@@ -2,12 +2,26 @@ import util
 import engine
 import ui
 
+boards = {
+    "board_1": {
+        "width": 15,
+        "height": 7
+    },
+    "board_2": {
+        "width": 30,
+        "height": 40
+    },
+    "board_3": {
+        "width": 10,
+        "height": 30
+    }
+}
+
 PLAYER_ICON = '@'
 PLAYER_START_X = 3
 PLAYER_START_Y = 3
 
-BOARD_WIDTH = 30
-BOARD_HEIGHT = 20
+INITIAL_BOARD = boards["board_1"]
 
 
 def create_player():
@@ -23,12 +37,12 @@ def create_player():
 
 def main():
     player = create_player()
-    board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
-
+    board = engine.create_board(INITIAL_BOARD)
+    # tu jakiś dialog początkowy z userem?
     util.clear_screen()
     is_running = True
     while is_running:
-        engine.put_player_on_board(board, player)
+        # engine.put_player_on_board(board, player)
         ui.display_board(board)
 
         key = util.key_pressed()

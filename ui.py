@@ -1,8 +1,10 @@
-def display_board(board):
+def display_board(board_list):
     '''
     Displays complete game board on the screen
 
     Returns:
     Nothing
     '''
-    pass
+    for row in board_list:
+        row = "".join(row)
+        print(row)
