@@ -105,18 +105,14 @@ def move_player(board, player, key):
     
     axix_y = len(board)
     axis_x = len(board[0])
-    if (key == "a"):
-        if player["y"] <= axis_x and player["y"] > 0:
+    if key == "a" and player["y"] <= axis_x and player["y"] > 0:
             player["y"] -= 1
-    elif (key == "d"):
-        if player["y"] < axis_x and player["y"] >= 0:
+    elif key == "d" and player["y"] < axis_x and player["y"] >= 0:
             player["y"] += 1
-    elif (key == "s"):
-        if player["x"] <= axix_y and player["x"] > 0:
+    elif key == "s" and player["x"] <= axix_y and player["x"] > 0:
             player["x"] -= 1
-    elif (key == "w"):
-        if player["x"] < axix_y and player["x"] >= 0:
+    elif  key == "w" and player["x"] < axix_y and player["x"] >= 0:
             player["x"] += 1
     
-    return player            
+    return player        
   
