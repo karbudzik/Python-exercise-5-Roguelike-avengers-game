@@ -53,4 +53,15 @@ def move_player(board, player, key):
     Returns:
     "Player" dictionary with modified player's coordinates
     '''
-    pass
+    print(board, player, key)
+    # for i in range(len(board)):
+    #     for j in range(len(board[i])):
+    if player["player_position_x"] < len(board) and player["player_position_x"] > 0:
+        
+        if key == "a":
+            player["player_position_x"] -= 1
+        elif key == "d":
+            player["player_position_x"] += 1
+
+    return player               
+  

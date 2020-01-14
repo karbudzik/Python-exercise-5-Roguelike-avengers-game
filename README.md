@@ -34,7 +34,7 @@ You will learn and practice how to do the following things in Python:
 ## Tasks
 
 
-1. Implement a basic board generator function to return a rectangular board of the given size.
+1. Implement0 a basic board generator function to return a rectangular board of the given size.
 
     - The `engine.create_board` function returns an empty, rectangular board as a list of lists of the given size, containing characters according to the field type (e.g. spaces all around and wall icons on its edges).
     - The game has at least 3 boards/levels with different inhabitants.
@@ -131,9 +131,7 @@ You will learn and practice how to do the following things in Python:
   assigned to general things. And not just "things", you also can
   distill abstract interactions like "fights" or "conversations". With
   this you'll get a flexible and extendable game.
-- Try to generate data! Read attributes from data files or use
-  randomized logic to create or mix components when creating things into
-  your world. You also can try creating playable boards.
+- Try to generate data! . You also can try creating playable boards.
 - The `util` module contains two basic OS-dependent functions, one
   for clearing the screen and one for getting user keystrokes. You
   shouldn't bother too much with terminal emulation.
@@ -146,7 +144,7 @@ https://classroom.github.com/g/98QVWNNf
 ## Background materials
 
 - [Dictionaries](https://learn.code.cool/codecool-graph/#/../pages/python/dictionaries)
-- [Modifying objects](https://learn.code.cool/codecool-graph/#/../pages/python/modifying-objects)
+- [Modifying objects](https://learn.code.cool/codecoo.l-graph/#/../pages/python/modifying-objects)
 - [User input](https://learn.code.cool/codecool-graph/#/../pages/python/user-input)
 - [Clean code](https://learn.code.cool/codecool-graph/#/../pages/general/clean-code)
 - [About Python modules](https://realpython.com/python-modules-packages/)
