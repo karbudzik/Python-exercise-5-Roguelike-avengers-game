@@ -5,15 +5,41 @@ import ui
 boards = {
     "board_1": {
         "width": 15,
-        "height": 7
+        "height": 7,
+        "exits": {
+            "north": {
+                "index_x": 5,
+                "index_y": 0,
+                "leads_to": "board_2"
+            },
+            "east": {
+                "index_x": 14,
+                "index_y": 4,
+                "leads_to": "board_3"
+            }
+        }
     },
     "board_2": {
-        "width": 30,
-        "height": 40
+        "width": 20,
+        "height": 30,
+        "exits": {
+            "south": {
+                "index_x": 15,
+                "index_y": 29,
+                "leads_to": "board_1"
+            }
+        }
     },
     "board_3": {
         "width": 10,
-        "height": 30
+        "height": 30,
+        "exits": {
+            "west": {
+                "index_x": 0,
+                "index_y": 20,
+                "leads_to": "board_1"
+            }
+        }
     }
 }
 
