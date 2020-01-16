@@ -89,6 +89,29 @@ def put_player_on_board(board, player):
     '''
     pass
 
+def is_exit(board, player):
+    if board[player["x"]][player["y"]] != "|" or board[player["x"]][player["y"]] != "-":
+        return True
+    return False
+
+
+def check_wall(player):
+    if player == 1:
+        return True
+    else:
+        return False
+
+
+def put_player_on_board(board, player, action=""):
+    board[player["position"]["x"]][player["position"]["y"]] = player["icon"]
+    if action == "remove":
+        board[player["position"]["x"]][player["position"]["y"]] = " "
+
+
+def check_next_object(player, board):
+    if board[player["x"]][player["y"]] != " ":
+        return board[player["x"]][player["y"]]
+
 def move_player(board, player, key):
     '''
     Modifies the player's coordinates according to the pressed key.
@@ -103,16 +126,30 @@ def move_player(board, player, key):
     "Player" dictionary with modified player's coordinates
     '''
     
-    axix_y = len(board)
-    axis_x = len(board[0])
-    if key == "a" and player["y"] <= axis_x and player["y"] > 0:
-            player["y"] -= 1
-    elif key == "d" and player["y"] < axis_x and player["y"] >= 0:
+    height = len(board)-1
+    width = len(board[0]) - 1
+    if key == "a" and player["y"] <= width and player["y"] > 0:
+        player["y"] -= 1
+        if check_next_object(player, board) == "|":
+            print("wall")
             player["y"] += 1
-    elif key == "s" and player["x"] <= axix_y and player["x"] > 0:
+
+    elif key == "d" and player["y"] < width and player["y"] >= 0:
+        player["y"] += 1
+        if check_next_object(player, board) == "|":
+            print("wall")
+            player["y"] -= 1
+    elif key == "s" and player["x"] <= height and player["x"] > 0:
+        player["x"] += 1
+        if check_next_object(player, board) == "-":
+            print("wall")
             player["x"] -= 1
-    elif  key == "w" and player["x"] < axix_y and player["x"] >= 0:
+    elif  key == "w" and player["x"] < height and player["x"] >= 0:
+        player["x"] -= 1
+        if check_next_object(player, board) == "-":
+            print("wall")
             player["x"] += 1
     
-    return player        
+    
+    return player       
   

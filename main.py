@@ -80,9 +80,8 @@ def main():
         ui.display_board(board)
     
         key = util.key_pressed()
+        engine.put_player_on_board(board, player, action="remove")
         engine.move_player(board, player["position"], key)
-        #chwilowy print
-        print("new player position: {}".format(player["position"]))
         if key == 'q':
             is_running = False
         else:
