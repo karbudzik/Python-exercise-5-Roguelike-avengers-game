@@ -12,6 +12,7 @@ boards = {
                 "index_y": 0,
                 "leads_to": "board_2"
             },
+            
             "east": {
                 "index_x": 14,
                 "index_y": 4,
@@ -47,6 +48,7 @@ player= {
         "x": 5,
         "y": 5,
     },
+
     "icon": "@"
 }
 
@@ -61,10 +63,11 @@ def create_player():
     '''
     Creates a 'player' dictionary for storing all player related informations - i.e. player icon, player position.
     Fell free to extend this dictionary!
-
+    
     Returns:
     dictionary
     '''
+
     pass
 
 

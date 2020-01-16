@@ -112,6 +112,10 @@ def check_next_object(player, board):
     if board[player["x"]][player["y"]] != " ":
         return board[player["x"]][player["y"]]
 
+
+def change_board(board, player):
+    print(boards)
+
 def move_player(board, player, key):
     '''
     Modifies the player's coordinates according to the pressed key.
@@ -130,25 +134,38 @@ def move_player(board, player, key):
     width = len(board[0]) - 1
     if key == "a" and player["y"] <= width and player["y"] > 0:
         player["y"] -= 1
-        if check_next_object(player, board) == "|":
+        next_object = check_next_object(player, board)
+        if next_object == "|":
             print("wall")
             player["y"] += 1
+        elif next_object == "x":
+            print("board")
 
     elif key == "d" and player["y"] < width and player["y"] >= 0:
         player["y"] += 1
-        if check_next_object(player, board) == "|":
+        next_object = check_next_object(player, board)
+        if next_object == "|":
             print("wall")
             player["y"] -= 1
-    elif key == "s" and player["x"] <= height and player["x"] > 0:
+        elif next_object == "x":
+            print("board")
+            change_board(board, player)
+    elif key == "s" and player["x"] <= height and player["x"] >= 0:
         player["x"] += 1
-        if check_next_object(player, board) == "-":
+        next_object = check_next_object(player, board)
+        if next_object == "-":
             print("wall")
             player["x"] -= 1
-    elif  key == "w" and player["x"] < height and player["x"] >= 0:
+        elif next_object == "x":
+            print("board")
+    elif  key == "w" and player["x"] < height and player["x"] > 0:
         player["x"] -= 1
-        if check_next_object(player, board) == "-":
+        next_object = check_next_object(player, board)
+        if next_object == "-":
             print("wall")
             player["x"] += 1
+        elif next_object == "x":
+            print("board")
     
     
     return player       
