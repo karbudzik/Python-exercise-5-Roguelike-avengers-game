@@ -67,11 +67,10 @@ def create_player():
     player = {
         "name": user_name,
         "position_x": 3,
-        "position_y": 3,
+        "position_y": 6,
         "current_board": "board_1",
         "player_icon": user_icon
     }
-    print(player)
     return player
 
 def ask_for_details():
@@ -92,30 +91,28 @@ def ask_for_details():
         user_icon = random.choice(possible_icons)
     while user_icon not in possible_icons:
         user_icon = input("You can't pick this character. You can choose between '@', '&', '#' and '%' or press 'r' to pick randomly. > ")
+        if user_icon in ["r", "R"] or len(user_icon) < 1:
+            user_icon = random.choice(possible_icons)
+        elif user_icon in ["q", "Q", "quit", "Quit", "QUIT"]:
+            sys.exit()
 
     return user_name, user_icon
 
 def main():
-    # nie wiem czy dobrze zrobiłem ale chwilowo zakomentowałem, bo poki co funckja nie tworzy jeszcze gracza a pewnie bedzie, 
-    # ja na potrzeby mojej funkcji musiałem stworzyć obiekt player, zeby zmieniac mu korydnanty, 
-    # może mam to zrobić innaczej dajcie znać to lekko zmienie dane w mojej funkcji move_player()
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])
-    # tu jakiś dialog początkowy z userem?
     util.clear_screen()
     is_running = True
     while is_running:
         engine.put_player_on_board(board, player)
         ui.display_board(board)
-    
         key = util.key_pressed()
-        engine.put_player_on_board(board, player, action="remove")
-        engine.move_player(board, player["position"], key)
+        engine.remove_player_from_board(board, player)
+        engine.move_player(board, player, key)
         if key == 'q':
             is_running = False
         else:
             pass
-        #wylaczylem na chwile zeby nie znikaly printy
         util.clear_screen()
 
 

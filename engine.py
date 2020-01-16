@@ -87,34 +87,37 @@ def put_player_on_board(board, player):
     Returns:
     Nothing
     '''
-    pass
-
-def is_exit(board, player):
-    if board[player["x"]][player["y"]] != "|" or board[player["x"]][player["y"]] != "-":
-        return True
-    return False
+    y = player["position_y"]-1
+    x = player["position_x"]-1
+    board[y][x] = player["player_icon"]
 
 
-def check_wall(player):
-    if player == 1:
-        return True
-    else:
-        return False
+# def is_exit(board, player):
+#     if board[player["x"]][player["y"]] != "|" or board[player["x"]][player["y"]] != "-":
+#         return True
+#     return False
 
 
-def put_player_on_board(board, player, action=""):
-    board[player["position"]["x"]][player["position"]["y"]] = player["icon"]
-    if action == "remove":
-        board[player["position"]["x"]][player["position"]["y"]] = " "
+# def check_wall(player):
+#     if player == 1:
+#         return True
+#     else:
+#         return False
 
 
-def check_next_object(player, board):
-    if board[player["x"]][player["y"]] != " ":
-        return board[player["x"]][player["y"]]
+def remove_player_from_board(board, player):
+    y = player["position_y"]-1
+    x = player["position_x"]-1
+    board[y][x] = " "
 
 
-def change_board(board, player):
-    print(boards)
+# def check_next_object(player, board):
+#     if board[player["position_y"]][player["position_x"]] != " ":
+#         return board[player["position_y"]][player["position_x"]]
+
+
+# def change_board(board, player):
+#     print(boards)
 
 def move_player(board, player, key):
     '''
@@ -129,44 +132,33 @@ def move_player(board, player, key):
     Returns:
     "Player" dictionary with modified player's coordinates
     '''
-    
     height = len(board)-1
     width = len(board[0]) - 1
-    if key == "a" and player["y"] <= width and player["y"] > 0:
-        player["y"] -= 1
-        next_object = check_next_object(player, board)
-        if next_object == "|":
-            print("wall")
-            player["y"] += 1
-        elif next_object == "x":
-            print("board")
+    index_x = player["position_x"] - 1
+    index_y = player["position_y"] - 1
 
-    elif key == "d" and player["y"] < width and player["y"] >= 0:
-        player["y"] += 1
-        next_object = check_next_object(player, board)
-        if next_object == "|":
-            print("wall")
-            player["y"] -= 1
-        elif next_object == "x":
-            print("board")
-            change_board(board, player)
-    elif key == "s" and player["x"] <= height and player["x"] >= 0:
-        player["x"] += 1
-        next_object = check_next_object(player, board)
-        if next_object == "-":
-            print("wall")
-            player["x"] -= 1
-        elif next_object == "x":
-            print("board")
-    elif  key == "w" and player["x"] < height and player["x"] > 0:
-        player["x"] -= 1
-        next_object = check_next_object(player, board)
-        if next_object == "-":
-            print("wall")
-            player["x"] += 1
-        elif next_object == "x":
-            print("board")
+    if key in ["a", "A"]: 
+        if index_x > 1: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
+            player["position_x"] -= 1
+        elif board[index_y][index_x - 1] == "x":
+            print("exit") #jeszcze nie wiem co z tym zrobić ale wymyślimy
+        
+    elif key in ["d", "D"]:
+        if index_x < (width - 1):
+            player["position_x"] += 1
+        elif board[index_y][index_x + 1] == "x":
+            print("exit") #jeszcze nie wiem co z tym zrobić ale wymyślimy
     
-    
-    return player       
+    elif key in ["s", "S"]:
+        if index_y < (height - 1):
+            player["position_y"] += 1
+        elif board[index_y + 1][index_x] == "x":
+            print("exit") #jeszcze nie wiem co z tym zrobić ale wymyślimy
+
+    elif key in ["w", "W"]:
+        if index_y > 1:
+            player["position_y"] -= 1
+        elif board[index_y - 1][index_x] == "x":
+            print("exit") #jeszcze nie wiem co z tym zrobić ale wymyślimy
+         
   
