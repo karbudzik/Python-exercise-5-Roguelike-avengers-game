@@ -1,4 +1,5 @@
 import copy
+import main
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
@@ -32,8 +33,8 @@ def add_exits(board, board_list, exit_char):
     list: Game board
     """
 
-    print(board["exits"])
-    print(board["exits"]["north"]["index_x"])
+    # print(board["exits"])
+    # print(board["exits"]["north"]["index_x"])
     
     for element in board["exits"]:
         x = board["exits"][element]["index_x"]
@@ -147,7 +148,14 @@ def move_player(board, player, key):
         if index_x < (width - 1):
             player["position_x"] += 1
         elif board[index_y][index_x + 1] == "x":
-            print("exit") #jeszcze nie wiem co z tym zrobić ale wymyślimy
+            print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
+            next_board = main.boards[player["current_board"]]["exits"]["east"]["leads_to"]
+            player["current_board"] = next_board
+            player["position_x"] = main.boards[next_board]["exits"]["west"]["index_x"]+1
+            player["position_y"] = main.boards[next_board]["exits"]["west"]["index_y"]+1
+            print(player["position_x"], player["position_y"])
+            print("ok")
+            
     
     elif key in ["s", "S"]:
         if index_y < (height - 1):

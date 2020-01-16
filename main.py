@@ -104,6 +104,7 @@ def main():
     util.clear_screen()
     is_running = True
     while is_running:
+        board = engine.create_board(boards[player["current_board"]])
         engine.put_player_on_board(board, player)
         ui.display_board(board)
         key = util.key_pressed()
