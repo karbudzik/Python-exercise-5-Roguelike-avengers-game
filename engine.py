@@ -171,14 +171,14 @@ def move_player(board, player, key):
     index_y = player["position_y"] - 1
 
     if key in ["a", "A"]: 
-        if index_x > 1: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
+        if index_x > 1 and board[index_y][index_x - 1] == " ": # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
             player["position_x"] -= 1
         elif board[index_y][index_x - 1] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "west", "east")
         
     elif key in ["d", "D"]:
-        if index_x < (width - 1):
+        if index_x < (width - 1) and board[index_y][index_x + 1] == " ":
             player["position_x"] += 1
         elif board[index_y][index_x + 1] == "x":
             print("exit")
@@ -193,14 +193,14 @@ def move_player(board, player, key):
             
     
     elif key in ["s", "S"]:
-        if index_y < (height - 1):
+        if index_y < (height - 1) and board[index_y + 1][index_x] == " ":
             player["position_y"] += 1
         elif board[index_y + 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "south", "north")
 
     elif key in ["w", "W"]:
-        if index_y > 1:
+        if index_y > 1 and board[index_y - 1][index_x] == " ":
             player["position_y"] -= 1
         elif board[index_y - 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
