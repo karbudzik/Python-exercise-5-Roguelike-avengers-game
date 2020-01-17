@@ -20,7 +20,17 @@ boards = {
                 "index_y": 4,
                 "leads_to": "board_3"
             }
-        }
+        },
+        "nature": {
+            "tree_1": {
+                "index_x": 2,
+                "index_y": 2,
+            },
+            "tree_2": {
+                "index_x": 1,
+                "index_y": 4,
+            },
+        },
     },
     "board_2": {
         "width": 20,
@@ -31,7 +41,17 @@ boards = {
                 "index_y": 29,
                 "leads_to": "board_1"
             }
-        }
+        },
+        "nature": {
+            "tree_1": {
+                "index_x": 4,
+                "index_y": 9,
+            },
+            "tree_2": {
+                "index_x": 10,
+                "index_y": 3,
+            },
+        },
     },
     "board_3": {
         "width": 10,

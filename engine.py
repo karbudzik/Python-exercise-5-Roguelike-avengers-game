@@ -20,7 +20,7 @@ def create_rows(board, horizontal_brick, vertical_brick, floor_char):
 
     return horizontal_wall, middle_row
 
-def add_exits(board, board_list, exit_char):
+def add_const_elements(board, board_list, to_add="", char="x"):
     """
     Add exits signs to the board_list.
 
@@ -35,13 +35,37 @@ def add_exits(board, board_list, exit_char):
 
     # print(board["exits"])
     # print(board["exits"]["north"]["index_x"])
-    
-    for element in board["exits"]:
-        x = board["exits"][element]["index_x"]
-        y = board["exits"][element]["index_y"]
-        board_list[y][x] = exit_char
-
+    if to_add in board:
+        for element in board[to_add]:
+            x = board[to_add][element]["index_x"]
+            y = board[to_add][element]["index_y"]
+            board_list[y][x] = char
     return board_list
+
+# Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
+# wersje na górze jest bardziej ogolna i działa np dla wszystkich obiektów elementów w słowniku nature, aaa no dla twoich exitow tez , chce przetestować inne obiekty w na planszy , i moj movement na nich.
+# def add_exits(board, board_list, exit_char):
+#     """
+#     Add exits signs to the board_list.
+
+#     Args:
+#     dictionary: The details of a board in a form of dictionary, with "exits" among them.
+#     list: The list of lists in which the characters will be changed
+#     string: The character which will be a symbol of exit
+
+#     Returns:
+#     list: Game board
+#     """
+
+#     # print(board["exits"])
+#     # print(board["exits"]["north"]["index_x"])
+    
+#     for element in board["exits"]:
+#         x = board["exits"][element]["index_x"]
+#         y = board["exits"][element]["index_y"]
+#         board_list[y][x] = exit_char
+
+#     return board_list
 
 
 def create_board(board):
@@ -72,7 +96,11 @@ def create_board(board):
        board_list.append(middle_row_copy)
     board_list.append(south_wall)
 
-    board_list = add_exits(board, board_list, exit_char)
+    board_list = add_const_elements(board, board_list, "exits", char="x")
+    board_list = add_const_elements(board, board_list, "nature", char="T")
+    # Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
+    # wersje na górze, chce przetestować inne obiekty w na planszy, i moj movement na nich.
+    # board_list = add_exits(board, board_list, exit_char)
 
     return board_list
 
