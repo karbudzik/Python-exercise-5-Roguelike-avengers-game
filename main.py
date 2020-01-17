@@ -109,7 +109,7 @@ def main():
         ui.display_board(board)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
-        engine.move_player(board, player, key)
+        player = engine.move_player(board, player, key)
         if key == 'q':
             is_running = False
         else:
