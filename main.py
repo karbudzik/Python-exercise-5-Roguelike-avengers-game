@@ -36,14 +36,14 @@ boards = {
             },
         },
         "items": {
-            "money": {
-                "gold": 5,
+            "gold": {
+                "number":2,
                 "index_x": 4,
                 "index_y": 5,
                 "icon" : "$"
             },
             "amor": {
-                "shield": 30,
+                "number": 30,
                 "index_x": 8,
                 "index_y": 3,
                 "icon":"D"   
@@ -72,6 +72,20 @@ boards = {
                 "index_y": 3,
                 "icon" : "T"
             },
+        },
+        "items": {
+            "knife": {
+                "number":1,
+                "index_x": 7,
+                "index_y": 4,
+                "icon" : "1"
+            },
+            "amor": {
+                "number": 30,
+                "index_x": 8,
+                "index_y": 3,
+                "icon":"D"   
+            }
         },
     },
     "board_3": {
