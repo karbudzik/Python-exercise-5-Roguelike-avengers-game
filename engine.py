@@ -98,6 +98,8 @@ def create_board(board):
 
     board_list = add_const_elements(board, board_list, "exits", char="x")
     board_list = add_const_elements(board, board_list, "nature", char="T")
+    board_list = add_const_elements(board, board_list, "items", char="$")
+
     # Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
     # wersje na górze, chce przetestować inne obiekty w na planszy, i moj movement na nich.
     # board_list = add_exits(board, board_list, exit_char)
@@ -149,7 +151,8 @@ def change_board(player, direction_from, direction_to):
     next_board = main.boards[player["current_board"]]["exits"][direction_from]["leads_to"]
     player["current_board"] = next_board
     player["position_x"] = main.boards[next_board]["exits"][direction_to]["index_x"]+1
-    player["position_y"] = main.boards[next_board]["exits"][direction_to]["index_y"]+1
+    player["position_y"] = main.boards[next_board]["exits"][direction_to]["index_y"] + 1
+    
 
 
 def move_player(board, player, key):
@@ -171,36 +174,27 @@ def move_player(board, player, key):
     index_y = player["position_y"] - 1
 
     if key in ["a", "A"]: 
-        if index_x > 1 and board[index_y][index_x - 1] == " ": # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
+        if index_x > 1 and board[index_y][index_x - 1] in [" ", "$"]: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
             player["position_x"] -= 1
         elif board[index_y][index_x - 1] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "west", "east")
         
     elif key in ["d", "D"]:
-        if index_x < (width - 1) and board[index_y][index_x + 1] == " ":
+        if index_x < (width - 1) and board[index_y][index_x + 1] in [" ", "$"]:
             player["position_x"] += 1
         elif board[index_y][index_x + 1] == "x":
-            print("exit")
             change_board(player, "east", "west")
-            # return "change_board" #jeszcze nie wiem co z tym zrobić ale wymyślimy
-            # next_board = main.boards[player["current_board"]]["exits"]["east"]["leads_to"]
-            # player["current_board"] = next_board
-            # player["position_x"] = main.boards[next_board]["exits"]["west"]["index_x"]+1
-            # player["position_y"] = main.boards[next_board]["exits"]["west"]["index_y"]+1
-            # print(player["position_x"], player["position_y"])
-            # print("ok")
-            
     
     elif key in ["s", "S"]:
-        if index_y < (height - 1) and board[index_y + 1][index_x] == " ":
+        if index_y < (height - 1) and board[index_y + 1][index_x] in [" ", "$"]:
             player["position_y"] += 1
         elif board[index_y + 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "south", "north")
 
     elif key in ["w", "W"]:
-        if index_y > 1 and board[index_y - 1][index_x] == " ":
+        if index_y > 1 and board[index_y - 1][index_x] in [" ", "$"]:
             player["position_y"] -= 1
         elif board[index_y - 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy

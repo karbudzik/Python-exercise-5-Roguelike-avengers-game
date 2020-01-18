@@ -31,6 +31,13 @@ boards = {
                 "index_y": 4,
             },
         },
+        "items": {
+            "money": {
+                "gold": 5,
+                "index_x": 4,
+                "index_y": 5,
+            },
+        },
     },
     "board_2": {
         "width": 20,
