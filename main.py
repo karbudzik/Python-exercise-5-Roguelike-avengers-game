@@ -12,23 +12,27 @@ boards = {
             "north": {
                 "index_x": 5,
                 "index_y": 0,
-                "leads_to": "board_2"
+                "leads_to": "board_2",
+                "icon" : "x"
             },
             
             "east": {
                 "index_x": 14,
                 "index_y": 4,
-                "leads_to": "board_3"
+                "leads_to": "board_3",
+                "icon" : "x"
             }
         },
         "nature": {
             "tree_1": {
                 "index_x": 2,
                 "index_y": 2,
+                "icon" : "T"
             },
             "tree_2": {
                 "index_x": 1,
                 "index_y": 4,
+                "icon" : "T"
             },
         },
         "items": {
@@ -36,7 +40,14 @@ boards = {
                 "gold": 5,
                 "index_x": 4,
                 "index_y": 5,
+                "icon" : "$"
             },
+            "amor": {
+                "shield": 30,
+                "index_x": 8,
+                "index_y": 3,
+                "icon":"D"   
+            }
         },
     },
     "board_2": {
@@ -46,17 +57,20 @@ boards = {
             "south": {
                 "index_x": 15,
                 "index_y": 29,
-                "leads_to": "board_1"
+                "leads_to": "board_1",
+                "icon" : "x"
             }
         },
         "nature": {
             "tree_1": {
                 "index_x": 4,
                 "index_y": 9,
+                "icon" : "T"
             },
             "tree_2": {
                 "index_x": 10,
                 "index_y": 3,
+                "icon" : "T"
             },
         },
     },
@@ -67,7 +81,8 @@ boards = {
             "west": {
                 "index_x": 0,
                 "index_y": 20,
-                "leads_to": "board_1"
+                "leads_to": "board_1",
+                "icon" : "x"
             }
         }
     }
@@ -129,7 +144,7 @@ def main():
         ui.display_board(board)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
-        player = engine.move_player(board, player, key)
+        player = engine.move_player(board, player, key, boards)
     
         if key == 'q':
             is_running = False

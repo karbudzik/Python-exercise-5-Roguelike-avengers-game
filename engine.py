@@ -21,7 +21,7 @@ def create_rows(board, horizontal_brick, vertical_brick, floor_char):
 
     return horizontal_wall, middle_row
 
-def add_const_elements(board, board_list, to_add="", char="x"):
+def add_const_elements(board, board_list, to_add=""):
     """
     Add exits signs to the board_list.
 
@@ -40,7 +40,7 @@ def add_const_elements(board, board_list, to_add="", char="x"):
         for element in board[to_add]:
             x = board[to_add][element]["index_x"]
             y = board[to_add][element]["index_y"]
-            board_list[y][x] = char
+            board_list[y][x] = board[to_add][element]["icon"]
     return board_list
 
 # Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
@@ -97,9 +97,9 @@ def create_board(board):
        board_list.append(middle_row_copy)
     board_list.append(south_wall)
 
-    board_list = add_const_elements(board, board_list, "exits", char="x")
-    board_list = add_const_elements(board, board_list, "nature", char="T")
-    board_list = add_const_elements(board, board_list, "items", char="$")
+    board_list = add_const_elements(board, board_list, "exits")
+    board_list = add_const_elements(board, board_list, "nature")
+    board_list = add_const_elements(board, board_list, "items")
 
     # Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
     # wersje na górze, chce przetestować inne obiekty w na planszy, i moj movement na nich.
@@ -180,12 +180,16 @@ def update_inventory(player, board):
     else:
         player["inventory"]["gold"] = main.boards[player["current_board"]]["items"]["money"]["gold"]
 
-  
+def remove_object_from_board(board, player):
+    
+    y = player["position_y"]-1
+    x = player["position_x"]-1
+    board["items"]["money"]["icon"]=" "
 
 
 
 
-def move_player(board, player, key):
+def move_player(board, player, key, boards):
     '''
     Modifies the player's coordinates according to the pressed key.
     Prevents from walking into walls and loads another board if a player go into gate.
@@ -212,8 +216,7 @@ def move_player(board, player, key):
         elif board[index_y][index_x - 1] in ["$"]:
             update_inventory(player, board)
             player["position_x"] -= 1
-            board[index_y][index_x - 1] = " "
-            print("ok")
+            remove_object_from_board(boards[player["current_board"]], player)
 
         
     elif key in ["d", "D"]:
