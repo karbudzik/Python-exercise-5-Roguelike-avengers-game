@@ -72,14 +72,7 @@ boards = {
         }
     }
 }
-# player= {
-#     "position": {
-#         "x": 5,
-#         "y": 5,
-#     },
 
-#     "icon": "@"
-# }
 
 def create_player():
     '''
@@ -137,11 +130,12 @@ def main():
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key)
+    
         if key == 'q':
             is_running = False
         else:
             pass
-        util.clear_screen()
+        # util.clear_screen()
 
 
 if __name__ == '__main__':

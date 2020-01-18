@@ -1,5 +1,6 @@
 import copy
 import main
+import collections
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
@@ -137,6 +138,16 @@ def put_player_on_board(board, player):
 
 
 def remove_player_from_board(board, player):
+    '''
+    Modifies the player position  by removing the player icon at its coordinates.
+
+    Args:
+    list: The game board
+    dictionary: The player information containing the icon and coordinates
+
+    Returns:
+    Nothing
+    '''
     y = player["position_y"]-1
     x = player["position_x"]-1
     board[y][x] = " "
@@ -148,11 +159,30 @@ def remove_player_from_board(board, player):
 
 
 def change_board(player, direction_from, direction_to):
+
     next_board = main.boards[player["current_board"]]["exits"][direction_from]["leads_to"]
     player["current_board"] = next_board
     player["position_x"] = main.boards[next_board]["exits"][direction_to]["index_x"]+1
     player["position_y"] = main.boards[next_board]["exits"][direction_to]["index_y"] + 1
     
+
+# def get_item(player,boards):
+#     # if player["position_x"]["position_y"] == boards[player["current_board"]]["items"]["gold"]["positon_x"]["position_y"]:
+#     pass
+
+def update_inventory(player, board):
+    print(player)
+    if "inventory" not in player:
+        player["inventory"] = {}
+        
+    if "gold" in player["inventory"]:
+        player["inventory"]["gold"] += main.boards[player["current_board"]]["items"]["money"]["gold"]
+    else:
+        player["inventory"]["gold"] = main.boards[player["current_board"]]["items"]["money"]["gold"]
+
+  
+
+
 
 
 def move_player(board, player, key):
@@ -173,12 +203,18 @@ def move_player(board, player, key):
     index_x = player["position_x"] - 1
     index_y = player["position_y"] - 1
 
-    if key in ["a", "A"]: 
-        if index_x > 1 and board[index_y][index_x - 1] in [" ", "$"]: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
+    if key in ["a", "A"]:
+        if index_x > 1 and board[index_y][index_x - 1] in [" "]: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
             player["position_x"] -= 1
-        elif board[index_y][index_x - 1] == "x":
+        elif board[index_y][index_x - 1] == "x":    
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "west", "east")
+        elif board[index_y][index_x - 1] in ["$"]:
+            update_inventory(player, board)
+            player["position_x"] -= 1
+            board[index_y][index_x - 1] = " "
+            print("ok")
+
         
     elif key in ["d", "D"]:
         if index_x < (width - 1) and board[index_y][index_x + 1] in [" ", "$"]:
