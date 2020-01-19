@@ -164,7 +164,7 @@ def main():
             is_running = False
         else:
             pass
-        # util.clear_screen()
+        util.clear_screen()
 
 
 if __name__ == '__main__':
