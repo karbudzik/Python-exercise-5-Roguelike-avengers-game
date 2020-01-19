@@ -215,32 +215,56 @@ def move_player(board, player, key, boards):
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "west", "east")
         elif board[index_y][index_x-1] in ["$", "D", "1"]:
-            #przeiteruja po kazdym elemencie w aktualnym bordzie item
-            player["position_x"] -= 2
+            player["position_x"] -= 1
             items_in_board=boards[player["current_board"]]["items"]
             for item in items_in_board:
-                if items_in_board[item]["index_x"] == player["position_x"]:
+                if items_in_board[item]["index_x"]+1 == player["position_x"]:
                     update_inventory(player, board, item)
                     remove_object_from_board(boards[player["current_board"]], player, item)
                 
     elif key in ["d", "D"]:
-        if index_x < (width - 1) and board[index_y][index_x + 1] in [" ", "$"]:
+        if index_x < (width - 1) and board[index_y][index_x + 1] in [" "]:
             player["position_x"] += 1
         elif board[index_y][index_x + 1] == "x":
             change_board(player, "east", "west")
+        elif board[index_y][index_x + 1] in ["$", "D", "1"]:
+            player["position_x"] += 1
+            items_in_board=boards[player["current_board"]]["items"]
+            for item in items_in_board:
+                if items_in_board[item]["index_x"]+1 == player["position_x"]:
+                    update_inventory(player, board, item)
+                    remove_object_from_board(boards[player["current_board"]], player, item)
+                    
     
     elif key in ["s", "S"]:
-        if index_y < (height - 1) and board[index_y + 1][index_x] in [" ", "$"]:
+        if index_y < (height - 1) and board[index_y + 1][index_x] in [" "]:
             player["position_y"] += 1
         elif board[index_y + 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "south", "north")
+        elif board[index_y+1][index_x] in ["$", "D", "1"]:
+            # player["position_y"] += 1
+            items_in_board=boards[player["current_board"]]["items"]
+            for item in items_in_board:
+                if items_in_board[item]["index_y"] == player["position_y"]:
+                    update_inventory(player, board, item)
+                    remove_object_from_board(boards[player["current_board"]], player, item)
+                    player["position_y"] += 1
 
     elif key in ["w", "W"]:
-        if index_y > 1 and board[index_y - 1][index_x] in [" ", "$"]:
+        if index_y > 1 and board[index_y - 1][index_x] in [" "]:
             player["position_y"] -= 1
         elif board[index_y - 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, "north", "south")
+        elif board[index_y-1][index_x] in ["$", "D", "1"]:
+            player["position_y"] -= 2
+            items_in_board=boards[player["current_board"]]["items"]
+            for item in items_in_board:
+                if items_in_board[item]["index_y"] == player["position_y"]:
+                    update_inventory(player, board, item)
+                    player["position_y"] -= 1
+                    remove_object_from_board(boards[player["current_board"]], player, item)
     
+
     return player
