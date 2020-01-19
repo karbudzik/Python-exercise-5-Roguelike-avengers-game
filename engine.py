@@ -1,5 +1,6 @@
 import copy
 import main
+import collections
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
@@ -20,7 +21,7 @@ def create_rows(board, horizontal_brick, vertical_brick, floor_char):
 
     return horizontal_wall, middle_row
 
-def add_const_elements(board, board_list, to_add="", char="x"):
+def add_const_elements(board, board_list, to_add=""):
     """
     Add exits signs to the board_list.
 
@@ -39,7 +40,7 @@ def add_const_elements(board, board_list, to_add="", char="x"):
         for element in board[to_add]:
             x = board[to_add][element]["index_x"]
             y = board[to_add][element]["index_y"]
-            board_list[y][x] = char
+            board_list[y][x] = board[to_add][element]["icon"]
     return board_list
 
 # Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
@@ -96,8 +97,10 @@ def create_board(board):
        board_list.append(middle_row_copy)
     board_list.append(south_wall)
 
-    board_list = add_const_elements(board, board_list, "exits", char="x")
-    board_list = add_const_elements(board, board_list, "nature", char="T")
+    board_list = add_const_elements(board, board_list, "exits")
+    board_list = add_const_elements(board, board_list, "nature")
+    board_list = add_const_elements(board, board_list, "items")
+
     # Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
     # wersje na górze, chce przetestować inne obiekty w na planszy, i moj movement na nich.
     # board_list = add_exits(board, board_list, exit_char)
@@ -135,6 +138,16 @@ def put_player_on_board(board, player):
 
 
 def remove_player_from_board(board, player):
+    '''
+    Modifies the player position  by removing the player icon at its coordinates.
+
+    Args:
+    list: The game board
+    dictionary: The player information containing the icon and coordinates
+
+    Returns:
+    Nothing
+    '''
     y = player["position_y"]-1
     x = player["position_x"]-1
     board[y][x] = " "
@@ -145,14 +158,51 @@ def remove_player_from_board(board, player):
 #         return board[player["position_y"]][player["position_x"]]
 
 
-def change_board(player, direction_from, direction_to):
-    next_board = main.boards[player["current_board"]]["exits"][direction_from]["leads_to"]
+def change_board(player, boards, direction_from, direction_to):
+
+    next_board = boards[player["current_board"]]["exits"][direction_from]["leads_to"]
     player["current_board"] = next_board
-    player["position_x"] = main.boards[next_board]["exits"][direction_to]["index_x"]+1
-    player["position_y"] = main.boards[next_board]["exits"][direction_to]["index_y"]+1
+    player["position_x"] = boards[next_board]["exits"][direction_to]["index_x"] + 1
+    player["position_y"] = boards[next_board]["exits"][direction_to]["index_y"] + 1
+    
+
+# def get_item(player,boards):
+#     # if player["position_x"]["position_y"] == boards[player["current_board"]]["items"]["gold"]["positon_x"]["position_y"]:
+#     pass
+
+def update_inventory(player, to_add):
+    if "inventory" not in player:
+        player["inventory"] = {}
+        
+    if to_add in player["inventory"]:
+        player["inventory"][to_add] += main.boards[player["current_board"]]["items"][to_add]["number"]
+    else:
+        player["inventory"][to_add] = main.boards[player["current_board"]]["items"][to_add]["number"]
+    
+    print(player)
+
+def remove_object_from_board(board, player,to_remove):
+    
+    y = player["position_y"]-1
+    x = player["position_x"]-1
+    board["items"][to_remove]["icon"] = " "
+    
+def item_detected(player, axis, current_board, sing):
+    if sing == "-":
+        player[axis] -= 1
+    else:
+        player[axis] += 1
+        
+    items_in_board=current_board["items"]
+    for item in items_in_board:
+        if items_in_board[item]["index_x"]+1 == player["position_x"]:
+            update_inventory(player, item)
+            remove_object_from_board(current_board, player, item)
 
 
-def move_player(board, player, key):
+
+
+def move_player(board, player, key, boards):
     '''
     Modifies the player's coordinates according to the pressed key.
     Prevents from walking into walls and loads another board if a player go into gate.
@@ -169,41 +219,42 @@ def move_player(board, player, key):
     width = len(board[0]) - 1
     index_x = player["position_x"] - 1
     index_y = player["position_y"] - 1
+    current_board= boards[player["current_board"]]
 
-    if key in ["a", "A"]: 
-        if index_x > 1: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
+    if key in ["a", "A"]:
+        if index_x > 1 and board[index_y][index_x - 1] in [" "]: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
             player["position_x"] -= 1
-        elif board[index_y][index_x - 1] == "x":
+        elif board[index_y][index_x - 1] == "x":    
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
-            change_board(player, "west", "east")
-        
+            change_board(player, boards, "west", "east")
+        elif board[index_y][index_x - 1] in ["$", "D", "1"]:
+            item_detected(player, "position_x", current_board, "-")
+                
     elif key in ["d", "D"]:
-        if index_x < (width - 1):
+        if index_x < (width - 1) and board[index_y][index_x + 1] in [" "]:
             player["position_x"] += 1
         elif board[index_y][index_x + 1] == "x":
-            print("exit")
-            change_board(player, "east", "west")
-            # return "change_board" #jeszcze nie wiem co z tym zrobić ale wymyślimy
-            # next_board = main.boards[player["current_board"]]["exits"]["east"]["leads_to"]
-            # player["current_board"] = next_board
-            # player["position_x"] = main.boards[next_board]["exits"]["west"]["index_x"]+1
-            # player["position_y"] = main.boards[next_board]["exits"]["west"]["index_y"]+1
-            # print(player["position_x"], player["position_y"])
-            # print("ok")
-            
-    
+            change_board(player, boards, "east", "west")
+        elif board[index_y][index_x + 1] in ["$", "D", "1"]:
+            item_detected(player,"position_x", current_board, "+")
+                    
     elif key in ["s", "S"]:
-        if index_y < (height - 1):
+        if index_y < (height - 1) and board[index_y + 1][index_x] in [" "]:
             player["position_y"] += 1
         elif board[index_y + 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
-            change_board(player, "south", "north")
+            change_board(player, boards, "south", "north")
+        elif board[index_y + 1][index_x] in ["$", "D", "1"]:
+            item_detected(player, "position_y", current_board, "+")
 
     elif key in ["w", "W"]:
-        if index_y > 1:
+        if index_y > 1 and board[index_y - 1][index_x] in [" "]:
             player["position_y"] -= 1
         elif board[index_y - 1][index_x] == "x":
             print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
-            change_board(player, "north", "south")
-    
+            change_board(player, boards, "north", "south")
+        elif board[index_y - 1][index_x] in ["$", "D", "1"]:
+            item_detected(player, "position_y", current_board, "-")
+            
+
     return player
