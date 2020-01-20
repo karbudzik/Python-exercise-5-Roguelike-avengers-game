@@ -138,6 +138,8 @@ def create_player():
     user_name, user_icon = ask_for_details()
     player = {
         "name": user_name,
+        "quest": 1,
+        "health": 70,
         "position_x": 3,
         "position_y": 6,
         "current_board": "board_1",
@@ -173,12 +175,13 @@ def ask_for_details():
 def main():
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])
+    # dodać opis początkowy gry
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
         engine.put_player_on_board(board, player)   
-        ui.display_board(board, boards[player["current_board"]]["name"])
+        ui.display_board(board, boards[player["current_board"]]["name"], player)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
