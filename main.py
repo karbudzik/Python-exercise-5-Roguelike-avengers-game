@@ -6,19 +6,19 @@ import sys
 
 boards = {
     "board_1": {
-        "width": 15,
-        "height": 7,
+        "name": "EARTH",
+        "width": 20,
+        "height": 12,
         "exits": {
             "north": {
-                "index_x": 5,
+                "index_x": 8,
                 "index_y": 0,
                 "leads_to": "board_2",
                 "icon" : "x"
             },
-            
             "east": {
-                "index_x": 14,
-                "index_y": 4,
+                "index_x": 19,
+                "index_y": 9,
                 "leads_to": "board_3",
                 "icon" : "x"
             }
@@ -34,15 +34,36 @@ boards = {
                 "index_y": 4,
                 "icon" : "T"
             },
+            "tree_3": {
+                "index_x": 13,
+                "index_y": 9,
+                "icon" : "T"
+            },
+            "tree_4": {
+                "index_x": 13,
+                "index_y": 8,
+                "icon" : "T"
+            },
+            "tree_5": {
+                "index_x": 13,
+                "index_y": 10,
+                "icon" : "T"
+            },
         },
         "items": {
-            "gold": {
-                "number":2,
+            "gold_1": {
+                "number": 2,
                 "index_x": 4,
-                "index_y": 5,
+                "index_y": 8,
                 "icon" : "$"
             },
-            "amor": {
+            "gold_2": {
+                "number": 2,
+                "index_x": 1,
+                "index_y": 2,
+                "icon" : "$"
+            },
+            "armor": {
                 "number": 30,
                 "index_x": 8,
                 "index_y": 3,
@@ -51,6 +72,7 @@ boards = {
         },
     },
     "board_2": {
+        "name": "ASGARD",
         "width": 20,
         "height": 30,
         "exits": {
@@ -80,15 +102,16 @@ boards = {
                 "index_y": 4,
                 "icon" : "1"
             },
-            "amor": {
+            "armor": {
                 "number": 30,
                 "index_x": 8,
                 "index_y": 3,
-                "icon":"D"   
+                "icon": "D"   
             }
         },
     },
     "board_3": {
+        "name": "VORMIR",
         "width": 10,
         "height": 30,
         "exits": {
@@ -105,7 +128,7 @@ boards = {
 
 def create_player():
     '''
-    Creates a 'player' dictionary for storing all player related informations - i.e. player icon, player position.
+    Creates a 'player' dictionary for storing all player related information - i.e. player icon, player position.
     Fell free to extend this dictionary!
     
     Returns:
@@ -154,8 +177,8 @@ def main():
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
-        engine.put_player_on_board(board, player)
-        ui.display_board(board)
+        engine.put_player_on_board(board, player)   
+        ui.display_board(board, boards[player["current_board"]]["name"])
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
