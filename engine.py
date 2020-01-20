@@ -125,8 +125,6 @@ def update_inventory(player, to_add):
         player["inventory"][to_add] += main.boards[player["current_board"]]["items"][to_add]["number"]
     else:
         player["inventory"][to_add] = main.boards[player["current_board"]]["items"][to_add]["number"]
-    
-    print(player["inventory"])
 
 
 def remove_object_from_board(board, player, to_remove, boards):
