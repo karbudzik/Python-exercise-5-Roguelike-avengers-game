@@ -1,4 +1,7 @@
 import os
+from pygame import mixer
+import pyfiglet
+from termcolor import colored, cprint
 
 def display_board(board_list, board_name, player):
     '''
@@ -25,11 +28,13 @@ def display_title(board_list, board_name, console_width):
     Returns:
     Nothing
     '''
-    caption = "*** " + board_name + " ***"
 
+    caption = pyfiglet.figlet_format("*** " + board_name + " ***", font="digital")
+    captions = caption.split("\n")
     print("")
-    print(caption.center(console_width))
-    print("")
+    for caption in captions:
+        print(colored(caption.center(console_width),"blue"))
+    
 
 
 def display_stats(player, console_width):
@@ -60,4 +65,4 @@ def display_stats(player, console_width):
     string_to_display = (" | ").join(stats_to_display)
 
     print("")
-    print(string_to_display.center(console_width))
+    print(colored(string_to_display.center(console_width),"red"))
