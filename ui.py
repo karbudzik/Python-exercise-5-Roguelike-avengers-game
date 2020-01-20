@@ -41,8 +41,9 @@ def display_description(player, quests, console_width):
     Returns:
     Nothing
     '''
-    description = quests[str(player["quest"])]["quest_description"]
-    print(description.center(console_width))
+    description_list = quests[str(player["quest"])]["quest_description"]
+    for line in description_list:  
+        print(line.center(console_width))
     print("")
 
 

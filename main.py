@@ -126,14 +126,17 @@ boards = {
 }
 quests = {
     "1": {
-        "quest_description": "Bleblabla"
+        "quest_description": ["You are an Avenger, fighting Thanos and his troops, preventing half of the universe's population from dying.", 
+                              "Your task is to find infinity stones located on 3 worlds in different time lines, starting from Earth.",
+                              "To find the stones placed here, you'll need to get information from most fraudulent of them all - Loki.",
+                              "Only then you'll be able to get to other worlds.",
+                              "But be careful, you might not come out of this alive..."]
     }
 }
 
 def create_player():
     '''
     Creates a 'player' dictionary for storing all player related information - i.e. player icon, player position.
-    Fell free to extend this dictionary!
     
     Returns:
     dictionary
