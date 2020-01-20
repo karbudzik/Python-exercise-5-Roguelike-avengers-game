@@ -59,7 +59,7 @@ boards = {
             },
             "gold_2": {
                 "number": 2,
-                "index_x": 1,
+                "index_x": 4,
                 "index_y": 2,
                 "icon" : "$"
             },
@@ -70,6 +70,13 @@ boards = {
                 "icon":"D"   
             }
         },
+        "characters": {
+            "Loki": {
+                "index_x": 13,
+                "index_y": 4,
+                "icon": "L"
+            }
+        }
     },
     "board_2": {
         "name": "ASGARD",
@@ -192,7 +199,7 @@ def main():
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
-    
+        engine.plot_development(player, quests)
         if key == 'q':
             is_running = False
         else:

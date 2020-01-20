@@ -73,6 +73,7 @@ def create_board(board):
     board_list = add_const_elements(board, board_list, "exits")
     board_list = add_const_elements(board, board_list, "nature")
     board_list = add_const_elements(board, board_list, "items")
+    board_list = add_const_elements(board, board_list, "characters")
 
     return board_list
 
@@ -165,7 +166,7 @@ def get_item(player, axis, current_board, sign, boards):
         
     items_on_board = current_board["items"]
     for item in items_on_board:
-        if items_on_board[item]["index_x"]+1 == player["position_x"]: #makes sure only ont item is taken by user, not all items from the board
+        if items_on_board[item]["index_x"]+1 == player["position_x"]: #makes sure only one item is taken by user, not all items from the board
             update_inventory(player, item)
             remove_object_from_board(current_board, player, item, boards)
             break
@@ -222,5 +223,20 @@ def move_player(board, player, key, boards):
         elif board[index_y - 1][index_x] in ["$", "D", "1"]:
             get_item(player, "position_y", current_board, "-", boards)
             
-
     return player
+
+
+def plot_development(player, quests):
+    '''
+    description
+    '''
+    if player["quest"] == 1:
+        pass
+    # jeśli loki koło nas to tracimy 20hp co ruch
+    # jak ma sword to może bić lokiego
+    # jak ma armor to może tracić hp wolniej
+
+
+'''
+        #spr hp czy żyje
+'''
