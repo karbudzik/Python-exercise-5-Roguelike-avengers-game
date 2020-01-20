@@ -3,6 +3,9 @@ import engine
 import ui
 import random
 import sys
+import pygame
+from pygame import mixer
+import pyfiglet
 
 boards = {
     "board_1": {
@@ -187,6 +190,9 @@ def ask_for_details():
     return user_name, user_icon
 
 def main():
+    pygame.init()
+    mixer.music.load("The Avengers Theme Song.ogg")
+    # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])
     
