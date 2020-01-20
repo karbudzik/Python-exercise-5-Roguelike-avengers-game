@@ -172,6 +172,17 @@ def get_item(player, axis, current_board, sign, boards):
             break
 
 
+def interact_with_character(boards, icon, player):
+    
+    if icon == "L":
+        board_name = player["current_board"]
+        del boards[board_name]["characters"]["Loki"]
+        # RICARDO: Here you can add a condition that if a player has "thor's hammer" and the "captain's america's shield"
+        # in the inventory, then he wins this fight (Loki is deleted from the board - as above). If not, the game is ended 
+        # - the player looses and game quits
+
+
+
 def move_player(board, player, key, boards):
     '''
     Modifies the player's coordinates according to the pressed key.
@@ -190,38 +201,51 @@ def move_player(board, player, key, boards):
     index_x = player["position_x"] - 1
     index_y = player["position_y"] - 1
     current_board = boards[player["current_board"]]
+    # At the end this function will have to be refactored (too many repeatable lines)
 
     if key in ["a", "A"]:
         if index_x > 1 and board[index_y][index_x - 1] in [" "]:
             player["position_x"] -= 1
         elif board[index_y][index_x - 1] == "x":     
             change_board(player, boards, "west", "east")
-        elif board[index_y][index_x - 1] in ["$", "D", "1"]:
+        elif board[index_y][index_x - 1] in ["$", "D", "1", "?"]:
             get_item(player, "position_x", current_board, "-", boards)
+        elif board[index_y][index_x - 1] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_x"] -= 1
                 
     elif key in ["d", "D"]:
         if index_x < (width - 1) and board[index_y][index_x + 1] in [" "]:
             player["position_x"] += 1
         elif board[index_y][index_x + 1] == "x":
             change_board(player, boards, "east", "west")
-        elif board[index_y][index_x + 1] in ["$", "D", "1"]:
+        elif board[index_y][index_x + 1] in ["$", "D", "1", "?"]:
             get_item(player, "position_x", current_board, "+", boards)
+        elif board[index_y][index_x + 1] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_x"] += 1
                     
     elif key in ["s", "S"]:
         if index_y < (height - 1) and board[index_y + 1][index_x] in [" "]:
             player["position_y"] += 1
         elif board[index_y + 1][index_x] == "x": 
             change_board(player, boards, "south", "north")
-        elif board[index_y + 1][index_x] in ["$", "D", "1"]:
+        elif board[index_y + 1][index_x] in ["$", "D", "1", "?"]:
             get_item(player, "position_y", current_board, "+", boards)
+        elif board[index_y + 1][index_x] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_y"] += 1
 
     elif key in ["w", "W"]:
         if index_y > 1 and board[index_y - 1][index_x] in [" "]:
             player["position_y"] -= 1
         elif board[index_y - 1][index_x] == "x":
             change_board(player, boards, "north", "south")
-        elif board[index_y - 1][index_x] in ["$", "D", "1"]:
+        elif board[index_y - 1][index_x] in ["$", "D", "1", "?"]:
             get_item(player, "position_y", current_board, "-", boards)
+        elif board[index_y - 1][index_x] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_y"] -= 1
             
     return player
 
@@ -232,9 +256,13 @@ def plot_development(player, quests):
     '''
     if player["quest"] == 1:
         pass
+        #if a player just won 
+
     # jeśli loki koło nas to tracimy 20hp co ruch
     # jak ma sword to może bić lokiego
+    # jak zabijemy lokiego to dodają się do inventory kamienie
     # jak ma armor to może tracić hp wolniej
+    # jeśli 
 
 
 '''

@@ -66,11 +66,17 @@ boards = {
                 "index_y": 2,
                 "icon" : "$"
             },
-            "armor": {
-                "number": 30,
-                "index_x": 8,
-                "index_y": 3,
-                "icon":"D"   
+            "thor's hammer": {
+                "number": 1,
+                "index_x": 14,
+                "index_y": 10,
+                "icon":"?"   
+            },
+            "captain's america' shield": {
+                "number": 1,
+                "index_x": 1,
+                "index_y": 10,
+                "icon":"?"   
             }
         },
         "characters": {
@@ -116,7 +122,7 @@ boards = {
                 "number": 30,
                 "index_x": 8,
                 "index_y": 3,
-                "icon": "D"   
+                "icon": "?"   
             }
         },
     },
