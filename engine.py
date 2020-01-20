@@ -166,7 +166,7 @@ def get_item(player, axis, current_board, sign, boards):
         
     items_on_board = current_board["items"]
     for item in items_on_board:
-        if items_on_board[item]["index_x"]+1 == player["position_x"]: #makes sure only one item is taken by user, not all items from the board
+        if items_on_board[item]["index_x"]+1 == player["position_x"]: #it makes sure only one item is taken by user, not all items from the board
             update_inventory(player, item)
             remove_object_from_board(current_board, player, item, boards)
             break
@@ -177,7 +177,8 @@ def interact_with_character(boards, icon, player):
     if icon == "L":
         board_name = player["current_board"]
         del boards[board_name]["characters"]["Loki"]
-        # RICARDO: Here you can add a condition that if a player has "thor's hammer" and the "captain's america's shield"
+        # RICARDO: 
+        # Here you could add a condition that if a player has "thor's hammer" and the "captain's america's shield"
         # in the inventory, then he wins this fight (Loki is deleted from the board - as above). If not, the game is ended 
         # - the player looses and game quits
 
@@ -254,15 +255,35 @@ def plot_development(player, quests):
     '''
     description
     '''
-    if player["quest"] == 1:
+    if player["quest"] == 1: #it's only for the plot happening on Earth (board_1)
         pass
-        #if a player just won 
+        #RICARDO - here you can add some conditions:
 
-    # jeśli loki koło nas to tracimy 20hp co ruch
-    # jak ma sword to może bić lokiego
-    # jak zabijemy lokiego to dodają się do inventory kamienie
-    # jak ma armor to może tracić hp wolniej
-    # jeśli 
+        # 1. First, if you didn't collect 2 infinity stones from the first board, the gates (x) should be locked
+        # You can do that e.g. by adding "gates_unlocked":False to the board's dictionary and then change it to True 
+        # (in this function here) when the stones are collected. You'll also have to add some "if board[gates_unlocked] == True"
+        # condition to the change_board() function
+
+        # 2. Loki should be at least a little dangerous, so you might add a trick - if user stands close to Loki (their 
+        # coordinates are close e.g. player has [4][5] and Loki has [3][5], user's health might decrease -20)
+
+        # 3. if a player just won battle with Loki (Loki is no longer in board["characters"]) - two infinity stones 
+        # are added to board["items"] and, therefore, displayed on the board. Or, if you prefer, they might already be
+        # in the board's dictionary, but they can have some "invisible":true key which would prevent it from being displayed 
+        # (add_const_elements() would have to be slightly modified then)
+
+        # The details of the stones (like names) you can find in story.txt file
+
+        # If a person collects all 2 infinity stones, two things happen:
+        # a) in player's dictionary "quest" is changed to "2"
+        # b) the gates are visible, as described in 1.
+
+    elif player["quest"] == 2:
+        pass
+    elif player["quest"] == 3:
+        pass
+    # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower 
+    # than 0, then the person died and game ended
 
 
 '''

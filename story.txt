@@ -17,6 +17,11 @@ armor decreases damage taken by half. Boots let the player jump 2 fields in
 one round. After catching Loki both infinity stones will be revealed. After Collecting
 them the exit to Asgard will be opened
 
+***ZMIANY KAROLINY*** To simplify code I gave up moving Loki. He stands in one position and 
+if player's approaches him with all items (thors hammer, captain's america's shield) collected - he wins. 
+If not - he looses and game ends. If person stands close to Loki for a longer time, their health might decrease.
+We are free to develop that in the future.
+
 Asgard world scenario.
 The space and reality stones are hidden on the board. To get them player needs
 to move pass 2 labyrinths. After collecting both of stones the gates to Vormir.

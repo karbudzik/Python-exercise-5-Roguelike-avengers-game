@@ -80,4 +80,4 @@ def display_stats(player, console_width):
     string_to_display = (" | ").join(stats_to_display)
 
     print("")
-    print(colored(string_to_display.center(console_width),"red"))
+    print(colored(string_to_display.center(console_width),"green"))

@@ -142,12 +142,19 @@ boards = {
 }
 quests = {
     "1": {
-        "quest_description": ["You are an Avenger, fighting Thanos and his troops, preventing half of the universe's population from dying.", 
-                              "Your task is to find infinity stones located on 3 worlds in different time lines, starting from Earth.",
-                              "To find the stones placed here, you'll need to get information from most fraudulent of them all - Loki.",
+        "quest_description": ["You are an Avenger, fighting Thanos and his troops.",
+                              "Your task is to find infinity stones located on 3 worlds, starting from Earth.",
+                              "To find the stones placed here, you'll need to beat the sneakiest of them all - Loki.",
                               "Only then you'll be able to get to other worlds.",
-                              "But be careful, you might not come out of this alive..."]
-    }
+                              "But be careful, you need to prepare for this meeting..."]
+    },
+    "2": {
+        "quest_description": ["quest 2 description here"]
+    },    
+    "3": {
+        "quest_description": ["quest 3 descripton here"]
+    },   
+
 }
 
 def create_player():
