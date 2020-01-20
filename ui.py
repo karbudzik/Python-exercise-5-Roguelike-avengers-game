@@ -3,7 +3,7 @@ from pygame import mixer
 import pyfiglet
 from termcolor import colored, cprint
 
-def display_board(board_list, board_name, player):
+def display_board(board_list, board_name, player, quests):
     '''
     Displays complete game board on the screen
 
@@ -13,6 +13,8 @@ def display_board(board_list, board_name, player):
     console_width = os.get_terminal_size().columns
     
     display_title(board_list, board_name, console_width)
+
+    display_description(player, quests, console_width)
 
     for row in board_list:
         row = "".join(row)
@@ -37,6 +39,19 @@ def display_title(board_list, board_name, console_width):
     
 
 
+def display_description(player, quests, console_width):
+    '''
+    Displays quest's description over the printed board.
+
+    Returns:
+    Nothing
+    '''
+    description_list = quests[str(player["quest"])]["quest_description"]
+    for line in description_list:  
+        print(line.center(console_width))
+    print("")
+
+
 def display_stats(player, console_width):
     '''
     Displays player's statistics under the printed board.
@@ -44,7 +59,7 @@ def display_stats(player, console_width):
     Returns:
     Nothing
     '''
-    #dodać liczenie infinity stones
+    #dodać liczenie infinity stones w engine
     keys_to_display = ["name", "quest", "infinity_stones", "health"]
     stats_to_display = []
     for key in keys_to_display:

@@ -127,12 +127,19 @@ boards = {
         }
     }
 }
-
+quests = {
+    "1": {
+        "quest_description": ["You are an Avenger, fighting Thanos and his troops, preventing half of the universe's population from dying.", 
+                              "Your task is to find infinity stones located on 3 worlds in different time lines, starting from Earth.",
+                              "To find the stones placed here, you'll need to get information from most fraudulent of them all - Loki.",
+                              "Only then you'll be able to get to other worlds.",
+                              "But be careful, you might not come out of this alive..."]
+    }
+}
 
 def create_player():
     '''
     Creates a 'player' dictionary for storing all player related information - i.e. player icon, player position.
-    Fell free to extend this dictionary!
     
     Returns:
     dictionary
@@ -181,13 +188,13 @@ def main():
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])
-    # dodać opis początkowy gry
+    
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
         engine.put_player_on_board(board, player)   
-        ui.display_board(board, boards[player["current_board"]]["name"], player)
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
