@@ -212,6 +212,7 @@ def move_player(board, player, key, boards):
     index_x = player["position_x"] - 1
     index_y = player["position_y"] - 1
     current_board = boards[player["current_board"]]
+    
     # At the end this function will have to be refactored (too many repeatable lines)
 
     if key in ["a", "A"]:
@@ -233,7 +234,9 @@ def move_player(board, player, key, boards):
         elif board[index_y][index_x + 1] == "x":
             change_board(player, boards, "east", "west")
         elif board[index_y][index_x + 1] in ["$", "D", "1", "?"]:
-            get_item(player, "position_x", current_board, "+", boards)
+            get_item(player, "position_x", current_board, "+", boards,"items")
+        elif board[index_y][index_x + 1] in [":", "=", "U"]:
+            get_item(player, "position_x", current_board, "+", boards, "food")
         elif board[index_y][index_x + 1] == "L":
             interact_with_character(boards, "L", player)
             player["position_x"] += 1
@@ -244,7 +247,9 @@ def move_player(board, player, key, boards):
         elif board[index_y + 1][index_x] == "x": 
             change_board(player, boards, "south", "north")
         elif board[index_y + 1][index_x] in ["$", "D", "1", "?"]:
-            get_item(player, "position_y", current_board, "+", boards)
+            get_item(player, "position_y", current_board, "+", boards, "items")
+        elif board[index_y + 1][index_x] in [":", "=", "U"]:
+            get_item(player, "position_y", current_board, "+", boards, "food")
         elif board[index_y + 1][index_x] == "L":
             interact_with_character(boards, "L", player)
             player["position_y"] += 1
@@ -255,7 +260,9 @@ def move_player(board, player, key, boards):
         elif board[index_y - 1][index_x] == "x":
             change_board(player, boards, "north", "south")
         elif board[index_y - 1][index_x] in ["$", "D", "1", "?"]:
-            get_item(player, "position_y", current_board, "-", boards)
+            get_item(player, "position_y", current_board, "-", boards, "items")
+        elif board[index_y - 1][index_x] in [":", "=", "U"]:
+            get_item(player, "position_y", current_board, "-", boards, "food")
         elif board[index_y - 1][index_x] == "L":
             interact_with_character(boards, "L", player)
             player["position_y"] -= 1

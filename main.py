@@ -107,9 +107,7 @@ boards = {
                 "index_y": 7,
                 "icon": "U",
                 "number":1   
-            },
-
-            
+            },  
         },
     },
     "board_2": {
@@ -153,7 +151,7 @@ boards = {
     },
     "board_3": {
         "name": "VORMIR",
-        "width": 10,
+        "width": 20,
         "height": 30,
         "exits": {
             "west": {
@@ -162,7 +160,30 @@ boards = {
                 "leads_to": "board_1",
                 "icon" : "x"
             }
-        }
+        },
+        "food": {
+            "hamburger": {
+                "health": 20,
+                "index_x": 14,
+                "index_y": 5,
+                "icon": "=",
+                "number":1   
+            },
+            "hot-dog": {
+                "health": 20,
+                "index_x": 10,
+                "index_y": 10,
+                "icon": ":",
+                "number":1 
+            },
+            "beer": {
+                "health": 50,
+                "index_x": 13,
+                "index_y": 7,
+                "icon": "U",
+                "number":1   
+            },  
+        },
     }
 }
 quests = {
@@ -232,7 +253,7 @@ def main():
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
-    board = engine.create_board(boards[player["current_board"]])
+    # board = engine.create_board(boards[player["current_board"]])
     show_inventory=False
     
     util.clear_screen()
