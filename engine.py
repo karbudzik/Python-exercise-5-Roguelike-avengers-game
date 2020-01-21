@@ -144,15 +144,8 @@ def remove_object_from_board(board, player, to_remove, boards,what_we_update):
     Nothing. Only modifies "boards" dictionary.
     '''
     board_name = player["current_board"]
-<<<<<<< HEAD
     del boards[board_name]["items"][to_remove]
 
-=======
-    del boards[board_name][what_we_update][to_remove]
-    
-def update_player_health(player, key):
-    player["health"]+=key
->>>>>>> 935cb8ae2433a36843b76d7ed6c98b32984cca4d
 
 def get_item(player, axis, current_board, sign, boards,what_we_update):
     '''

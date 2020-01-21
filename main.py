@@ -265,32 +265,20 @@ def main():
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
-<<<<<<< HEAD
     board = engine.create_board(boards[player["current_board"]])
 
-=======
-    # board = engine.create_board(boards[player["current_board"]])
-    show_inventory = False
-    show_legend = True
-    
->>>>>>> 935cb8ae2433a36843b76d7ed6c98b32984cca4d
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
-<<<<<<< HEAD
         # engine.put_player_on_board(board, player)
         # ui.display_board(board, boards[player["current_board"]]["name"])
         # key = util.key_pressed()
         # engine.remove_player_from_board(board, player)
         # player = engine.move_player(board, player, key, boards)
 
-        engine.put_player_on_board(board, player)   
-        ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
-=======
         engine.put_player_on_board(board, player)
-        ui.display_board(board, boards[player["current_board"]]["name"], player, quests,show_inventory,show_legend,legend)
->>>>>>> 935cb8ae2433a36843b76d7ed6c98b32984cca4d
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
