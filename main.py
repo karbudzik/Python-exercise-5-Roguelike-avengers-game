@@ -177,12 +177,12 @@ def main():
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
-        engine.put_player_on_board(board, player)   
+        engine.put_player_on_board(board, player)
         ui.display_board(board, boards[player["current_board"]]["name"])
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
-    
+
         if key == 'q':
             is_running = False
         else:
