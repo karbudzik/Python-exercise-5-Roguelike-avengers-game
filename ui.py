@@ -11,7 +11,7 @@ def display_board(board_list, board_name, player, quests):
     Nothing
     '''
     console_width = os.get_terminal_size().columns
-    
+
     display_title(board_list, board_name, console_width)
 
     display_description(player, quests, console_width)

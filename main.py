@@ -188,6 +188,7 @@ def ask_for_details():
     user_name = input("Choose your name or press 'r' if you want to randomly pick a name from the Avengers team. > ")
     if user_name in ["r", "R"] or len(user_name) < 1:
         user_name = random.choice(possible_names)
+    # implement option for user to choose one of the possible names in the list @rr
     
     possible_icons = ["@", "&", "#", "%"]
     user_icon = input("Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly. > ")
@@ -202,32 +203,30 @@ def ask_for_details():
 
     return user_name, user_icon
 
+
 def main():
     pygame.init()
     mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])
-    
+
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
-<<<<<<< HEAD
-        engine.put_player_on_board(board, player)
-        ui.display_board(board, boards[player["current_board"]]["name"])
-        key = util.key_pressed()
-        engine.remove_player_from_board(board, player)
-        player = engine.move_player(board, player, key, boards)
+        # engine.put_player_on_board(board, player)
+        # ui.display_board(board, boards[player["current_board"]]["name"])
+        # key = util.key_pressed()
+        # engine.remove_player_from_board(board, player)
+        # player = engine.move_player(board, player, key, boards)
 
-=======
         engine.put_player_on_board(board, player)   
         ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
         engine.plot_development(player, quests)
->>>>>>> b1147c93a4d5112dfb9bb13f9fe4984bf849726c
         if key == 'q':
             is_running = False
         else:

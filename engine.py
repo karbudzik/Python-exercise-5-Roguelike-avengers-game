@@ -2,6 +2,7 @@ import copy
 import main
 import collections
 
+
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
     Creates default rows to build the board with.
@@ -66,8 +67,8 @@ def create_board(board):
 
     board_list.append(north_wall)
     for row in range(board["height"]-2):
-       middle_row_copy = copy.deepcopy(middle_row)
-       board_list.append(middle_row_copy)
+        middle_row_copy = copy.deepcopy(middle_row)
+        board_list.append(middle_row_copy)
     board_list.append(south_wall)
 
     board_list = add_const_elements(board, board_list, "exits")
@@ -116,12 +117,12 @@ def change_board(player, boards, direction_from, direction_to):
     player["current_board"] = next_board
     player["position_x"] = boards[next_board]["exits"][direction_to]["index_x"] + 1
     player["position_y"] = boards[next_board]["exits"][direction_to]["index_y"] + 1
-      
+
 
 def update_inventory(player, to_add):
     if "inventory" not in player:
         player["inventory"] = {}
-        
+
     if to_add in player["inventory"]:
         player["inventory"][to_add] += main.boards[player["current_board"]]["items"][to_add]["number"]
     else:
@@ -143,7 +144,7 @@ def remove_object_from_board(board, player, to_remove, boards):
     '''
     board_name = player["current_board"]
     del boards[board_name]["items"][to_remove]
-    
+
 
 def get_item(player, axis, current_board, sign, boards):
     '''
