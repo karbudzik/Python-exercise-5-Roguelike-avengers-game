@@ -3,6 +3,9 @@ import engine
 import ui
 import random
 import sys
+import pygame
+from pygame import mixer
+import pyfiglet
 
 boards = {
     "board_1": {
@@ -59,17 +62,30 @@ boards = {
             },
             "gold_2": {
                 "number": 2,
-                "index_x": 1,
+                "index_x": 4,
                 "index_y": 2,
                 "icon" : "$"
             },
-            "armor": {
-                "number": 30,
-                "index_x": 8,
-                "index_y": 3,
-                "icon":"D"   
+            "thor's hammer": {
+                "number": 1,
+                "index_x": 14,
+                "index_y": 10,
+                "icon":"?"   
+            },
+            "captain's america' shield": {
+                "number": 1,
+                "index_x": 1,
+                "index_y": 10,
+                "icon":"?"   
             }
         },
+        "characters": {
+            "Loki": {
+                "index_x": 13,
+                "index_y": 4,
+                "icon": "L"
+            }
+        }
     },
     "board_2": {
         "name": "ASGARD",
@@ -106,7 +122,7 @@ boards = {
                 "number": 30,
                 "index_x": 8,
                 "index_y": 3,
-                "icon": "D"   
+                "icon": "?"   
             }
         },
     },
@@ -124,12 +140,26 @@ boards = {
         }
     }
 }
+quests = {
+    "1": {
+        "quest_description": ["You are an Avenger, fighting Thanos and his troops.",
+                              "Your task is to find infinity stones located on 3 worlds, starting from Earth.",
+                              "To find the stones placed here, you'll need to beat the sneakiest of them all - Loki.",
+                              "Only then you'll be able to get to other worlds.",
+                              "But be careful, you need to prepare for this meeting..."]
+    },
+    "2": {
+        "quest_description": ["quest 2 description here"]
+    },    
+    "3": {
+        "quest_description": ["quest 3 descripton here"]
+    },   
 
+}
 
 def create_player():
     '''
     Creates a 'player' dictionary for storing all player related information - i.e. player icon, player position.
-    Fell free to extend this dictionary!
     
     Returns:
     dictionary
@@ -138,6 +168,8 @@ def create_player():
     user_name, user_icon = ask_for_details()
     player = {
         "name": user_name,
+        "quest": 1,
+        "health": 70,
         "position_x": 3,
         "position_y": 6,
         "current_board": "board_1",
@@ -171,18 +203,31 @@ def ask_for_details():
     return user_name, user_icon
 
 def main():
+    pygame.init()
+    mixer.music.load("The Avengers Theme Song.ogg")
+    # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])
+    
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
+<<<<<<< HEAD
         engine.put_player_on_board(board, player)
         ui.display_board(board, boards[player["current_board"]]["name"])
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
 
+=======
+        engine.put_player_on_board(board, player)   
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
+        key = util.key_pressed()
+        engine.remove_player_from_board(board, player)
+        player = engine.move_player(board, player, key, boards)
+        engine.plot_development(player, quests)
+>>>>>>> b1147c93a4d5112dfb9bb13f9fe4984bf849726c
         if key == 'q':
             is_running = False
         else:

@@ -4,7 +4,7 @@ import collections
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
-    Creates default rows for the board to build the board with.
+    Creates default rows to build the board with.
 
     Args:
     dictionary: The details of a board in a form of dictionary, with "width" and "height" among them.
@@ -21,52 +21,25 @@ def create_rows(board, horizontal_brick, vertical_brick, floor_char):
 
     return horizontal_wall, middle_row
 
+
 def add_const_elements(board, board_list, to_add=""):
     """
-    Add exits signs to the board_list.
+    Add exits signs, nature elements and items to the board_list.
 
     Args:
-    dictionary: The details of a board in a form of dictionary, with "exits" among them.
+    dictionary: The details of a board in a form of dictionary, with "exits", "nature" and "items" among them.
     list: The list of lists in which the characters will be changed
-    string: The character which will be a symbol of exit
+    string: The type of added element
 
     Returns:
     list: Game board
     """
-
-    # print(board["exits"])
-    # print(board["exits"]["north"]["index_x"])
     if to_add in board:
         for element in board[to_add]:
             x = board[to_add][element]["index_x"]
             y = board[to_add][element]["index_y"]
             board_list[y][x] = board[to_add][element]["icon"]
     return board_list
-
-# Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
-# wersje na górze jest bardziej ogolna i działa np dla wszystkich obiektów elementów w słowniku nature, aaa no dla twoich exitow tez , chce przetestować inne obiekty w na planszy , i moj movement na nich.
-# def add_exits(board, board_list, exit_char):
-#     """
-#     Add exits signs to the board_list.
-
-#     Args:
-#     dictionary: The details of a board in a form of dictionary, with "exits" among them.
-#     list: The list of lists in which the characters will be changed
-#     string: The character which will be a symbol of exit
-
-#     Returns:
-#     list: Game board
-#     """
-
-#     # print(board["exits"])
-#     # print(board["exits"]["north"]["index_x"])
-    
-#     for element in board["exits"]:
-#         x = board["exits"][element]["index_x"]
-#         y = board["exits"][element]["index_y"]
-#         board_list[y][x] = exit_char
-
-#     return board_list
 
 
 def create_board(board):
@@ -100,10 +73,7 @@ def create_board(board):
     board_list = add_const_elements(board, board_list, "exits")
     board_list = add_const_elements(board, board_list, "nature")
     board_list = add_const_elements(board, board_list, "items")
-
-    # Karolina nie chce ci wywalać twojej funkcji, więc ja zakomentuje chwilowo a zrobie swoją
-    # wersje na górze, chce przetestować inne obiekty w na planszy, i moj movement na nich.
-    # board_list = add_exits(board, board_list, exit_char)
+    board_list = add_const_elements(board, board_list, "characters")
 
     return board_list
 
@@ -124,19 +94,6 @@ def put_player_on_board(board, player):
     board[y][x] = player["player_icon"]
 
 
-# def is_exit(board, player):
-#     if board[player["x"]][player["y"]] != "|" or board[player["x"]][player["y"]] != "-":
-#         return True
-#     return False
-
-
-# def check_wall(player):
-#     if player == 1:
-#         return True
-#     else:
-#         return False
-
-
 def remove_player_from_board(board, player):
     '''
     Modifies the player position  by removing the player icon at its coordinates.
@@ -153,22 +110,13 @@ def remove_player_from_board(board, player):
     board[y][x] = " "
 
 
-# def check_next_object(player, board):
-#     if board[player["position_y"]][player["position_x"]] != " ":
-#         return board[player["position_y"]][player["position_x"]]
-
-
 def change_board(player, boards, direction_from, direction_to):
 
     next_board = boards[player["current_board"]]["exits"][direction_from]["leads_to"]
     player["current_board"] = next_board
     player["position_x"] = boards[next_board]["exits"][direction_to]["index_x"] + 1
     player["position_y"] = boards[next_board]["exits"][direction_to]["index_y"] + 1
-    
-
-# def get_item(player,boards):
-#     # if player["position_x"]["position_y"] == boards[player["current_board"]]["items"]["gold"]["positon_x"]["position_y"]:
-#     pass
+      
 
 def update_inventory(player, to_add):
     if "inventory" not in player:
@@ -178,27 +126,61 @@ def update_inventory(player, to_add):
         player["inventory"][to_add] += main.boards[player["current_board"]]["items"][to_add]["number"]
     else:
         player["inventory"][to_add] = main.boards[player["current_board"]]["items"][to_add]["number"]
-    
-    print(player)
 
-def remove_object_from_board(board, player,to_remove):
+
+def remove_object_from_board(board, player, to_remove, boards):
+    '''
+    Removes the item from the "boards" dictionary.
+
+    Args:
+    list: The game board
+    dictionary: The player information
+    dictionary: Information about the item
+    dictionary: Boards available in the game
+
+    Returns:
+    Nothing. Only modifies "boards" dictionary.
+    '''
+    board_name = player["current_board"]
+    del boards[board_name]["items"][to_remove]
     
-    y = player["position_y"]-1
-    x = player["position_x"]-1
-    board["items"][to_remove]["icon"] = " "
-    
-def item_detected(player, axis, current_board, sing):
-    if sing == "-":
+
+def get_item(player, axis, current_board, sign, boards):
+    '''
+    Walks into items, adds them to the inventory and removes from the board
+
+    Args:
+    dictionary: player's dictionary with all the information about player
+    string: "position_x" or "position_x" - tells us in which direction player's moving
+    dictionary: the details of the board on which the player currently is
+    string: "-" or "+" sign tells us whether the movement index is increasing or decreasing
+
+    Returns:
+    Nothing. The current board and player's inventory are modified.
+
+    '''
+    if sign == "-":
         player[axis] -= 1
     else:
         player[axis] += 1
         
-    items_in_board=current_board["items"]
-    for item in items_in_board:
-        if items_in_board[item]["index_x"]+1 == player["position_x"]:
+    items_on_board = current_board["items"]
+    for item in items_on_board:
+        if items_on_board[item]["index_x"]+1 == player["position_x"]: #it makes sure only one item is taken by user, not all items from the board
             update_inventory(player, item)
-            remove_object_from_board(current_board, player, item)
+            remove_object_from_board(current_board, player, item, boards)
+            break
 
+
+def interact_with_character(boards, icon, player):
+    
+    if icon == "L":
+        board_name = player["current_board"]
+        del boards[board_name]["characters"]["Loki"]
+        # RICARDO: 
+        # Here you could add a condition that if a player has "thor's hammer" and the "captain's america's shield"
+        # in the inventory, then he wins this fight (Loki is deleted from the board - as above). If not, the game is ended 
+        # - the player looses and game quits
 
 
 
@@ -219,42 +201,91 @@ def move_player(board, player, key, boards):
     width = len(board[0]) - 1
     index_x = player["position_x"] - 1
     index_y = player["position_y"] - 1
-    current_board= boards[player["current_board"]]
+    current_board = boards[player["current_board"]]
+    # At the end this function will have to be refactored (too many repeatable lines)
 
     if key in ["a", "A"]:
-        if index_x > 1 and board[index_y][index_x - 1] in [" "]: # dzięki index_x > 1 nie musimy już sprawdzać czy next object == "|"
+        if index_x > 1 and board[index_y][index_x - 1] in [" "]:
             player["position_x"] -= 1
-        elif board[index_y][index_x - 1] == "x":    
-            print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
+        elif board[index_y][index_x - 1] == "x":     
             change_board(player, boards, "west", "east")
-        elif board[index_y][index_x - 1] in ["$", "D", "1"]:
-            item_detected(player, "position_x", current_board, "-")
+        elif board[index_y][index_x - 1] in ["$", "D", "1", "?"]:
+            get_item(player, "position_x", current_board, "-", boards)
+        elif board[index_y][index_x - 1] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_x"] -= 1
                 
     elif key in ["d", "D"]:
         if index_x < (width - 1) and board[index_y][index_x + 1] in [" "]:
             player["position_x"] += 1
         elif board[index_y][index_x + 1] == "x":
             change_board(player, boards, "east", "west")
-        elif board[index_y][index_x + 1] in ["$", "D", "1"]:
-            item_detected(player,"position_x", current_board, "+")
+        elif board[index_y][index_x + 1] in ["$", "D", "1", "?"]:
+            get_item(player, "position_x", current_board, "+", boards)
+        elif board[index_y][index_x + 1] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_x"] += 1
                     
     elif key in ["s", "S"]:
         if index_y < (height - 1) and board[index_y + 1][index_x] in [" "]:
             player["position_y"] += 1
-        elif board[index_y + 1][index_x] == "x":
-            print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
+        elif board[index_y + 1][index_x] == "x": 
             change_board(player, boards, "south", "north")
-        elif board[index_y + 1][index_x] in ["$", "D", "1"]:
-            item_detected(player, "position_y", current_board, "+")
+        elif board[index_y + 1][index_x] in ["$", "D", "1", "?"]:
+            get_item(player, "position_y", current_board, "+", boards)
+        elif board[index_y + 1][index_x] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_y"] += 1
 
     elif key in ["w", "W"]:
         if index_y > 1 and board[index_y - 1][index_x] in [" "]:
             player["position_y"] -= 1
         elif board[index_y - 1][index_x] == "x":
-            print("exit")  #jeszcze nie wiem co z tym zrobić ale wymyślimy
             change_board(player, boards, "north", "south")
-        elif board[index_y - 1][index_x] in ["$", "D", "1"]:
-            item_detected(player, "position_y", current_board, "-")
+        elif board[index_y - 1][index_x] in ["$", "D", "1", "?"]:
+            get_item(player, "position_y", current_board, "-", boards)
+        elif board[index_y - 1][index_x] == "L":
+            interact_with_character(boards, "L", player)
+            player["position_y"] -= 1
             
-
     return player
+
+
+def plot_development(player, quests):
+    '''
+    description
+    '''
+    if player["quest"] == 1: #it's only for the plot happening on Earth (board_1)
+        pass
+        #RICARDO - here you can add some conditions:
+
+        # 1. First, if you didn't collect 2 infinity stones from the first board, the gates (x) should be locked
+        # You can do that e.g. by adding "gates_unlocked":False to the board's dictionary and then change it to True 
+        # (in this function here) when the stones are collected. You'll also have to add some "if board[gates_unlocked] == True"
+        # condition to the change_board() function
+
+        # 2. Loki should be at least a little dangerous, so you might add a trick - if user stands close to Loki (their 
+        # coordinates are close e.g. player has [4][5] and Loki has [3][5], user's health might decrease -20)
+
+        # 3. if a player just won battle with Loki (Loki is no longer in board["characters"]) - two infinity stones 
+        # are added to board["items"] and, therefore, displayed on the board. Or, if you prefer, they might already be
+        # in the board's dictionary, but they can have some "invisible":true key which would prevent it from being displayed 
+        # (add_const_elements() would have to be slightly modified then)
+
+        # The details of the stones (like names) you can find in story.txt file
+
+        # If a person collects all 2 infinity stones, two things happen:
+        # a) in player's dictionary "quest" is changed to "2"
+        # b) the gates are visible, as described in 1.
+
+    elif player["quest"] == 2:
+        pass
+    elif player["quest"] == 3:
+        pass
+    # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower 
+    # than 0, then the person died and game ended
+
+
+'''
+        #spr hp czy żyje
+'''
