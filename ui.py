@@ -3,7 +3,7 @@ from pygame import mixer
 import pyfiglet
 from termcolor import colored, cprint
 
-def display_board(board_list, board_name, player, quests, show_inventory):
+def display_board(board_list, board_name, player, quests, show_inventory, show_legend,legend):
     '''
     Displays complete game board on the screen
 
@@ -21,8 +21,11 @@ def display_board(board_list, board_name, player, quests, show_inventory):
         print(row.center(console_width))
 
     display_stats(player, console_width)
+    
     if show_inventory:
-        display_equipment(player["inventory"],console_width)
+        display_equipment(player["inventory"], console_width)
+    if show_legend:
+        display_legend(legend,console_width)
    
 
 
@@ -92,3 +95,10 @@ def display_equipment(player, console_width):
         item = '{} | {}'.format(k,v)
         print(item.center(console_width))
         
+    print()
+def display_legend(legend, console_width):
+    print()
+    print(colored("Icons: ".center(console_width), "yellow"))
+    for k, v in legend.items():
+        item = '{:2} : {:15}'.format(k,v)
+        print(item.center(console_width))

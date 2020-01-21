@@ -5,8 +5,18 @@ import random
 import sys
 # import pygame
 # from pygame import mixer
-import pyfiglet
+# import pyfiglet
+legend = {
+    "x": "exit",
+    "T": "tree",
+    "$": "gold",
+    "U": "beer",
+    "=": "hamburger",
+    ":": "hot-dog",
+    "B": "boots",
+    "?":"specials"
 
+}
 boards = {
     "board_1": {
         "name": "EARTH",
@@ -60,12 +70,6 @@ boards = {
                 "index_y": 8,
                 "icon" : "$"
             },
-            "gold_2": {
-                "number": 2,
-                "index_x": 4,
-                "index_y": 2,
-                "icon" : "$"
-            },
             "thor's hammer": {
                 "number": 1,
                 "index_x": 14,
@@ -77,7 +81,13 @@ boards = {
                 "index_x": 1,
                 "index_y": 10,
                 "icon":"?"   
-            }
+            },
+            "boots": {
+                "number": 1,
+                "index_x": 6,
+                "index_y": 8,
+                "icon" : "B"
+            },
         },
         "characters": {
             "Loki": {
@@ -254,14 +264,15 @@ def main():
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
     # board = engine.create_board(boards[player["current_board"]])
-    show_inventory=False
+    show_inventory = False
+    show_legend = True
     
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
         engine.put_player_on_board(board, player)
-        ui.display_board(board, boards[player["current_board"]]["name"], player, quests,show_inventory)
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests,show_inventory,show_legend,legend)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
@@ -273,6 +284,11 @@ def main():
                 show_inventory = True
             else:
                 show_inventory = False
+        elif key in ["l", "L"]:
+            if show_legend == False:
+                show_legend = True
+            else:
+                show_legend=False
         else:
             pass
         util.clear_screen()
