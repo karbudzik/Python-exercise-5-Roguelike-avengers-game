@@ -183,7 +183,6 @@ def interact_with_character(boards, icon, player):
         # - the player looses and game quits
 
 
-
 def move_player(board, player, key, boards):
     '''
     Modifies the player's coordinates according to the pressed key.

@@ -208,19 +208,25 @@ def main():
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])
+    show_inventory=False
     
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
-        engine.put_player_on_board(board, player)   
-        ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
+        engine.put_player_on_board(board, player)
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests,show_inventory)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
         engine.plot_development(player, quests)
         if key == 'q':
             is_running = False
+        elif key == "i" and "inventory" in player:
+            if show_inventory == False:
+                show_inventory = True
+            else:
+                show_inventory = False
         else:
             pass
         util.clear_screen()
