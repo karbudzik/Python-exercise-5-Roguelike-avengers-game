@@ -3,10 +3,20 @@ import engine
 import ui
 import random
 import sys
-import pygame
-from pygame import mixer
-import pyfiglet
+# import pygame
+# from pygame import mixer
+# import pyfiglet
+legend = {
+    "x": "exit",
+    "T": "tree",
+    "$": "gold",
+    "U": "beer",
+    "=": "hamburger",
+    ":": "hot-dog",
+    "B": "boots",
+    "?":"specials"
 
+}
 boards = {
     "board_1": {
         "name": "EARTH",
@@ -60,12 +70,6 @@ boards = {
                 "index_y": 8,
                 "icon" : "$"
             },
-            "gold_2": {
-                "number": 2,
-                "index_x": 4,
-                "index_y": 2,
-                "icon" : "$"
-            },
             "thor's hammer": {
                 "number": 1,
                 "index_x": 14,
@@ -77,15 +81,44 @@ boards = {
                 "index_x": 1,
                 "index_y": 10,
                 "icon":"?"   
-            }
+            },
+            "boots": {
+                "number": 1,
+                "index_x": 6,
+                "index_y": 8,
+                "icon" : "B"
+            },
         },
         "characters": {
             "Loki": {
                 "index_x": 13,
                 "index_y": 4,
                 "icon": "L"
-            }
-        }
+            },
+        },
+        "food": {
+            "hamburger": {
+                "health": 20,
+                "index_x": 14,
+                "index_y": 5,
+                "icon": "=",
+                "number":1   
+            },
+            "hot-dog": {
+                "health": 20,
+                "index_x": 10,
+                "index_y": 10,
+                "icon": ":",
+                "number":1 
+            },
+            "beer": {
+                "health": 50,
+                "index_x": 13,
+                "index_y": 7,
+                "icon": "U",
+                "number":1   
+            },  
+        },
     },
     "board_2": {
         "name": "ASGARD",
@@ -128,7 +161,7 @@ boards = {
     },
     "board_3": {
         "name": "VORMIR",
-        "width": 10,
+        "width": 20,
         "height": 30,
         "exits": {
             "west": {
@@ -137,7 +170,30 @@ boards = {
                 "leads_to": "board_1",
                 "icon" : "x"
             }
-        }
+        },
+        "food": {
+            "hamburger": {
+                "health": 20,
+                "index_x": 14,
+                "index_y": 5,
+                "icon": "=",
+                "number":1   
+            },
+            "hot-dog": {
+                "health": 20,
+                "index_x": 10,
+                "index_y": 10,
+                "icon": ":",
+                "number":1 
+            },
+            "beer": {
+                "health": 50,
+                "index_x": 13,
+                "index_y": 7,
+                "icon": "U",
+                "number":1   
+            },  
+        },
     }
 }
 quests = {
@@ -205,16 +261,24 @@ def ask_for_details():
 
 
 def main():
-    pygame.init()
-    mixer.music.load("The Avengers Theme Song.ogg")
+    # pygame.init()
+    # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
+<<<<<<< HEAD
     board = engine.create_board(boards[player["current_board"]])
 
+=======
+    # board = engine.create_board(boards[player["current_board"]])
+    show_inventory = False
+    show_legend = True
+    
+>>>>>>> 935cb8ae2433a36843b76d7ed6c98b32984cca4d
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
+<<<<<<< HEAD
         # engine.put_player_on_board(board, player)
         # ui.display_board(board, boards[player["current_board"]]["name"])
         # key = util.key_pressed()
@@ -223,12 +287,26 @@ def main():
 
         engine.put_player_on_board(board, player)   
         ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
+=======
+        engine.put_player_on_board(board, player)
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests,show_inventory,show_legend,legend)
+>>>>>>> 935cb8ae2433a36843b76d7ed6c98b32984cca4d
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
         engine.plot_development(player, quests)
         if key == 'q':
             is_running = False
+        elif key == "i" and "inventory" in player:
+            if show_inventory == False:
+                show_inventory = True
+            else:
+                show_inventory = False
+        elif key in ["l", "L"]:
+            if show_legend == False:
+                show_legend = True
+            else:
+                show_legend=False
         else:
             pass
         util.clear_screen()
