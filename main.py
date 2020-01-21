@@ -3,8 +3,8 @@ import engine
 import ui
 import random
 import sys
-import pygame
-from pygame import mixer
+# import pygame
+# from pygame import mixer
 import pyfiglet
 
 boards = {
@@ -84,8 +84,33 @@ boards = {
                 "index_x": 13,
                 "index_y": 4,
                 "icon": "L"
-            }
-        }
+            },
+        },
+        "food": {
+            "hamburger": {
+                "health": 20,
+                "index_x": 14,
+                "index_y": 5,
+                "icon": "=",
+                "number":1   
+            },
+            "hot-dog": {
+                "health": 20,
+                "index_x": 10,
+                "index_y": 10,
+                "icon": ":",
+                "number":1 
+            },
+            "beer": {
+                "health": 50,
+                "index_x": 13,
+                "index_y": 7,
+                "icon": "U",
+                "number":1   
+            },
+
+            
+        },
     },
     "board_2": {
         "name": "ASGARD",
@@ -203,8 +228,8 @@ def ask_for_details():
     return user_name, user_icon
 
 def main():
-    pygame.init()
-    mixer.music.load("The Avengers Theme Song.ogg")
+    # pygame.init()
+    # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
     board = engine.create_board(boards[player["current_board"]])

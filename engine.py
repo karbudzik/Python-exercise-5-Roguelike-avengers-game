@@ -74,6 +74,7 @@ def create_board(board):
     board_list = add_const_elements(board, board_list, "nature")
     board_list = add_const_elements(board, board_list, "items")
     board_list = add_const_elements(board, board_list, "characters")
+    board_list = add_const_elements(board, board_list, "food")
 
     return board_list
 
@@ -118,17 +119,17 @@ def change_board(player, boards, direction_from, direction_to):
     player["position_y"] = boards[next_board]["exits"][direction_to]["index_y"] + 1
       
 
-def update_inventory(player, to_add):
+def update_inventory(player, to_add,what_we_update):
     if "inventory" not in player:
         player["inventory"] = {}
         
     if to_add in player["inventory"]:
-        player["inventory"][to_add] += main.boards[player["current_board"]]["items"][to_add]["number"]
+        player["inventory"][to_add] += main.boards[player["current_board"]][what_we_update][to_add]["number"]
     else:
-        player["inventory"][to_add] = main.boards[player["current_board"]]["items"][to_add]["number"]
+        player["inventory"][to_add] = main.boards[player["current_board"]][what_we_update][to_add]["number"]
 
 
-def remove_object_from_board(board, player, to_remove, boards):
+def remove_object_from_board(board, player, to_remove, boards,what_we_update):
     '''
     Removes the item from the "boards" dictionary.
 
@@ -142,10 +143,12 @@ def remove_object_from_board(board, player, to_remove, boards):
     Nothing. Only modifies "boards" dictionary.
     '''
     board_name = player["current_board"]
-    del boards[board_name]["items"][to_remove]
+    del boards[board_name][what_we_update][to_remove]
     
+def update_player_health(player, key):
+    player["health"]+=key
 
-def get_item(player, axis, current_board, sign, boards):
+def get_item(player, axis, current_board, sign, boards,what_we_update):
     '''
     Walks into items, adds them to the inventory and removes from the board
 
@@ -164,12 +167,20 @@ def get_item(player, axis, current_board, sign, boards):
     else:
         player[axis] += 1
         
-    items_on_board = current_board["items"]
-    for item in items_on_board:
-        if items_on_board[item]["index_x"]+1 == player["position_x"]: #it makes sure only one item is taken by user, not all items from the board
-            update_inventory(player, item)
-            remove_object_from_board(current_board, player, item, boards)
-            break
+    items_on_board = current_board[what_we_update]
+    if what_we_update=="items":
+        for item in items_on_board:
+            if items_on_board[item]["index_x"]+1 == player["position_x"]: #it makes sure only one item is taken by user, not all items from the board
+                update_inventory(player, item,what_we_update)
+                remove_object_from_board(current_board, player, item, boards,what_we_update)
+                break
+    elif what_we_update == "food":
+        for item in items_on_board:
+            if items_on_board[item]["index_x"] + 1 == player["position_x"]:
+                update_player_health(player, items_on_board[item]["health"])
+                remove_object_from_board(current_board, player, item, boards, what_we_update)
+                break
+        
 
 
 def interact_with_character(boards, icon, player):
@@ -209,7 +220,9 @@ def move_player(board, player, key, boards):
         elif board[index_y][index_x - 1] == "x":     
             change_board(player, boards, "west", "east")
         elif board[index_y][index_x - 1] in ["$", "D", "1", "?"]:
-            get_item(player, "position_x", current_board, "-", boards)
+            get_item(player, "position_x", current_board, "-", boards, "items")
+        elif board[index_y][index_x - 1] in [":", "=", "U"]:
+            get_item(player, "position_x", current_board, "-", boards, "food")
         elif board[index_y][index_x - 1] == "L":
             interact_with_character(boards, "L", player)
             player["position_x"] -= 1
