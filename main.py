@@ -290,8 +290,8 @@ def main():
         ui.display_board(board, boards[player["current_board"]]["name"], player, quests, show_inventory, show_legend, legend)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
-        player = engine.move_player(board, player, key, boards)
-        engine.plot_development(player, quests)
+        if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
+            player = engine.move_player(board, player, key, boards)
         if key in ["q", "Q"]:
             is_running = False
         elif key in ["i", "I"] and "inventory" in player:
@@ -300,6 +300,8 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
+
+        engine.plot_development(player, quests)
         util.clear_screen()
 
 

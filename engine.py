@@ -242,7 +242,7 @@ def plot_development(player, quests):
     description
     '''
     if player["quest"] == 1: #it's only for the plot happening on Earth (board_1)
-        pass
+        # pass
         #RICARDO - here you can add some conditions:
 
         # 1. First, if you didn't collect 2 infinity stones from the first board, the gates (x) should be locked
@@ -263,7 +263,7 @@ def plot_development(player, quests):
         # If a person collects all 2 infinity stones, two things happen:
         # a) in player's dictionary "quest" is changed to "2"
         # b) the gates are visible, as described in 1.
-
+        print("1")
     elif player["quest"] == 2:
         pass
     elif player["quest"] == 3:
