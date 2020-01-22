@@ -2,6 +2,7 @@ import os
 from pygame import mixer
 import pyfiglet
 from termcolor import colored, cprint
+from time import sleep
 
 def display_board(board_list, board_name, player, quests, show_inventory, show_legend,legend):
     '''
@@ -102,3 +103,21 @@ def display_legend(legend, console_width):
     for k, v in legend.items():
         item = '{:2} : {:15}'.format(k,v)
         print(item.center(console_width))
+
+def display_logo(art):
+    # console_width = os.get_terminal_size().rows
+    print("\n\n")
+    for line in art:
+        print("\t\t\t\t\t\t\t{}".format(line), end="")
+        sleep(0.2)
+    print("\n\n")
+
+def type_writter_effect(list_of_words):
+    print("\n\n")
+    for word in list_of_words:
+        print("\t\t\t", end="")
+        for letter in word:
+            print(letter, end="", flush=True)
+            sleep(0.05)
+        print()
+    
