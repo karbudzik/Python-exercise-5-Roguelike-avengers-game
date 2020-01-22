@@ -7,6 +7,7 @@ import data_menager
 # import pygame
 # from pygame import mixer
 # import pyfiglet
+
 legend = {
     "x": "exit",
     "T": "tree",
@@ -15,9 +16,10 @@ legend = {
     "=": "hamburger",
     ":": "hot-dog",
     "B": "boots",
-    "?":"specials"
-
+    "?": "specials",
+    "*": "infinity stones"
 }
+
 boards = {
     "board_1": {
         "name": "EARTH",
@@ -65,7 +67,7 @@ boards = {
             },
         },
         "items": {
-            "gold_1": {
+            "gold": {
                 "number": 2,
                 "index_x": 4,
                 "index_y": 8,
@@ -205,7 +207,6 @@ quests = {
     "3": {
         "quest_description": ["quest 3 descripton here"]
     },   
-
 }
 
 def create_player():
@@ -227,6 +228,7 @@ def create_player():
         "player_icon": user_icon
     }
     return player
+
 
 def ask_for_details():
     """
@@ -267,6 +269,13 @@ def ask_for_details():
 
     return user_name, user_icon
 
+def make_opposite_boolean(boolean):
+    if boolean == True:
+        boolean = False
+    else:
+        boolean = True
+    return boolean
+
 def main():
     util.clear_screen()
     asci_logo = data_menager.read_file("avengers.txt")
@@ -286,23 +295,17 @@ def main():
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
         engine.put_player_on_board(board, player)
-        ui.display_board(board, boards[player["current_board"]]["name"], player, quests,show_inventory,show_legend,legend)
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests, show_inventory, show_legend, legend)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         player = engine.move_player(board, player, key, boards)
         engine.plot_development(player, quests)
-        if key == 'q':
+        if key in ["q", "Q"]:
             is_running = False
-        elif key == "i" and "inventory" in player:
-            if show_inventory == False:
-                show_inventory = True
-            else:
-                show_inventory = False
+        elif key in ["i", "I"] and "inventory" in player:
+            show_inventory = make_opposite_boolean(show_inventory)
         elif key in ["l", "L"]:
-            if show_legend == False:
-                show_legend = True
-            else:
-                show_legend=False
+            show_legend = make_opposite_boolean(show_legend)
         else:
             pass
         util.clear_screen()
