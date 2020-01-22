@@ -237,37 +237,29 @@ def ask_for_details():
     Returns:
     User's details
     """
+    names = "Avalible heroes: You or Spider-Man/Iron-Man"
+    questions = ["Type your name or chosse between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' if you want to randomly pick", "Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly."]
+    ui.type_writter_effect([names, questions[0]])
+    print("\t\t\t",end="")
+    user_name = input("> ")
+    
+    if user_name in ["s", "S"]:
+        user_name = "Spider-Man"
+    elif user_name in ["i", "I"]:
+        user_name = "Iron-Man"
+    elif user_name in ["r", "R"] or len(user_name) < 1:
+        user_name = random.choice(["Spider-Man", "Iron-Man"])
 
-    # Wersja Mati, dział po odkomentowaniu, i zakomentowaniu inputów z wersji Karoliny
-    # names = "Avalible heros :You or Spider-Man / Iron-Man"
-    # questions = ["Type your name or chosse between Spider-Man[ type S ] and Iron-Man [ type I], or press 'r' if you want to randomly pick", "Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly."]
-    # ui.type_writter_effect([names, questions[0]])
-    # print("\t\t\t",end="")
-    # user_name = input("> ")
-    # ui.type_writter_effect([questions[1]])
-    # print("\t\t\t",end="")
-    # user_icon = input("> ")
-    
-    # Wersja Karoliny
+    ui.type_writter_effect([questions[1]])
+    print("\t\t\t",end="")
+    user_icon = input("> ")
 
-    possible_names = ["Captain America", "Iron Man", "Hulk", "Thor", "Black Widow", "War Machine", "Captain Marvel", "Spider-Man", "Black Panther", "Star Lord"]
-    
-    user_name = input("Choose your name or press 'r' if you want to randomly pick a name from the Avengers team. > ")
-    if user_name in ["r", "R"] or len(user_name) < 1:
-        user_name = random.choice(possible_names)
-    
     possible_icons = ["@", "&", "#", "%"]
-    user_icon = input("Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly. > ")
-    if user_icon in ["r", "R"] or len(user_icon) < 1:
+    if user_icon not in possible_icons:
         user_icon = random.choice(possible_icons)
-    while user_icon not in possible_icons:
-        user_icon = input("You can't pick this character. You can choose between '@', '&', '#' and '%' or press 'r' to pick randomly. > ")
-        if user_icon in ["r", "R"] or len(user_icon) < 1:
-            user_icon = random.choice(possible_icons)
-        elif user_icon in ["q", "Q", "quit", "Quit", "QUIT"]:
-            sys.exit()
 
     return user_name, user_icon
+
 
 def make_opposite_boolean(boolean):
     if boolean == True:
@@ -298,8 +290,8 @@ def main():
         ui.display_board(board, boards[player["current_board"]]["name"], player, quests, show_inventory, show_legend, legend)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
-        player = engine.move_player(board, player, key, boards)
-        engine.plot_development(player, quests)
+        if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
+            player = engine.move_player(board, player, key, boards)
         if key in ["q", "Q"]:
             is_running = False
         elif key in ["i", "I"] and "inventory" in player:
@@ -308,6 +300,8 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
+
+        engine.plot_development(player, quests)
         util.clear_screen()
 
 
