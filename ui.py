@@ -1,7 +1,7 @@
 import os
-from pygame import mixer
-import pyfiglet
-from termcolor import colored, cprint
+# from pygame import mixer
+# import pyfiglet
+# from termcolor import colored, cprint
 
 def display_board(board_list, board_name, player, quests, show_inventory, show_legend,legend):
     '''
@@ -13,7 +13,6 @@ def display_board(board_list, board_name, player, quests, show_inventory, show_l
     console_width = os.get_terminal_size().columns
     
     display_title(board_list, board_name, console_width)
-
     display_description(player, quests, console_width)
 
     for row in board_list:
@@ -23,10 +22,9 @@ def display_board(board_list, board_name, player, quests, show_inventory, show_l
     display_stats(player, console_width)
     
     if show_inventory:
-        display_equipment(player["inventory"], console_width)
+        display_equipment(player, console_width)
     if show_legend:
-        display_legend(legend,console_width)
-   
+        display_legend(legend, console_width)
 
 
 def display_title(board_list, board_name, console_width):
@@ -36,13 +34,13 @@ def display_title(board_list, board_name, console_width):
     Returns:
     Nothing
     '''
-
-    caption = pyfiglet.figlet_format("*** " + board_name + " ***", font="digital")
+    # caption = pyfiglet.figlet_format("*** " + board_name + " ***", font="digital") - odkomentować na prezentację
+    caption = "*** " + board_name + " ***"
     captions = caption.split("\n")
     print("")
     for caption in captions:
-        print(colored(caption.center(console_width),"blue"))
-    
+        # print(colored(caption.center(console_width),"blue")) - odkomentować na prezentację
+        print(caption.center(console_width))
 
 
 def display_description(player, quests, console_width):
@@ -65,7 +63,6 @@ def display_stats(player, console_width):
     Returns:
     Nothing
     '''
-    #dodać liczenie infinity stones w engine
     keys_to_display = ["name", "quest", "infinity_stones", "health"]
     stats_to_display = []
     for key in keys_to_display:
@@ -86,19 +83,56 @@ def display_stats(player, console_width):
     string_to_display = (" | ").join(stats_to_display)
 
     print("")
-    print(colored(string_to_display.center(console_width), "green"))
+    # print(colored(string_to_display.center(console_width), "green")) - odkomentwać na prezentację
+    print(string_to_display.center(console_width))
     
+
 def display_equipment(player, console_width):
-    print()
-    print(colored("inventory : ".center(console_width), "red"))
-    for k, v in player.items():
-        item = '{} | {}'.format(k,v)
-        print(item.center(console_width))
-        
-    print()
+ 
+    equipment = player["inventory"]
+    headers = ["name:", "count:"]
+    title = "YOUR INVENTORY"
+    print_table(title, equipment, headers, console_width)
+
+
 def display_legend(legend, console_width):
+
+    headers = ["symbol:", "description:"]
+    title = "LEGEND (Press 'L' to hide)"
+    print_table(title, legend, headers, console_width)
+
+
+def set_table_width(dictionary, headers):
+    """ Defines a width of columns so the table fits to the longest elements.""" 
+    first_width = len(headers[0])
+    for key in dictionary:
+        if len(key) > first_width:
+            first_width = len(key)
+
+    second_width = len(headers[1])
+    for key in dictionary:
+        if len(str(dictionary[key])) > second_width:
+            second_width = len(str(dictionary[key]))
+
+    return (first_width, second_width)
+
+
+def print_table(title, dictionary, headers, console_width):
+    """Display the contents of the inventory in an ordered, well-organized table with
+    each column right-aligned.
+    """
+
+    first_width, second_width = set_table_width(dictionary, headers)
+    vertical_break = " | "
+    total_width = first_width + len(vertical_break) + second_width
+    
     print()
-    print(colored("Icons: ".center(console_width), "yellow"))
-    for k, v in legend.items():
-        item = '{:2} : {:15}'.format(k,v)
-        print(item.center(console_width))
+    print((title).center(console_width))
+    print(((total_width) * "-").center(console_width))
+    print((f"{headers[0]:>{first_width}}{vertical_break}{headers[1]:>{second_width}}").center(console_width))
+    print(((total_width) * "-").center(console_width))
+
+    for key in dictionary:
+        print((f"{key:>{first_width}}{vertical_break}{dictionary[key]:>{second_width}}").center(console_width))
+    
+    print(((total_width) * "-").center(console_width))
