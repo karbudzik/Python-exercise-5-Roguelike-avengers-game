@@ -170,7 +170,7 @@ def get_item(player, axis, current_board, sign, boards,what_we_update):
     items_on_board = current_board[what_we_update]
     if what_we_update=="items":
         for item in items_on_board:
-            if items_on_board[item]["index_x"]+1 == player["position_x"]: #it makes sure only one item is taken by user, not all items from the board
+            if items_on_board[item]["index_x"]+1 == player["position_x"]: 
                 update_inventory(player, item,what_we_update)
                 remove_object_from_board(current_board, player, item, boards,what_we_update)
                 break
@@ -184,7 +184,6 @@ def get_item(player, axis, current_board, sign, boards,what_we_update):
 
 
 def interact_with_character(boards, icon, player):
-    
     if icon == "L":
         board_name = player["current_board"]
         del boards[board_name]["characters"]["Loki"]
