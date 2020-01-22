@@ -187,7 +187,7 @@ def interact_with_character(boards, icon, player):
     if icon == "L":
         board_name = player["current_board"]
         del boards[board_name]["characters"]["Loki"]
-        # RICARDO: 
+        # RICARDO:
         # Here you could add a condition that if a player has "thor's hammer" and the "captain's america's shield"
         # in the inventory, then he wins this fight (Loki is deleted from the board - as above). If not, the game is ended 
         # - the player looses and game quits
