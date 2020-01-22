@@ -213,60 +213,28 @@ def move_player(board, player, key, boards):
     index_y = player["position_y"] - 1
     current_board = boards[player["current_board"]]
     
-    # At the end this function will have to be refactored (too many repeatable lines)
+    key_pairs = [["a", "A"], ["d", "D"], ["s", "S"], ["w", "W"]]
+    condition_if_not_wall = [[eval("index_x > 1")], [eval("index_x < (width - 1)")], [eval("index_y < (height - 1)")], [eval("index_y > 1")]]
+    desired_place_coordinates = [board[index_y][index_x - 1], board[index_y][index_x + 1], board[index_y + 1][index_x], board[index_y - 1][index_x]]
+    movement_axis = [["position_x", -1, "-"], ["position_x", 1, "+"], ["position_y", 1, "+"], ["position_y", -1, "-"]]
+    movement_directions = [["west", "east"], ["east", "west"], ["south", "north"], ["north", "south"]]
 
-    if key in ["a", "A"]:
-        if index_x > 1 and board[index_y][index_x - 1] in [" "]:
-            player["position_x"] -= 1
-        elif board[index_y][index_x - 1] == "x":     
-            change_board(player, boards, "west", "east")
-        elif board[index_y][index_x - 1] in ["$", "D", "1", "?"]:
-            get_item(player, "position_x", current_board, "-", boards, "items")
-        elif board[index_y][index_x - 1] in [":", "=", "U"]:
-            get_item(player, "position_x", current_board, "-", boards, "food")
-        elif board[index_y][index_x - 1] == "L":
-            interact_with_character(boards, "L", player)
-            player["position_x"] -= 1
-                
-    elif key in ["d", "D"]:
-        if index_x < (width - 1) and board[index_y][index_x + 1] in [" "]:
-            player["position_x"] += 1
-        elif board[index_y][index_x + 1] == "x":
-            change_board(player, boards, "east", "west")
-        elif board[index_y][index_x + 1] in ["$", "D", "1", "?"]:
-            get_item(player, "position_x", current_board, "+", boards,"items")
-        elif board[index_y][index_x + 1] in [":", "=", "U"]:
-            get_item(player, "position_x", current_board, "+", boards, "food")
-        elif board[index_y][index_x + 1] == "L":
-            interact_with_character(boards, "L", player)
-            player["position_x"] += 1
-                    
-    elif key in ["s", "S"]:
-        if index_y < (height - 1) and board[index_y + 1][index_x] in [" "]:
-            player["position_y"] += 1
-        elif board[index_y + 1][index_x] == "x": 
-            change_board(player, boards, "south", "north")
-        elif board[index_y + 1][index_x] in ["$", "D", "1", "?"]:
-            get_item(player, "position_y", current_board, "+", boards, "items")
-        elif board[index_y + 1][index_x] in [":", "=", "U"]:
-            get_item(player, "position_y", current_board, "+", boards, "food")
-        elif board[index_y + 1][index_x] == "L":
-            interact_with_character(boards, "L", player)
-            player["position_y"] += 1
+    for pair in key_pairs:
+        if key in pair:
+            move_index = key_pairs.index(pair)
 
-    elif key in ["w", "W"]:
-        if index_y > 1 and board[index_y - 1][index_x] in [" "]:
-            player["position_y"] -= 1
-        elif board[index_y - 1][index_x] == "x":
-            change_board(player, boards, "north", "south")
-        elif board[index_y - 1][index_x] in ["$", "D", "1", "?"]:
-            get_item(player, "position_y", current_board, "-", boards, "items")
-        elif board[index_y - 1][index_x] in [":", "=", "U"]:
-            get_item(player, "position_y", current_board, "-", boards, "food")
-        elif board[index_y - 1][index_x] == "L":
-            interact_with_character(boards, "L", player)
-            player["position_y"] -= 1
-            
+    if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
+        player[movement_axis[move_index][0]] += movement_axis[move_index][1]
+    elif desired_place_coordinates[move_index] == "x":     
+        change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
+    elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B"]:
+        get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
+    elif desired_place_coordinates[move_index] in [":", "=", "U"]:
+        get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "food")
+    elif desired_place_coordinates[move_index] == "L":
+        interact_with_character(boards, "L", player)
+        player[movement_axis[move_index][0]] += movement_axis[move_index][1]
+
     return player
 
 
@@ -305,6 +273,3 @@ def plot_development(player, quests):
     # than 0, then the person died and game ended
 
 
-'''
-        #spr hp czy żyje
-'''
