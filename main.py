@@ -3,6 +3,7 @@ import engine
 import ui
 import random
 import sys
+import data_menager
 # import pygame
 # from pygame import mixer
 # import pyfiglet
@@ -83,12 +84,6 @@ boards = {
                 "index_x": 1,
                 "index_y": 10,
                 "icon":"?"   
-            },
-            "boots": {
-                "number": 1,
-                "index_x": 6,
-                "index_y": 8,
-                "icon" : "B"
             },
         },
         "characters": {
@@ -242,7 +237,21 @@ def ask_for_details():
     Returns:
     User's details
     """
+
+    # Wersja Mati, dział po odkomentowaniu, i zakomentowaniu inputów z wersji Karoliny
+    # names = "Avalible heros :You or Spider-Man / Iron-Man"
+    # questions = ["Type your name or chosse between Spider-Man[ type S ] and Iron-Man [ type I], or press 'r' if you want to randomly pick", "Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly."]
+    # ui.type_writter_effect([names, questions[0]])
+    # print("\t\t\t",end="")
+    # user_name = input("> ")
+    # ui.type_writter_effect([questions[1]])
+    # print("\t\t\t",end="")
+    # user_icon = input("> ")
+    
+    # Wersja Karoliny
+
     possible_names = ["Captain America", "Iron Man", "Hulk", "Thor", "Black Widow", "War Machine", "Captain Marvel", "Spider-Man", "Black Panther", "Star Lord"]
+    
     user_name = input("Choose your name or press 'r' if you want to randomly pick a name from the Avengers team. > ")
     if user_name in ["r", "R"] or len(user_name) < 1:
         user_name = random.choice(possible_names)
@@ -268,6 +277,11 @@ def make_opposite_boolean(boolean):
     return boolean
 
 def main():
+    util.clear_screen()
+    asci_logo = data_menager.read_file("avengers.txt")
+    # zakomentujcie sobie poniżej wtedy nie będzie się wam wczytywać logo za każdym razem
+    ui.display_logo(asci_logo)
+    util.clear_screen()
     # pygame.init()
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
