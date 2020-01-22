@@ -238,7 +238,7 @@ def ask_for_details():
     User's details
     """
     names = "Avalible heroes: You or Spider-Man/Iron-Man"
-    questions = ["Type your name or chosse between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' if you want to randomly pick", "Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly."]
+    questions = ["Type your name or choose between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' to pick randomly", "Choose the icon you want to be. Pick between '@', '&', '#' and '%' or press 'r' to choose randomly."]
     ui.type_writter_effect([names, questions[0]])
     print("\t\t\t",end="")
     user_name = input("> ")
@@ -272,8 +272,8 @@ def main():
     util.clear_screen()
     asci_logo = data_menager.read_file("avengers.txt")
     # zakomentujcie sobie poniżej wtedy nie będzie się wam wczytywać logo za każdym razem
-    ui.display_logo(asci_logo)
-    util.clear_screen()
+    # ui.display_logo(asci_logo)
+    # util.clear_screen()
     # pygame.init()
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
