@@ -113,11 +113,18 @@ def remove_player_from_board(board, player):
 
 def change_board(player, boards, direction_from, direction_to):
 
-    next_board = boards[player["current_board"]]["exits"][direction_from]["leads_to"]
+    next_board = boards[player["current_board"]]["exits"][direction_to]["leads_to"]
     player["current_board"] = next_board
-    player["position_x"] = boards[next_board]["exits"][direction_to]["index_x"] + 1
-    player["position_y"] = boards[next_board]["exits"][direction_to]["index_y"] + 1
-      
+   
+    directions = ["south", "north", "east", "west"]
+    correction_numbers = [[1, 0], [1, 2], [0, 1], [2, 1]] #numbers to correct user's position on the board
+
+    for direction in directions:
+        if direction_from == direction:
+            index = directions.index(direction)
+            player["position_x"] = boards[next_board]["exits"][direction_from]["index_x"] + correction_numbers[index][0]
+            player["position_y"] = boards[next_board]["exits"][direction_from]["index_y"] + correction_numbers[index][1]
+
 
 def update_inventory(player, to_add,what_we_update):
     if "inventory" not in player:
@@ -145,8 +152,10 @@ def remove_object_from_board(board, player, to_remove, boards,what_we_update):
     board_name = player["current_board"]
     del boards[board_name][what_we_update][to_remove]
     
+
 def update_player_health(player, key):
     player["health"]+=key
+
 
 def get_item(player, axis, current_board, sign, boards,what_we_update):
     '''
@@ -216,11 +225,15 @@ def move_player(board, player, key, boards):
     condition_if_not_wall = [[eval("index_x > 1")], [eval("index_x < (width - 1)")], [eval("index_y < (height - 1)")], [eval("index_y > 1")]]
     desired_place_coordinates = [board[index_y][index_x - 1], board[index_y][index_x + 1], board[index_y + 1][index_x], board[index_y - 1][index_x]]
     movement_axis = [["position_x", -1, "-"], ["position_x", 1, "+"], ["position_y", 1, "+"], ["position_y", -1, "-"]]
-    movement_directions = [["west", "east"], ["east", "west"], ["south", "north"], ["north", "south"]]
+    movement_directions = [["east", "west"], ["west", "east"], ["north", "south"], ["south", "north"]]
 
     for pair in key_pairs:
         if key in pair:
             move_index = key_pairs.index(pair)
+
+    print(player["current_board"])
+    print(index_x)
+    print(index_y)
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
@@ -242,7 +255,7 @@ def plot_development(player, quests):
     description
     '''
     if player["quest"] == 1: #it's only for the plot happening on Earth (board_1)
-        # pass
+        pass
         #RICARDO - here you can add some conditions:
 
         # 1. First, if you didn't collect 2 infinity stones from the first board, the gates (x) should be locked
@@ -263,7 +276,7 @@ def plot_development(player, quests):
         # If a person collects all 2 infinity stones, two things happen:
         # a) in player's dictionary "quest" is changed to "2"
         # b) the gates are visible, as described in 1.
-        print("1")
+
     elif player["quest"] == 2:
         pass
     elif player["quest"] == 3:
