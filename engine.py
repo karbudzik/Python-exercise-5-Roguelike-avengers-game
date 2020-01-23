@@ -116,10 +116,6 @@ def change_board(player, boards, direction_from, direction_to):
 
     next_board = boards[player["current_board"]]["exits"][direction_to]["leads_to"]
     player["current_board"] = next_board
-<<<<<<< HEAD
-    player["position_x"] = boards[next_board]["exits"][direction_to]["index_x"] + 1
-    player["position_y"] = boards[next_board]["exits"][direction_to]["index_y"] + 1
-=======
    
     directions = ["south", "north", "east", "west"]
     correction_numbers = [[1, 0], [1, 2], [0, 1], [2, 1]] #numbers to correct user's position on the board
@@ -129,7 +125,6 @@ def change_board(player, boards, direction_from, direction_to):
             index = directions.index(direction)
             player["position_x"] = boards[next_board]["exits"][direction_from]["index_x"] + correction_numbers[index][0]
             player["position_y"] = boards[next_board]["exits"][direction_from]["index_y"] + correction_numbers[index][1]
->>>>>>> 29999600a201a39886eb2983d78e2404387acf5a
 
 
 def update_inventory(player, to_add,what_we_update):
@@ -156,16 +151,11 @@ def remove_object_from_board(board, player, to_remove, boards,what_we_update):
     Nothing. Only modifies "boards" dictionary.
     '''
     board_name = player["current_board"]
-<<<<<<< HEAD
-    del boards[board_name]["items"][to_remove]
-
-=======
     del boards[board_name][what_we_update][to_remove]
     
 
 def update_player_health(player, key):
     player["health"]+=key
->>>>>>> 29999600a201a39886eb2983d78e2404387acf5a
 
 
 def get_item(player, axis, current_board, sign, boards,what_we_update):

@@ -237,19 +237,11 @@ def ask_for_details():
     Returns:
     User's details
     """
-<<<<<<< HEAD
     possible_names = ["Captain America", "Iron Man", "Hulk", "Thor", "Black Widow", "War Machine", "Captain Marvel", "Spider-Man", "Black Panther", "Star Lord"]
     user_name = input("Choose your name or press 'r' if you want to randomly pick a name from the Avengers team. > ")
     if user_name in ["r", "R"] or len(user_name) < 1:
         user_name = random.choice(possible_names)
     # implement option for user to choose one of the possible names in the list @rr
-=======
-    names = "Avalible heroes: You or Spider-Man/Iron-Man"
-    questions = ["Type your name or choose between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' to pick randomly", "Choose the icon you want to be. Pick between '@', '&', '#' and '%' or press 'r' to choose randomly."]
-    ui.type_writter_effect([names, questions[0]])
-    print("\t\t\t",end="")
-    user_name = input("> ")
->>>>>>> 29999600a201a39886eb2983d78e2404387acf5a
     
     if user_name in ["s", "S"]:
         user_name = "Spider-Man"
@@ -268,8 +260,6 @@ def ask_for_details():
 
     return user_name, user_icon
 
-<<<<<<< HEAD
-=======
 
 def make_opposite_boolean(boolean):
     if boolean == True:
@@ -277,7 +267,6 @@ def make_opposite_boolean(boolean):
     else:
         boolean = True
     return boolean
->>>>>>> 29999600a201a39886eb2983d78e2404387acf5a
 
 def main():
     util.clear_screen()
