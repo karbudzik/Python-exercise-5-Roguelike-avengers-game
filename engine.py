@@ -192,7 +192,6 @@ def get_item(player, axis, current_board, sign, boards,what_we_update):
                 break
         
 
-
 def interact_with_character(boards, icon, player):
     if icon == "L":
         board_name = player["current_board"]
@@ -232,10 +231,6 @@ def move_player(board, player, key, boards):
         if key in pair:
             move_index = key_pairs.index(pair)
 
-    print(player["current_board"])
-    print(index_x)
-    print(index_y)
-
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
     elif desired_place_coordinates[move_index] == "x":     
@@ -257,14 +252,20 @@ def plot_development(player, quests):
     '''
     if player["quest"] == 1:  # it's only for the plot happening on Earth (board_1)
         pass
-        if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
-            player['health'] -= 20
-        elif player_is_next_to_Loki():  # This will be the battle
-            if player['health'] >= 30:  # I've added a health to Loki's character :)
-                remove_Loki_from_board()
-                show_infinity_stones()
-            else:
-                player_has_lost()
+
+    # ******** I've commented this function because it was not ready and caused errors. Feel free to uncomment when needed. *****
+
+        # if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
+        #     player['health'] -= 20
+        # elif player_is_next_to_Loki():  # This will be the battle
+        #     if player['health'] >= 30:  # I've added a health to Loki's character :)
+        #         remove_Loki_from_board()
+        #         show_infinity_stones()
+        #     else:
+        #         player_has_lost()
+
+
+
         #RICARDO - here you can add some conditions:
 
         # 1. First, if you didn't collect 2 infinity stones from the first board, the gates (x) should be locked
@@ -294,19 +295,21 @@ def plot_development(player, quests):
     # than 0, then the person died and game ended
 
 
-def player_is_close_to_Loki():
-    if (main.player['position_x'] + 1) == main.boards['characters']['Loki']['index_x']:
-        return True
-    elif (main.player['position_y'] + 1) == main.boards['characters']['Loki']['index_y']:
-        return True
-    else:
-        return False
+# ******* I've commented this functions because they are not ready and cause errors. Feel free to uncoment them if needed. *******
+#
+# def player_is_close_to_Loki():
+#     if (main.player['position_x'] + 1) == main.boards['characters']['Loki']['index_x']:
+#         return True
+#     elif (main.player['position_y'] + 1) == main.boards['characters']['Loki']['index_y']:
+#         return True
+#     else:
+#         return False
 
 
-def player_is_next_to_Loki():
-    if main.player['position_x'] == main.boards['characters']['Loki']['index_x']:
-        return True
-    elif main.player['position_y'] == main.boards['characters']['Loki']['index_y']:
-        return True
-    else:
-        return False
+# def player_is_next_to_Loki():
+#     if main.player['position_x'] == main.boards['characters']['Loki']['index_x']:
+#         return True
+#     elif main.player['position_y'] == main.boards['characters']['Loki']['index_y']:
+#         return True
+#     else:
+#         return False

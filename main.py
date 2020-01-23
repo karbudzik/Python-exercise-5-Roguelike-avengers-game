@@ -238,11 +238,12 @@ def ask_for_details():
     Returns:
     User's details
     """
-    possible_names = ["Captain America", "Iron Man", "Hulk", "Thor", "Black Widow", "War Machine", "Captain Marvel", "Spider-Man", "Black Panther", "Star Lord"]
-    user_name = input("Choose your name or press 'r' if you want to randomly pick a name from the Avengers team. > ")
-    if user_name in ["r", "R"] or len(user_name) < 1:
-        user_name = random.choice(possible_names)
-    # implement option for user to choose one of the possible names in the list @rr
+    names = "Avalible heroes: You or Spider-Man/Iron-Man"
+    questions = ["Type your name or chosse between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' if you want to randomly pick", "Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly."]
+    questions = ["Type your name or choose between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' to pick randomly", "Choose the icon you want to be. Pick between '@', '&', '#' and '%' or press 'r' to choose randomly."]
+    ui.type_writter_effect([names, questions[0]])
+    print("\t\t\t",end="")
+    user_name = input("> ")
     
     if user_name in ["s", "S"]:
         user_name = "Spider-Man"
@@ -250,15 +251,12 @@ def ask_for_details():
         user_name = "Iron-Man"
     elif user_name in ["r", "R"] or len(user_name) < 1:
         user_name = random.choice(["Spider-Man", "Iron-Man"])
-
     ui.type_writter_effect([questions[1]])
     print("\t\t\t",end="")
     user_icon = input("> ")
-
     possible_icons = ["@", "&", "#", "%"]
     if user_icon not in possible_icons:
         user_icon = random.choice(possible_icons)
-
     return user_name, user_icon
 
 
@@ -273,26 +271,24 @@ def main():
     util.clear_screen()
     asci_logo = data_menager.read_file("avengers.txt")
     # zakomentujcie sobie poniżej wtedy nie będzie się wam wczytywać logo za każdym razem
+    ui.display_logo(asci_logo)
+    util.clear_screen()
     # ui.display_logo(asci_logo)
     # util.clear_screen()
     # pygame.init()
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
-    board = engine.create_board(boards[player["current_board"]])
-
+    # board = engine.create_board(boards[player["current_board"]])
+    show_inventory = False
+    show_legend = True
+    
     util.clear_screen()
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
-        # engine.put_player_on_board(board, player)
-        # ui.display_board(board, boards[player["current_board"]]["name"])
-        # key = util.key_pressed()
-        # engine.remove_player_from_board(board, player)
-        # player = engine.move_player(board, player, key, boards)
-
         engine.put_player_on_board(board, player)
-        ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
+        ui.display_board(board, boards[player["current_board"]]["name"], player, quests, show_inventory, show_legend, legend)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
@@ -305,7 +301,6 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
-
         engine.plot_development(player, quests)
         util.clear_screen()
 
