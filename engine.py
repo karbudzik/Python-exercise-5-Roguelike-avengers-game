@@ -245,13 +245,12 @@ def move_player(board, player, key, boards):
     return player
 
 
-def plot_development(player, quests):
+def plot_development(player, quests, boards):
     '''
     description
     '''
-    if player["quest"] == 1:  # it's only for the plot happening on Earth (board_1)
+    if player["current_board"] == "board_1":  # it's only for the plot happening on Earth (board_1)
         pass
-
     # ******** I've commented this function because it was not ready and caused errors. Feel free to uncomment when needed. *****
 
         # if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
@@ -285,13 +284,39 @@ def plot_development(player, quests):
         # If a person collects all 2 infinity stones, two things happen:
         # a) in player's dictionary "quest" is changed to "2"
         # b) the gates are visible, as described in 1.
+    elif player["current_board"] == "board_2":
+        pass
+    elif player["current_board"] == "board_3":
+        next = player_next_to_character(player, "Skull",
+                                        boards[player["current_board"]])
 
-    elif player["quest"] == 2:
-        pass
-    elif player["quest"] == 3:
-        pass
+        if next:
+            print("player next to Skull")
+
     # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
     # than 0, then the person died and game end
+
+
+def player_next_to_character(player: dict,
+                             character_name: str,
+                             board: dict) -> bool:
+    try:
+        character_coor = (board["characters"][character_name]["index_x"] + 1,
+                          board["characters"][character_name]["index_y"] + 1)
+        neighboring_fields = [
+                              [character_coor[0] - 1, character_coor[1]],
+                              [character_coor[0] + 1, character_coor[1]],
+                              [character_coor[0], character_coor[1] - 1],
+                              [character_coor[0], character_coor[1] + 1]
+                              ]
+
+        player_coor = [player["position_x"], player["position_y"]]
+        if player_coor in neighboring_fields:
+            return True
+        else:
+            return False
+    except KeyError:
+        return False
 
 
 # ******* I've commented this functions because they are not ready and cause errors. Feel free to uncoment them if needed. *******

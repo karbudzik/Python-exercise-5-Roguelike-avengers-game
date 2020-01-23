@@ -209,17 +209,25 @@ boards = {
             },
         },
         "characters": {
-            "The Collector": {
+            "Collector": {
                 "index_x": 13,
                 "index_y": 4,
                 "icon": "C",
-                "health": 30
+                "health": 30,
+                "riddle": """What animal walks with 4 legs, then with 2,
+                                       and at end with 3?""",
+                "answer": ("human", "human being", "man", "person")
             },
-            "The Skull":{
+            "Skull": {
                 "index_x": 7,
                 "index_y": 8,
                 "icon": "S",
-                "health": 30
+                "health": 30,
+                "riddle": """Everyone has it, but some don't like it. It makes
+                             a kid lough, saddens old man, pleases young girl.
+                             When You laugh it laughswith You, when You weep
+                             it weeps as well.""",
+                "answer": ("reflection", "mirror reflection")
             }
         },
         "nature": {
@@ -249,7 +257,7 @@ boards = {
 
 quests = {
     "1": {
-        "quest_description": ["You are an Avenger, fighting Thanos and his troops.",
+        "quest_description": ["You are an Avenger, fighting Thanos and his troops."
                               "Your task is to find infinity stones located on 3 worlds, starting from Earth.",
                               "To find the stones placed here, you'll need to beat the sneakiest of them all - Loki.",
                               "Only then you'll be able to get to other worlds.",
@@ -337,7 +345,7 @@ def ask_for_details():
         user_name = random.choice(["Spider-Man", "Iron-Man"])
 
     ui.type_writter_effect([questions[1]])
-    print("\t\t\t",end="")
+    print("\t\t\t", end="")
     user_icon = input("> ")
     possible_icons = ["@", "&", "#", "%"]
     if user_icon not in possible_icons:
@@ -387,7 +395,7 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
-        engine.plot_development(player, quests)
+        engine.plot_development(player, quests, boards)
         util.clear_screen()
 
 
