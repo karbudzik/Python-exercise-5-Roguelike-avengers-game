@@ -116,7 +116,7 @@ def change_board(player, boards, direction_from, direction_to):
 
     next_board = boards[player["current_board"]]["exits"][direction_to]["leads_to"]
     player["current_board"] = next_board
-   
+
     directions = ["south", "north", "east", "west"]
     correction_numbers = [[1, 0], [1, 2], [0, 1], [2, 1]] #numbers to correct user's position on the board
 
@@ -127,7 +127,7 @@ def change_board(player, boards, direction_from, direction_to):
             player["position_y"] = boards[next_board]["exits"][direction_from]["index_y"] + correction_numbers[index][1]
 
 
-def update_inventory(player, to_add,what_we_update):
+def update_inventory(player, to_add, what_we_update):
     if "inventory" not in player:
         player["inventory"] = {}
 
@@ -152,13 +152,13 @@ def remove_object_from_board(board, player, to_remove, boards,what_we_update):
     '''
     board_name = player["current_board"]
     del boards[board_name][what_we_update][to_remove]
-    
+
 
 def update_player_health(player, key):
-    player["health"]+=key
+    player["health"] += key
 
 
-def get_item(player, axis, current_board, sign, boards,what_we_update):
+def get_item(player, axis, current_board, sign, boards, what_we_update):
     '''
     Walks into items, adds them to the inventory and removes from the board
 
@@ -176,13 +176,13 @@ def get_item(player, axis, current_board, sign, boards,what_we_update):
         player[axis] -= 1
     else:
         player[axis] += 1
-        
+
     items_on_board = current_board[what_we_update]
-    if what_we_update=="items":
+    if what_we_update == "items":
         for item in items_on_board:
-            if items_on_board[item]["index_x"]+1 == player["position_x"]: 
-                update_inventory(player, item,what_we_update)
-                remove_object_from_board(current_board, player, item, boards,what_we_update)
+            if items_on_board[item]["index_x"]+1 == player["position_x"]:
+                update_inventory(player, item, what_we_update)
+                remove_object_from_board(current_board, player, item, boards, what_we_update)
                 break
     elif what_we_update == "food":
         for item in items_on_board:
@@ -190,7 +190,6 @@ def get_item(player, axis, current_board, sign, boards,what_we_update):
                 update_player_health(player, items_on_board[item]["health"])
                 remove_object_from_board(current_board, player, item, boards, what_we_update)
                 break
-        
 
 def interact_with_character(boards, icon, player):
     if icon == "L":
@@ -198,7 +197,7 @@ def interact_with_character(boards, icon, player):
         del boards[board_name]["characters"]["Loki"]
         # RICARDO:
         # Here you could add a condition that if a player has "thor's hammer" and the "captain's america's shield"
-        # in the inventory, then he wins this fight (Loki is deleted from the board - as above). If not, the game is ended 
+        # in the inventory, then he wins this fight (Loki is deleted from the board - as above). If not, the game is ended
         # - the player looses and game quits
 
 
@@ -220,7 +219,7 @@ def move_player(board, player, key, boards):
     index_x = player["position_x"] - 1
     index_y = player["position_y"] - 1
     current_board = boards[player["current_board"]]
-    
+
     key_pairs = [["a", "A"], ["d", "D"], ["s", "S"], ["w", "W"]]
     condition_if_not_wall = [[eval("index_x > 1")], [eval("index_x < (width - 1)")], [eval("index_y < (height - 1)")], [eval("index_y > 1")]]
     desired_place_coordinates = [board[index_y][index_x - 1], board[index_y][index_x + 1], board[index_y + 1][index_x], board[index_y - 1][index_x]]
@@ -233,7 +232,7 @@ def move_player(board, player, key, boards):
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-    elif desired_place_coordinates[move_index] == "x":     
+    elif desired_place_coordinates[move_index] == "x":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
     elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B"]:
         get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
@@ -269,16 +268,16 @@ def plot_development(player, quests):
         #RICARDO - here you can add some conditions:
 
         # 1. First, if you didn't collect 2 infinity stones from the first board, the gates (x) should be locked
-        # You can do that e.g. by adding "gates_unlocked":False to the board's dictionary and then change it to True 
+        # You can do that e.g. by adding "gates_unlocked":False to the board's dictionary and then change it to True
         # (in this function here) when the stones are collected. You'll also have to add some "if board[gates_unlocked] == True"
         # condition to the change_board() function
 
-        # 2. Loki should be at least a little dangerous, so you might add a trick - if user stands close to Loki (their 
+        # 2. Loki should be at least a little dangerous, so you might add a trick - if user stands close to Loki (their
         # coordinates are close e.g. player has [4][5] and Loki has [3][5], user's health might decrease -20)
 
-        # 3. if a player just won battle with Loki (Loki is no longer in board["characters"]) - two infinity stones 
+        # 3. if a player just won battle with Loki (Loki is no longer in board["characters"]) - two infinity stones
         # are added to board["items"] and, therefore, displayed on the board. Or, if you prefer, they might already be
-        # in the board's dictionary, but they can have some "invisible":true key which would prevent it from being displayed 
+        # in the board's dictionary, but they can have some "invisible":true key which would prevent it from being displayed
         # (add_const_elements() would have to be slightly modified then)
 
         # The details of the stones (like names) you can find in story.txt file
@@ -291,8 +290,9 @@ def plot_development(player, quests):
         pass
     elif player["quest"] == 3:
         pass
-    # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower 
+    # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
     # than 0, then the person died and game ended
+<<<<<<< Updated upstream
 
 
 # ******* I've commented this functions because they are not ready and cause errors. Feel free to uncoment them if needed. *******
@@ -313,3 +313,5 @@ def plot_development(player, quests):
 #         return True
 #     else:
 #         return False
+=======
+>>>>>>> Stashed changes
