@@ -3,6 +3,7 @@ import engine
 import ui
 import random
 import sys
+import data_menager
 # import pygame
 # from pygame import mixer
 # import pyfiglet
@@ -83,12 +84,6 @@ boards = {
                 "index_x": 1,
                 "index_y": 10,
                 "icon":"?"   
-            },
-            "boots": {
-                "number": 1,
-                "index_x": 6,
-                "index_y": 8,
-                "icon" : "B"
             },
         },
         "characters": {
@@ -242,27 +237,54 @@ def ask_for_details():
     Returns:
     User's details
     """
+<<<<<<< HEAD
     possible_names = ["Captain America", "Iron Man", "Hulk", "Thor", "Black Widow", "War Machine", "Captain Marvel", "Spider-Man", "Black Panther", "Star Lord"]
     user_name = input("Choose your name or press 'r' if you want to randomly pick a name from the Avengers team. > ")
     if user_name in ["r", "R"] or len(user_name) < 1:
         user_name = random.choice(possible_names)
     # implement option for user to choose one of the possible names in the list @rr
+=======
+    names = "Avalible heroes: You or Spider-Man/Iron-Man"
+    questions = ["Type your name or choose between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' to pick randomly", "Choose the icon you want to be. Pick between '@', '&', '#' and '%' or press 'r' to choose randomly."]
+    ui.type_writter_effect([names, questions[0]])
+    print("\t\t\t",end="")
+    user_name = input("> ")
+>>>>>>> 29999600a201a39886eb2983d78e2404387acf5a
     
+    if user_name in ["s", "S"]:
+        user_name = "Spider-Man"
+    elif user_name in ["i", "I"]:
+        user_name = "Iron-Man"
+    elif user_name in ["r", "R"] or len(user_name) < 1:
+        user_name = random.choice(["Spider-Man", "Iron-Man"])
+
+    ui.type_writter_effect([questions[1]])
+    print("\t\t\t",end="")
+    user_icon = input("> ")
+
     possible_icons = ["@", "&", "#", "%"]
-    user_icon = input("Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly. > ")
-    if user_icon in ["r", "R"] or len(user_icon) < 1:
+    if user_icon not in possible_icons:
         user_icon = random.choice(possible_icons)
-    while user_icon not in possible_icons:
-        user_icon = input("You can't pick this character. You can choose between '@', '&', '#' and '%' or press 'r' to pick randomly. > ")
-        if user_icon in ["r", "R"] or len(user_icon) < 1:
-            user_icon = random.choice(possible_icons)
-        elif user_icon in ["q", "Q", "quit", "Quit", "QUIT"]:
-            sys.exit()
 
     return user_name, user_icon
 
+<<<<<<< HEAD
+=======
+
+def make_opposite_boolean(boolean):
+    if boolean == True:
+        boolean = False
+    else:
+        boolean = True
+    return boolean
+>>>>>>> 29999600a201a39886eb2983d78e2404387acf5a
 
 def main():
+    util.clear_screen()
+    asci_logo = data_menager.read_file("avengers.txt")
+    # zakomentujcie sobie poniżej wtedy nie będzie się wam wczytywać logo za każdym razem
+    # ui.display_logo(asci_logo)
+    # util.clear_screen()
     # pygame.init()
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
@@ -283,8 +305,8 @@ def main():
         ui.display_board(board, boards[player["current_board"]]["name"], player, quests)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
-        player = engine.move_player(board, player, key, boards)
-        engine.plot_development(player, quests)
+        if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
+            player = engine.move_player(board, player, key, boards)
         if key in ["q", "Q"]:
             is_running = False
         elif key in ["i", "I"] and "inventory" in player:
@@ -293,6 +315,8 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
+
+        engine.plot_development(player, quests)
         util.clear_screen()
 
 

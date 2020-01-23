@@ -1,7 +1,8 @@
 import os
-# from pygame import mixer
-# import pyfiglet
-# from termcolor import colored, cprint
+from pygame import mixer
+import pyfiglet
+from termcolor import colored, cprint
+from time import sleep
 
 def display_board(board_list, board_name, player, quests, show_inventory, show_legend,legend):
     '''
@@ -125,8 +126,8 @@ def print_table(title, dictionary, headers, console_width):
     first_width, second_width = set_table_width(dictionary, headers)
     vertical_break = " | "
     total_width = first_width + len(vertical_break) + second_width
-    
     print()
+    
     print((title).center(console_width))
     print(((total_width) * "-").center(console_width))
     print((f"{headers[0]:>{first_width}}{vertical_break}{headers[1]:>{second_width}}").center(console_width))
@@ -134,5 +135,22 @@ def print_table(title, dictionary, headers, console_width):
 
     for key in dictionary:
         print((f"{key:>{first_width}}{vertical_break}{dictionary[key]:>{second_width}}").center(console_width))
-    
+
     print(((total_width) * "-").center(console_width))
+
+def display_logo(art):
+    # console_width = os.get_terminal_size().rows
+    print("\n\n")
+    for line in art:
+        print("\t\t\t\t\t\t\t{}".format(line), end="")
+        sleep(0.2)
+    print("\n\n")
+
+def type_writter_effect(list_of_words):
+    print("\n\n")
+    for word in list_of_words:
+        print("\t\t\t", end="")
+        for letter in word:
+            print(letter, end="", flush=True)
+            sleep(0.05)
+        print()
