@@ -90,7 +90,8 @@ boards = {
             "Loki": {
                 "index_x": 13,
                 "index_y": 4,
-                "icon": "L"
+                "icon": "L",
+                "health": 30
             },
         },
         "food": {
@@ -99,7 +100,7 @@ boards = {
                 "index_x": 14,
                 "index_y": 5,
                 "icon": "=",
-                "number":1   
+                "number": 1
             },
             "hot-dog": {
                 "health": 20,

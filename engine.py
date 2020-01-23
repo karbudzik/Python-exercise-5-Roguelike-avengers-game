@@ -255,8 +255,16 @@ def plot_development(player, quests):
     '''
     description
     '''
-    if player["quest"] == 1: #it's only for the plot happening on Earth (board_1)
+    if player["quest"] == 1:  # it's only for the plot happening on Earth (board_1)
         pass
+        if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
+            player['health'] -= 20
+        elif player_is_next_to_Loki():  # This will be the battle
+            if player['health'] >= 30:  # I've added a health to Loki's character :)
+                remove_Loki_from_board()
+                show_infinity_stones()
+            else:
+                player_has_lost()
         #RICARDO - here you can add some conditions:
 
         # 1. First, if you didn't collect 2 infinity stones from the first board, the gates (x) should be locked
@@ -286,3 +294,19 @@ def plot_development(player, quests):
     # than 0, then the person died and game ended
 
 
+def player_is_close_to_Loki():
+    if (main.player['position_x'] + 1) == main.boards['characters']['Loki']['index_x']:
+        return True
+    elif (main.player['position_y'] + 1) == main.boards['characters']['Loki']['index_y']:
+        return True
+    else:
+        return False
+
+
+def player_is_next_to_Loki():
+    if main.player['position_x'] == main.boards['characters']['Loki']['index_x']:
+        return True
+    elif main.player['position_y'] == main.boards['characters']['Loki']['index_y']:
+        return True
+    else:
+        return False
