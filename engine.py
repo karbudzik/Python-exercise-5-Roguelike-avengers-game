@@ -234,7 +234,7 @@ def move_player(board, player, key, boards):
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
     elif desired_place_coordinates[move_index] == "x":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
-    elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B"]:
+    elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*"]:
         get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
     elif desired_place_coordinates[move_index] in [":", "=", "U"]:
         get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "food")
@@ -291,8 +291,7 @@ def plot_development(player, quests):
     elif player["quest"] == 3:
         pass
     # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
-    # than 0, then the person died and game ended
-<<<<<<< Updated upstream
+    # than 0, then the person died and game end
 
 
 # ******* I've commented this functions because they are not ready and cause errors. Feel free to uncoment them if needed. *******
@@ -313,5 +312,3 @@ def plot_development(player, quests):
 #         return True
 #     else:
 #         return False
-=======
->>>>>>> Stashed changes
