@@ -396,7 +396,7 @@ def main():
         obstacle = True
         while obstacle:
             numbers = random.choices(["0", "1", "-1"],k=2)
-            black_character = boards[player["current_board"]]["characters"]["Loki"]
+            black_character = boards["board_1"]["characters"]["Loki"]
             print(black_character)
             if engine.check_free_space(numbers, board, black_character):
                 black_character["index_y"] += int(numbers[0])
