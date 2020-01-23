@@ -142,7 +142,7 @@ def display_logo(art):
     print("\n\n")
     for line in art:
         print("\t\t\t\t\t\t\t{}".format(line), end="")
-        sleep(0.2)
+        # sleep(0.2)
     print("\n\n")
 
 def type_writter_effect(list_of_words):
@@ -151,5 +151,5 @@ def type_writter_effect(list_of_words):
         print("\t\t\t", end="")
         for letter in word:
             print(letter, end="", flush=True)
-            sleep(0.05)
+            # sleep(0.05)
         print()

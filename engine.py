@@ -290,6 +290,7 @@ def plot_development(player, quests):
         pass
     elif player["quest"] == 3:
         pass
+
     # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
     # than 0, then the person died and game end
 
@@ -312,3 +313,9 @@ def plot_development(player, quests):
 #         return True
 #     else:
 #         return False
+
+
+def check_free_space(numbers, board, enemy):
+    if board[enemy["index_y"]+int(numbers[0])][enemy["index_x"]+int(numbers[1])] == " ":
+        return True
+    return False
