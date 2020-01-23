@@ -36,12 +36,6 @@ boards = {
                 "index_y": 0,
                 "leads_to": "board_2",
                 "icon": "x"
-            },
-            "east": {
-                "index_x": 19,
-                "index_y": 9,
-                "leads_to": "board_3",
-                "icon": "x"
             }
         },
         "nature": {
@@ -133,6 +127,12 @@ boards = {
                 "index_y": 11,
                 "leads_to": "board_1",
                 "icon": "x"
+            },
+            "north": {
+                "index_x": 5,
+                "index_y": 0,
+                "leads_to": "board_3",
+                "icon": "x"
             }
         },
         "nature": {
@@ -181,12 +181,12 @@ boards = {
     "board_3": {
         "name": "VORMIR",
         "width": 20,
-        "height": 30,
+        "height": 12,
         "exits": {
-            "west": {
-                "index_x": 0,
-                "index_y": 20,
-                "leads_to": "board_1",
+            "south": {
+                "index_x": 4,
+                "index_y": 11,
+                "leads_to": "board_2",
                 "icon": "x"
             }
         },
@@ -214,15 +214,44 @@ boards = {
             },
         },
         "characters": {
-            "Loki": {
+            "The Collector": {
                 "index_x": 13,
                 "index_y": 4,
-                "icon": "E",
+                "icon": "C",
                 "health": 30
             },
+            "The Skull":{
+                "index_x": 7,
+                "index_y": 8,
+                "icon": "S",
+                "health": 30
+            }
         },
-    },
+        "nature": {
+            "tree_1": {
+                "index_x": 8,
+                "index_y": 1,
+                "icon": "T"
+            },
+            "tree_2": {
+                "index_x": 6,
+                "index_y": 4,
+                "icon": "T"
+            },
+            "tree_3": {
+                "index_x": 5,
+                "index_y": 8,
+                "icon": "T"
+            },
+            "tree_4": {
+                "index_x": 11,
+                "index_y": 8,
+                "icon": "T"
+            }
+        },
+    }
 }
+
 quests = {
     "1": {
         "quest_description": ["You are an Avenger, fighting Thanos and his troops.",
@@ -238,9 +267,15 @@ quests = {
                                  gates to Vormir will open."""]
     },
     "3": {
-        "quest_description": ["quest 3 descripton here"]
+        "quest_description": ["""Infinity stones are in possession by two
+                                 characters: the Collector (Power Stone),
+                                 and the Skull (Soul Stone). The characters
+                                 will give You the stones
+                                 if You will answer their riddles.
+                                 Beware off the traps."""]
     },
 }
+
 
 labyrinth_data = {"obstacle_name": "rock",
                   "icon": "O",
