@@ -249,17 +249,6 @@ def plot_development(player, quests, boards, board_list):
     '''
     description
     '''
-<<<<<<< Updated upstream
-    if player["quest"] == 1:  # it's only for the plot happening on Earth (board_1)
-        if player_is_close_to_Loki(player):  # this function will check player's location in relation to Loki's
-            player['health'] -= 20
-        elif player_is_next_to_Loki(player):  # This will be the battle
-            if player['health'] >= 30:  # I've added a health to Loki's character :)
-                remove_Loki_from_board()
-                show_infinity_stones()
-            else:
-                player_has_lost()
-=======
     if player["current_board"] == "board_1":  # it's only for the plot happening on Earth (board_1)
         if "Loki" in boards["board_1"]["characters"]:
             black_character = boards["board_1"]["characters"]["Loki"]
@@ -279,7 +268,6 @@ def plot_development(player, quests, boards, board_list):
         #         show_infinity_stones()
         #     else:
         #         player_has_lost()
->>>>>>> Stashed changes
 
 
 
@@ -306,13 +294,6 @@ def plot_development(player, quests, boards, board_list):
     elif player["current_board"] == "board_2":
         pass
     elif player["current_board"] == "board_3":
-<<<<<<< Updated upstream
-        next = player_next_to_character(player, "Skull",
-                                        boards[player["current_board"]])
-
-        if next:
-            print("player next to Skull")
-=======
         characters = boards[player["current_board"]]["characters"] # map Characters dict into local var
 
         # Check all characters
@@ -349,7 +330,6 @@ def plot_development(player, quests, boards, board_list):
                 if player["riddle_counter"] >= 3:
                     print("Your are dead")
                     remove_player_from_board(player, boards[player["board"]])
->>>>>>> Stashed changes
 
     # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
     # than 0, then the person died and game end

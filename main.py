@@ -416,22 +416,7 @@ def main():
         else:
             pass
 
-<<<<<<< Updated upstream
-        if "Loki" in boards["board_1"]["characters"]:
-            obstacle = True
-            black_character = boards["board_1"]["characters"]["Loki"]
-            while obstacle and black_character:
-                numbers = random.choices(["0", "1", "-1"], k=2)
-                print(black_character)
-                if engine.check_free_space(numbers, board, black_character):
-                    black_character["index_y"] += int(numbers[0])
-                    black_character["index_x"] += int(numbers[1])
-                    obstacle = False
-                    
-        engine.plot_development(player, quests, boards)
-=======
         engine.plot_development(player, quests, boards, board)
->>>>>>> Stashed changes
         util.clear_screen()
 
 
