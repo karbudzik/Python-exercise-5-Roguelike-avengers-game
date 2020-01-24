@@ -1,7 +1,7 @@
 import copy
 import main
 import collections
-
+import random
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
@@ -245,10 +245,11 @@ def move_player(board, player, key, boards):
     return player
 
 
-def plot_development(player, quests, boards):
+def plot_development(player, quests, boards, board_list):
     '''
     description
     '''
+<<<<<<< Updated upstream
     if player["quest"] == 1:  # it's only for the plot happening on Earth (board_1)
         if player_is_close_to_Loki(player):  # this function will check player's location in relation to Loki's
             player['health'] -= 20
@@ -258,6 +259,27 @@ def plot_development(player, quests, boards):
                 show_infinity_stones()
             else:
                 player_has_lost()
+=======
+    if player["current_board"] == "board_1":  # it's only for the plot happening on Earth (board_1)
+        if "Loki" in boards["board_1"]["characters"]:
+            black_character = boards["board_1"]["characters"]["Loki"]
+            numbers = random.choices(["0", "1", "-1"], k=2)
+            print(numbers)
+            print(black_character["index_x"], black_character["index_y"])
+            if check_free_space(numbers, board_list, black_character):
+                black_character["index_y"] += int(numbers[0])
+                black_character["index_x"] += int(numbers[1])
+    # ******** I've commented this function because it was not ready and caused errors. Feel free to uncomment when needed. *****
+
+        # if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
+        #     player['health'] -= 20
+        # elif player_is_next_to_Loki():  # This will be the battle
+        #     if player['health'] >= 30:  # I've added a health to Loki's character :)
+        #         remove_Loki_from_board()
+        #         show_infinity_stones()
+        #     else:
+        #         player_has_lost()
+>>>>>>> Stashed changes
 
 
 
@@ -284,15 +306,61 @@ def plot_development(player, quests, boards):
     elif player["current_board"] == "board_2":
         pass
     elif player["current_board"] == "board_3":
+<<<<<<< Updated upstream
         next = player_next_to_character(player, "Skull",
                                         boards[player["current_board"]])
 
         if next:
             print("player next to Skull")
+=======
+        characters = boards[player["current_board"]]["characters"] # map Characters dict into local var
+
+        # Check all characters
+        for character_name in characters:
+            #If player next to a character
+            if player_next_to_character(player,
+                                        character_name,
+                                        boards[player["current_board"]]):
+                print(characters[character_name]["riddle"])
+
+                #Iterate until You get a good answer or counter exceeds
+                riddle_solved = False
+                while not riddle_solved and player["riddle_counter"] > 3:
+                    answer = input("What's Your answer? ")
+                    if answer in characters[character_name]["answer"]:
+                        riddle_solved = True
+                        player["riddle_counter"] = 0 # reset riddle counter
+                        temp_char = characters.pop(character_name) # save removed character
+
+                        # make an infinity stone in the same place as character was
+                        stone = {
+                            "number": 1,
+                            "index_x": temp_char["index_x"],
+                            "index_y": temp_char["index_y"],
+                            "icon": "*"
+                        }
+                        board = boards[player["current_board"]] # current board dict
+                        board["items"][temp_char["stone"]] = stone # add stone to "items" dict
+                    else:
+                        if answer not in characters[character_name]["answer"]:
+                            player["riddle_counter"] += 1
+
+                # Game over - player is dead
+                if player["riddle_counter"] >= 3:
+                    print("Your are dead")
+                    remove_player_from_board(player, boards[player["board"]])
+>>>>>>> Stashed changes
 
     # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
     # than 0, then the person died and game end
-
+def get_neighbor_fields(field_coor: tuple) -> list:
+    neighboring_fields = [
+                          [field_coor[0] - 1, field_coor[1]],
+                          [field_coor[0] + 1, field_coor[1]],
+                          [field_coor[0], field_coor[1] - 1],
+                          [field_coor[0], field_coor[1] + 1]
+                          ]
+    return neighboring_fields
 
 def player_next_to_character(player: dict,
                              character_name: str,
@@ -300,12 +368,7 @@ def player_next_to_character(player: dict,
     try:
         character_coor = (board["characters"][character_name]["index_x"] + 1,
                           board["characters"][character_name]["index_y"] + 1)
-        neighboring_fields = [
-                              [character_coor[0] - 1, character_coor[1]],
-                              [character_coor[0] + 1, character_coor[1]],
-                              [character_coor[0], character_coor[1] - 1],
-                              [character_coor[0], character_coor[1] + 1]
-                              ]
+        neighboring_fields = get_neighbor_fields(character_coor)
 
         player_coor = [player["position_x"], player["position_y"]]
         if player_coor in neighboring_fields:
@@ -354,7 +417,15 @@ def player_has_lost():
     exit()
 
 
-def check_free_space(numbers, board, enemy):
-    if board[enemy["index_y"]+int(numbers[0])][enemy["index_x"]+int(numbers[1])] == " ":
-        return True
-    return False
+def check_free_space(move, board_list, character):
+    field_x = character["index_x"] + int(move[0]) + 1
+    field_y = character["index_y"] + int(move[1]) + 1
+    try:
+        # Check if field coordinate is empty
+        if board_list[field_y][field_x] == ' ':
+            return True
+        else:
+            return False
+    except IndexError:
+        print("Index out of bounds.")
+        return False

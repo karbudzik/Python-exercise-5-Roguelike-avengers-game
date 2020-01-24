@@ -231,7 +231,8 @@ boards = {
                 "health": 30,
                 "riddle": """What animal walks with 4 legs, then with 2,
                                        and at end with 3?""",
-                "answer": ("human", "human being", "man", "person")
+                "answer": ("human", "human being", "man", "person"),
+                "stone" : "power_stone"
             },
             "Skull": {
                 "index_x": 7,
@@ -242,7 +243,8 @@ boards = {
                              a kid lough, saddens old man, pleases young girl.
                              When You laugh it laughswith You, when You weep
                              it weeps as well.""",
-                "answer": ("reflection", "mirror reflection")
+                "answer": ("reflection", "mirror reflection"),
+                "stone": "soul_stone"
             }
         },
         "nature": {
@@ -333,7 +335,8 @@ def create_player():
         "position_y": 6,
         "current_board": "board_1",
         "player_icon": user_icon,
-        "inventory": {}
+        "inventory": {},
+        "riddle_counter": 0
     }
     return player
 
@@ -396,6 +399,7 @@ def main():
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
+        print(len(board), len(board[0]))
         engine.put_player_on_board(board, player)
         ui.display_board(board, boards[player["current_board"]]["name"], player, quests, show_inventory, show_legend, legend)
         key = util.key_pressed()
@@ -412,6 +416,7 @@ def main():
         else:
             pass
 
+<<<<<<< Updated upstream
         if "Loki" in boards["board_1"]["characters"]:
             obstacle = True
             black_character = boards["board_1"]["characters"]["Loki"]
@@ -424,6 +429,9 @@ def main():
                     obstacle = False
                     
         engine.plot_development(player, quests, boards)
+=======
+        engine.plot_development(player, quests, boards, board)
+>>>>>>> Stashed changes
         util.clear_screen()
 
 
