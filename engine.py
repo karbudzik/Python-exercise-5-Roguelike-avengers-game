@@ -23,6 +23,15 @@ def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     return horizontal_wall, middle_row
 
 
+def add_static_elements(board, board_list):
+    for key in board["static_elements"]:
+        for cor in board["static_elements"][key]["coor"]:
+            x = cor[0]
+            y = cor[1]
+            board_list[y][x] = board["static_elements"][key]["icon"]
+    return board_list
+
+
 def add_const_elements(board, board_list, to_add=""):
     """
     Add exits signs, nature elements and items to the board_list.
@@ -71,11 +80,10 @@ def create_board(board):
         board_list.append(middle_row_copy)
     board_list.append(south_wall)
 
-    board_list = add_const_elements(board, board_list, "exits")
-    board_list = add_const_elements(board, board_list, "nature")
-    board_list = add_const_elements(board, board_list, "items")
-    board_list = add_const_elements(board, board_list, "characters")
-    board_list = add_const_elements(board, board_list, "food")
+    for category in ["exits", "items", "characters", "food"]:
+        board_list = add_const_elements(board, board_list, category)
+
+    board_list = add_static_elements(board, board_list)
 
     return board_list
 
