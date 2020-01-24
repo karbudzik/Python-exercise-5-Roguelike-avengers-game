@@ -8,6 +8,11 @@ import data_menager
 # from pygame import mixer
 # import pyfiglet
 
+enemy = {
+    "x": 3,
+    "y": 4
+}
+
 legend = {
     "x": "exit",
     "T": "tree",
@@ -30,40 +35,34 @@ boards = {
                 "index_x": 8,
                 "index_y": 0,
                 "leads_to": "board_2",
-                "icon" : "x"
-            },
-            "east": {
-                "index_x": 19,
-                "index_y": 9,
-                "leads_to": "board_3",
-                "icon" : "x"
+                "icon": "x"
             }
         },
         "nature": {
             "tree_1": {
                 "index_x": 2,
                 "index_y": 2,
-                "icon" : "T"
+                "icon": "T"
             },
             "tree_2": {
                 "index_x": 1,
                 "index_y": 4,
-                "icon" : "T"
+                "icon": "T"
             },
             "tree_3": {
                 "index_x": 13,
                 "index_y": 9,
-                "icon" : "T"
+                "icon": "T"
             },
             "tree_4": {
                 "index_x": 13,
                 "index_y": 8,
-                "icon" : "T"
+                "icon": "T"
             },
             "tree_5": {
                 "index_x": 13,
                 "index_y": 10,
-                "icon" : "T"
+                "icon": "T"
             },
         },
         "items": {
@@ -71,29 +70,19 @@ boards = {
                 "number": 2,
                 "index_x": 4,
                 "index_y": 8,
-                "icon" : "$"
+                "icon": "$"
             },
             "thor's hammer": {
                 "number": 1,
                 "index_x": 14,
                 "index_y": 10,
-                "icon":"?"   
+                "icon": "?"
             },
             "captain's america' shield": {
                 "number": 1,
                 "index_x": 1,
                 "index_y": 10,
-                "icon":"8"   
-            },
-            "infinity_stone1": {
-                "index_x": 3,
-                "index_y": 10,
-                "icon":"*"
-            },
-            "infinity_stone2": {
-                "index_x": 3,
-                "index_y": 6,
-                "icon":"*"
+                "icon": "?"
             },
             "infinity_stone3": {
                 "index_x": 9,
@@ -127,66 +116,88 @@ boards = {
                 "index_x": 10,
                 "index_y": 10,
                 "icon": ":",
-                "number":1 
+                "number": 1
             },
             "beer": {
                 "health": 50,
                 "index_x": 13,
                 "index_y": 7,
                 "icon": "U",
-                "number":1   
-            },  
+                "number": 1
+            },
         },
     },
     "board_2": {
         "name": "ASGARD",
-        "width": 20,
-        "height": 30,
+        "width": 16,
+        "height": 12,
         "exits": {
             "south": {
-                "index_x": 15,
-                "index_y": 29,
+                "index_x": 9,
+                "index_y": 11,
                 "leads_to": "board_1",
-                "icon" : "x"
+                "icon": "x"
+            },
+            "north": {
+                "index_x": 5,
+                "index_y": 0,
+                "leads_to": "board_3",
+                "icon": "x"
             }
         },
         "nature": {
             "tree_1": {
-                "index_x": 4,
-                "index_y": 9,
-                "icon" : "T"
+                "index_x": 8,
+                "index_y": 1,
+                "icon": "T"
             },
             "tree_2": {
-                "index_x": 10,
-                "index_y": 3,
-                "icon" : "T"
+                "index_x": 6,
+                "index_y": 4,
+                "icon": "T"
             },
+            "tree_3": {
+                "index_x": 5,
+                "index_y": 8,
+                "icon": "T"
+            },
+            "tree_4": {
+                "index_x": 11,
+                "index_y": 8,
+                "icon": "T"
+            }
         },
         "items": {
-            "knife": {
-                "number":1,
-                "index_x": 7,
-                "index_y": 4,
-                "icon" : "1"
-            },
             "armor": {
-                "number": 30,
-                "index_x": 8,
+                "number": 1,
+                "index_x": 6,
+                "index_y": 2,
+                "icon": "?"
+            },
+            "space_stone": {
+                "number": 1,
+                "index_x": 2,
+                "index_y": 4,
+                "icon": "*"
+            },
+            "reality_stone": {
+                "number": 1,
+                "index_x": 11,
                 "index_y": 3,
-                "icon": "?"   
+                "icon": "*"
             }
         },
     },
     "board_3": {
         "name": "VORMIR",
         "width": 20,
-        "height": 30,
+        "height": 12,
         "exits": {
-            "west": {
-                "index_x": 0,
-                "index_y": 20,
-                "leads_to": "board_1",
-                "icon" : "x"
+            "south": {
+                "index_x": 4,
+                "index_y": 11,
+                "leads_to": "board_2",
+                "icon": "x"
             }
         },
         "food": {
@@ -195,45 +206,120 @@ boards = {
                 "index_x": 14,
                 "index_y": 5,
                 "icon": "=",
-                "number":1   
+                "number": 1
             },
             "hot-dog": {
                 "health": 20,
                 "index_x": 10,
                 "index_y": 10,
                 "icon": ":",
-                "number":1 
+                "number": 1
             },
             "beer": {
                 "health": 50,
                 "index_x": 13,
                 "index_y": 7,
                 "icon": "U",
-                "number":1   
-            },  
+                "number": 1
+            },
+        },
+        "characters": {
+            "Collector": {
+                "index_x": 13,
+                "index_y": 4,
+                "icon": "C",
+                "health": 30,
+                "riddle": """What animal walks with 4 legs, then with 2,
+                                       and at end with 3?""",
+                "answer": ("human", "human being", "man", "person")
+            },
+            "Skull": {
+                "index_x": 7,
+                "index_y": 8,
+                "icon": "S",
+                "health": 30,
+                "riddle": """Everyone has it, but some don't like it. It makes
+                             a kid lough, saddens old man, pleases young girl.
+                             When You laugh it laughswith You, when You weep
+                             it weeps as well.""",
+                "answer": ("reflection", "mirror reflection")
+            }
+        },
+        "nature": {
+            "tree_1": {
+                "index_x": 8,
+                "index_y": 1,
+                "icon": "T"
+            },
+            "tree_2": {
+                "index_x": 6,
+                "index_y": 4,
+                "icon": "T"
+            },
+            "tree_3": {
+                "index_x": 5,
+                "index_y": 8,
+                "icon": "T"
+            },
+            "tree_4": {
+                "index_x": 11,
+                "index_y": 8,
+                "icon": "T"
+            }
         },
     }
 }
+
 quests = {
     "1": {
-        "quest_description": ["You are an Avenger, fighting Thanos and his troops.",
+        "quest_description": ["You are an Avenger, fighting Thanos and his troops."
                               "Your task is to find infinity stones located on 3 worlds, starting from Earth.",
                               "To find the stones placed here, you'll need to beat the sneakiest of them all - Loki.",
                               "Only then you'll be able to get to other worlds.",
                               "But be careful, you need to prepare for this meeting..."]
     },
     "2": {
-        "quest_description": ["quest 2 description here"]
-    },    
+        "quest_description": ["""The space and reality stones are hidden on the
+                                 board. To get them You need to move pass 2
+                                 labyrinths. After collecting both stones
+                                 gates to Vormir will open."""]
+    },
     "3": {
-        "quest_description": ["quest 3 descripton here"]
-    },   
+        "quest_description": ["""Infinity stones are in possession by two
+                                 characters: the Collector (Power Stone),
+                                 and the Skull (Soul Stone). The characters
+                                 will give You the stones
+                                 if You will answer their riddles.
+                                 Beware off the traps."""]
+    },
 }
+
+
+labyrinth_data = {"obstacle_name": "rock",
+                  "icon": "O",
+                  "coor": [[7, 1], [13, 1], [12, 2], [3, 3],
+                           [6, 3], [6, 3], [6, 3], [2, 4],
+                           [4, 4], [11, 4], [5, 5], [4, 5], [11, 5],
+                           [12, 5], [2, 6], [4, 6], [7, 6], [12, 6],
+                           [3, 7], [6, 7], [8, 7], [12, 7], [9, 8],
+                           [9, 9]]
+                  }
+
+
+def generate_labyrinth(board, labyrinth_data):
+    count = 0
+    for cor in labyrinth_data["coor"]:
+        key = labyrinth_data["obstacle_name"] + "_" + str(count)
+        val = {"index_x": cor[0], "index_y": cor[1],
+               "icon": labyrinth_data["icon"]}
+        board["nature"][key] = val
+        count += 1
+
 
 def create_player():
     '''
     Creates a 'player' dictionary for storing all player related information - i.e. player icon, player position.
-    
+
     Returns:
     dictionary
     '''
@@ -246,7 +332,8 @@ def create_player():
         "position_x": 3,
         "position_y": 6,
         "current_board": "board_1",
-        "player_icon": user_icon
+        "player_icon": user_icon,
+        "inventory": {}
     }
     return player
 
@@ -254,7 +341,7 @@ def create_player():
 def ask_for_details():
     """
     Asks player for name and icon.
-    
+
     Returns:
     User's details
     """
@@ -264,15 +351,16 @@ def ask_for_details():
     ui.type_writter_effect([names, questions[0]])
     print("\t\t\t",end="")
     user_name = input("> ")
-    
+
     if user_name in ["s", "S"]:
         user_name = "Spider-Man"
     elif user_name in ["i", "I"]:
         user_name = "Iron-Man"
     elif user_name in ["r", "R"] or len(user_name) < 1:
         user_name = random.choice(["Spider-Man", "Iron-Man"])
+
     ui.type_writter_effect([questions[1]])
-    print("\t\t\t",end="")
+    print("\t\t\t", end="")
     user_icon = input("> ")
     possible_icons = ["@", "&", "#", "%"]
     if user_icon not in possible_icons:
@@ -291,7 +379,7 @@ def main():
     util.clear_screen()
     asci_logo = data_menager.read_file("avengers.txt")
     # zakomentujcie sobie poniżej wtedy nie będzie się wam wczytywać logo za każdym razem
-    ui.display_logo(asci_logo)
+    # ui.display_logo(asci_logo)
     util.clear_screen()
     # ui.display_logo(asci_logo)
     # util.clear_screen()
@@ -299,10 +387,11 @@ def main():
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1) muzyka działa po odkomentowaniu
     player = create_player()
+    generate_labyrinth(boards["board_2"], labyrinth_data)
     # board = engine.create_board(boards[player["current_board"]])
     show_inventory = False
     show_legend = True
-    
+
     util.clear_screen()
     is_running = True
     while is_running:
@@ -313,6 +402,7 @@ def main():
         engine.remove_player_from_board(board, player)
         if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
             player = engine.move_player(board, player, key, boards)
+            # enemy = engine.move_enemy()
         if key in ["q", "Q"]:
             is_running = False
         elif key in ["i", "I"] and "inventory" in player:
@@ -321,6 +411,18 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
+
+        if "Loki" in boards["board_1"]["characters"]:
+            obstacle = True
+            black_character= boards["board_1"]["characters"]["Loki"]
+            while obstacle and black_character:
+                numbers = random.choices(["0", "1", "-1"], k=2)
+                print(black_character)
+                if engine.check_free_space(numbers, board, black_character):
+                    black_character["index_y"] += int(numbers[0])
+                    black_character["index_x"] += int(numbers[1])
+                    obstacle = False
+                    
         engine.plot_development(player, quests)
         util.clear_screen()
 
