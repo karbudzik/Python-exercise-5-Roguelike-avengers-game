@@ -317,21 +317,28 @@ def player_next_to_character(player: dict,
 
 
 def player_is_close_to_Loki(player):
-    if (player['position_x'] + 1) == main.boards['board_1']['characters']['Loki']['index_x']:
-        return True
-    elif (player['position_y'] + 1) == main.boards['board_1']['characters']['Loki']['index_y']:
-        return True
+    if "Loki" in main.boards["board_1"]["characters"]:
+        if (player['position_x'] + 1) == main.boards['board_1']['characters']['Loki']['index_x']:
+            return True
+        elif (player['position_y'] + 1) == main.boards['board_1']['characters']['Loki']['index_y']:
+            return True
+        else:
+            return False
     else:
-        return False
+        return True
 
 
 def player_is_next_to_Loki(player):
-    if player['position_x'] == main.boards['board_1']['characters']['Loki']['index_x']:
-        return True
-    elif player['position_y'] == main.boards['board_1']['characters']['Loki']['index_y']:
-        return True
+    if "Loki" in main.boards["board_1"]["characters"]:
+        if player['position_x'] == main.boards['board_1']['characters']['Loki']['index_x']:
+            return True
+        elif player['position_y'] == main.boards['board_1']['characters']['Loki']['index_y']:
+            return True
+        else:
+            return False
     else:
         return False
+    
 
 
 def remove_Loki_from_board():
