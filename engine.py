@@ -286,15 +286,12 @@ def plot_development(player, quests, boards):
         # b) the gates are visible, as described in 1.
     elif player["current_board"] == "board_2":
         pass
-<<<<<<< HEAD
     elif player["current_board"] == "board_3":
         next = player_next_to_character(player, "Skull",
                                         boards[player["current_board"]])
 
         if next:
             print("player next to Skull")
-=======
->>>>>>> ea8a806844b935cfe32ab611be8ffe5c353755cb
 
     # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
     # than 0, then the person died and game end

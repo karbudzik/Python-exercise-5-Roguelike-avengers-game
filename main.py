@@ -401,9 +401,6 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
-<<<<<<< HEAD
-        engine.plot_development(player, quests, boards)
-=======
 
         if "Loki" in boards["board_1"]["characters"]:
             obstacle = True
@@ -416,8 +413,7 @@ def main():
                     black_character["index_x"] += int(numbers[1])
                     obstacle = False
                     
-        engine.plot_development(player, quests)
->>>>>>> ea8a806844b935cfe32ab611be8ffe5c353755cb
+        engine.plot_development(player, quests, boards)
         util.clear_screen()
 
 
