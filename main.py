@@ -59,18 +59,6 @@ boards = {
                 "index_y": 10,
                 "icon": "?"
             },
-            "time stone": {
-                "number": 1,
-                "index_x": 9,
-                "index_y": 3,
-                "icon":"*"
-            },
-            "mind stone": {
-                "number": 1,
-                "index_x": 5,
-                "index_y": 5,
-                "icon":"*"
-            }
         },
         "characters": {
             "Loki": {

@@ -134,7 +134,7 @@ def change_board(player, boards, direction_from, direction_to):
             player["position_y"] = boards[next_board]["exits"][direction_from]["index_y"] + correction_numbers[index][1]
 
 
-def update_inventory(player, to_add, what_we_update):
+def update_inventory(player, to_add, what_we_update): #player, stone, items
     if "inventory" not in player:
         player["inventory"] = {}
 
@@ -202,6 +202,7 @@ def get_item(player, axis, current_board, sign, boards, what_we_update):
 def interact_with_character(boards, icon, player):
     if icon == "L":
         board_name = player["current_board"]
+        print("interact")
         del boards[board_name]["characters"]["Loki"]
         # RICARDO:
         # Here you could add a condition that if a player has "thor's hammer" and the "captain's america's shield"
@@ -260,17 +261,22 @@ def plot_development(player, quests, boards, board_list):
     if player["current_board"] == "board_1":
         if "Loki" in boards["board_1"]["characters"]:
             character_movement(boards, "board_1", board_list, "Loki")
-            
-    # ******** I've commented this function because it was not ready and caused errors. Feel free to uncomment when needed. *****
+            # tu może być zaimplementowana walka? albo ewentualnie w interact_with_character()?
+        else: # kamienie pokazują się po zniknięciu Lokiego:
+            add_infinity_stones(boards, "board_1", "time stone", 9, 3)
+            add_infinity_stones(boards, "board_1", "mind stone", 5, 5)
+    
 
-        # if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
-        #     player['health'] -= 20
-        # elif player_is_next_to_Loki():  # This will be the battle
-        #     if player['health'] >= 30:  # I've added a health to Loki's character :)
-        #         remove_Loki_from_board()
-        #         show_infinity_stones()
-        #     else:
-        #         player_has_lost()
+            # Ricardo's code:
+            #
+            # if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
+            #     player['health'] -= 20
+            # elif player_is_next_to_Loki():  # This will be the battle
+            #     if player['health'] >= 30:  # I've added a health to Loki's character :)
+            #         remove_Loki_from_board()
+            #         show_infinity_stones()
+            #     else:
+            #         player_has_lost()
 
     elif player["current_board"] == "board_2":
         pass
@@ -381,8 +387,13 @@ def remove_Loki_from_board():
     del main.boards['board_1']['characters']['Loki']
 
 
-def show_infinity_stones():
-    add_const_elements(main.boards, '', '')
+def add_infinity_stones(boards, board, stone_name, x, y):
+    boards[board]["items"][stone_name] = {
+        "number": 1,
+        "index_x": x,
+        "index_y": y,
+        "icon":"*",
+    }
 
 
 def player_has_lost():
