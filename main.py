@@ -8,11 +8,6 @@ import data_menager
 # from pygame import mixer
 # import pyfiglet
 
-enemy = {
-    "x": 3,
-    "y": 4
-}
-
 legend = {
     "x": "exit",
     "T": "tree",
@@ -38,31 +33,11 @@ boards = {
                 "icon": "x"
             }
         },
-        "nature": {
-            "tree_1": {
-                "index_x": 2,
-                "index_y": 2,
-                "icon": "T"
-            },
-            "tree_2": {
-                "index_x": 1,
-                "index_y": 4,
-                "icon": "T"
-            },
-            "tree_3": {
-                "index_x": 13,
-                "index_y": 9,
-                "icon": "T"
-            },
-            "tree_4": {
-                "index_x": 13,
-                "index_y": 8,
-                "icon": "T"
-            },
-            "tree_5": {
-                "index_x": 13,
-                "index_y": 10,
-                "icon": "T"
+        "static_elements": {
+            "trees": {
+                "obstacle_name": "tree",
+                "icon": "T",
+                "coor": [[2, 2], [1, 4], [13, 9], [13, 8], [13, 10]]
             },
         },
         "items": {
@@ -84,12 +59,14 @@ boards = {
                 "index_y": 10,
                 "icon": "?"
             },
-            "infinity_stone3": {
+            "time stone": {
+                "number": 1,
                 "index_x": 9,
                 "index_y": 3,
                 "icon":"*"
             },
-            "infinity_stone4": {
+            "mind stone": {
+                "number": 1,
                 "index_x": 5,
                 "index_y": 5,
                 "icon":"*"
@@ -145,26 +122,21 @@ boards = {
                 "icon": "x"
             }
         },
-        "nature": {
-            "tree_1": {
-                "index_x": 8,
-                "index_y": 1,
-                "icon": "T"
+        "static_elements": {
+            "trees": {
+                "obstacle_name": "tree",
+                "icon": "T",
+                "coor": [[8, 1], [6, 4], [5, 8], [11, 8]]
             },
-            "tree_2": {
-                "index_x": 6,
-                "index_y": 4,
-                "icon": "T"
-            },
-            "tree_3": {
-                "index_x": 5,
-                "index_y": 8,
-                "icon": "T"
-            },
-            "tree_4": {
-                "index_x": 11,
-                "index_y": 8,
-                "icon": "T"
+            "labyrinth": {
+                "obstacle_name": "rock",
+                "icon": "O",
+                "coor": [[7, 1], [13, 1], [12, 2], [3, 3],
+                        [6, 3], [6, 3], [6, 3], [2, 4],
+                        [4, 4], [11, 4], [5, 5], [4, 5], [11, 5],
+                        [12, 5], [2, 6], [4, 6], [7, 6], [12, 6],
+                        [3, 7], [6, 7], [8, 7], [12, 7], [9, 8],
+                        [9, 9]]
             }
         },
         "items": {
@@ -174,13 +146,13 @@ boards = {
                 "index_y": 2,
                 "icon": "?"
             },
-            "space_stone": {
+            "space stone": {
                 "number": 1,
                 "index_x": 2,
                 "index_y": 4,
                 "icon": "*"
             },
-            "reality_stone": {
+            "reality stone": {
                 "number": 1,
                 "index_x": 11,
                 "index_y": 3,
@@ -247,27 +219,12 @@ boards = {
                 "stone": "soul_stone"
             }
         },
-        "nature": {
-            "tree_1": {
-                "index_x": 8,
-                "index_y": 1,
-                "icon": "T"
+        "static_elements": {
+            "trees": {
+                "obstacle_name": "tree",
+                "icon": "T",
+                "coor": [[8, 1], [6, 4], [5, 8], [11, 8]]
             },
-            "tree_2": {
-                "index_x": 6,
-                "index_y": 4,
-                "icon": "T"
-            },
-            "tree_3": {
-                "index_x": 5,
-                "index_y": 8,
-                "icon": "T"
-            },
-            "tree_4": {
-                "index_x": 11,
-                "index_y": 8,
-                "icon": "T"
-            }
         },
     }
 }
@@ -295,27 +252,6 @@ quests = {
                                  Beware off the traps."""]
     },
 }
-
-
-labyrinth_data = {"obstacle_name": "rock",
-                  "icon": "O",
-                  "coor": [[7, 1], [13, 1], [12, 2], [3, 3],
-                           [6, 3], [6, 3], [6, 3], [2, 4],
-                           [4, 4], [11, 4], [5, 5], [4, 5], [11, 5],
-                           [12, 5], [2, 6], [4, 6], [7, 6], [12, 6],
-                           [3, 7], [6, 7], [8, 7], [12, 7], [9, 8],
-                           [9, 9]]
-                  }
-
-
-def generate_labyrinth(board, labyrinth_data):
-    count = 0
-    for cor in labyrinth_data["coor"]:
-        key = labyrinth_data["obstacle_name"] + "_" + str(count)
-        val = {"index_x": cor[0], "index_y": cor[1],
-               "icon": labyrinth_data["icon"]}
-        board["nature"][key] = val
-        count += 1
 
 
 def create_player():
@@ -380,18 +316,13 @@ def make_opposite_boolean(boolean):
 
 def main():
     util.clear_screen()
-    asci_logo = data_menager.read_file("avengers.txt")
-    # zakomentujcie sobie poniżej wtedy nie będzie się wam wczytywać logo za każdym razem
-    # ui.display_logo(asci_logo)
-    util.clear_screen()
+    # asci_logo = data_menager.read_file("avengers.txt")
     # ui.display_logo(asci_logo)
     # util.clear_screen()
     # pygame.init()
     # mixer.music.load("The Avengers Theme Song.ogg")
-    # mixer.music.play(-1) muzyka działa po odkomentowaniu
+    # mixer.music.play(-1) - muzyka działa po odkomentowaniu
     player = create_player()
-    generate_labyrinth(boards["board_2"], labyrinth_data)
-    # board = engine.create_board(boards[player["current_board"]])
     show_inventory = False
     show_legend = True
 
@@ -399,14 +330,12 @@ def main():
     is_running = True
     while is_running:
         board = engine.create_board(boards[player["current_board"]])
-        print(len(board), len(board[0]))
         engine.put_player_on_board(board, player)
         ui.display_board(board, boards[player["current_board"]]["name"], player, quests, show_inventory, show_legend, legend)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
         if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
             player = engine.move_player(board, player, key, boards)
-            # enemy = engine.move_enemy()
         if key in ["q", "Q"]:
             is_running = False
         elif key in ["i", "I"] and "inventory" in player:
@@ -416,22 +345,7 @@ def main():
         else:
             pass
 
-<<<<<<< Updated upstream
-        if "Loki" in boards["board_1"]["characters"]:
-            obstacle = True
-            black_character = boards["board_1"]["characters"]["Loki"]
-            while obstacle and black_character:
-                numbers = random.choices(["0", "1", "-1"], k=2)
-                print(black_character)
-                if engine.check_free_space(numbers, board, black_character):
-                    black_character["index_y"] += int(numbers[0])
-                    black_character["index_x"] += int(numbers[1])
-                    obstacle = False
-                    
-        engine.plot_development(player, quests, boards)
-=======
         engine.plot_development(player, quests, boards, board)
->>>>>>> Stashed changes
         util.clear_screen()
 
 
