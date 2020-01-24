@@ -83,8 +83,28 @@ boards = {
                 "number": 1,
                 "index_x": 1,
                 "index_y": 10,
-                "icon":"?"   
+                "icon":"8"   
             },
+            "infinity_stone1": {
+                "index_x": 3,
+                "index_y": 10,
+                "icon":"*"
+            },
+            "infinity_stone2": {
+                "index_x": 3,
+                "index_y": 6,
+                "icon":"*"
+            },
+            "infinity_stone3": {
+                "index_x": 9,
+                "index_y": 3,
+                "icon":"*"
+            },
+            "infinity_stone4": {
+                "index_x": 5,
+                "index_y": 5,
+                "icon":"*"
+            }
         },
         "characters": {
             "Loki": {

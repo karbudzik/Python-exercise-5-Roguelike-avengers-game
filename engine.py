@@ -127,7 +127,7 @@ def change_board(player, boards, direction_from, direction_to):
             player["position_y"] = boards[next_board]["exits"][direction_from]["index_y"] + correction_numbers[index][1]
 
 
-def update_inventory(player, to_add,what_we_update):
+def update_inventory(player, to_add, what_we_update):
     if "inventory" not in player:
         player["inventory"] = {}
 
@@ -137,7 +137,7 @@ def update_inventory(player, to_add,what_we_update):
         player["inventory"][to_add] = main.boards[player["current_board"]][what_we_update][to_add]["number"]
 
 
-def remove_object_from_board(board, player, to_remove, boards,what_we_update):
+def remove_object_from_board(board, player, to_remove, boards, what_we_update):
     '''
     Removes the item from the "boards" dictionary.
 
@@ -158,7 +158,7 @@ def update_player_health(player, key):
     player["health"]+=key
 
 
-def get_item(player, axis, current_board, sign, boards,what_we_update):
+def get_item(player, axis, current_board, sign, boards, what_we_update):
     '''
     Walks into items, adds them to the inventory and removes from the board
 
@@ -251,18 +251,14 @@ def plot_development(player, quests):
     description
     '''
     if player["quest"] == 1:  # it's only for the plot happening on Earth (board_1)
-        pass
-
-    # ******** I've commented this function because it was not ready and caused errors. Feel free to uncomment when needed. *****
-
-        # if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
-        #     player['health'] -= 20
-        # elif player_is_next_to_Loki():  # This will be the battle
-        #     if player['health'] >= 30:  # I've added a health to Loki's character :)
-        #         remove_Loki_from_board()
-        #         show_infinity_stones()
-        #     else:
-        #         player_has_lost()
+        if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
+            player['health'] -= 20
+        elif player_is_next_to_Loki():  # This will be the battle
+            if player['health'] >= 30:  # I've added a health to Loki's character :)
+                remove_Loki_from_board()
+                show_infinity_stones()
+            else:
+                player_has_lost()
 
 
 
@@ -295,21 +291,32 @@ def plot_development(player, quests):
     # than 0, then the person died and game ended
 
 
-# ******* I've commented this functions because they are not ready and cause errors. Feel free to uncoment them if needed. *******
-#
-# def player_is_close_to_Loki():
-#     if (main.player['position_x'] + 1) == main.boards['characters']['Loki']['index_x']:
-#         return True
-#     elif (main.player['position_y'] + 1) == main.boards['characters']['Loki']['index_y']:
-#         return True
-#     else:
-#         return False
+def player_is_close_to_Loki():
+    if (main.player['position_x'] + 1) == main.boards['characters']['Loki']['index_x']:
+        return True
+    elif (main.player['position_y'] + 1) == main.boards['characters']['Loki']['index_y']:
+        return True
+    else:
+        return False
 
 
-# def player_is_next_to_Loki():
-#     if main.player['position_x'] == main.boards['characters']['Loki']['index_x']:
-#         return True
-#     elif main.player['position_y'] == main.boards['characters']['Loki']['index_y']:
-#         return True
-#     else:
-#         return False
+def player_is_next_to_Loki():
+    if main.player['position_x'] == main.boards['characters']['Loki']['index_x']:
+        return True
+    elif main.player['position_y'] == main.boards['characters']['Loki']['index_y']:
+        return True
+    else:
+        return False
+
+
+def remove_Loki_from_board():
+    del main.boards['characters']['Loki']
+
+
+def show_infinity_stones():
+    add_const_elements(main.boards, '', '')
+
+
+def player_has_lost():
+    print("You have lost!")
+    exit()
