@@ -250,9 +250,9 @@ def plot_development(player, quests, boards):
     description
     '''
     if player["quest"] == 1:  # it's only for the plot happening on Earth (board_1)
-        if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
+        if player_is_close_to_Loki(player):  # this function will check player's location in relation to Loki's
             player['health'] -= 20
-        elif player_is_next_to_Loki():  # This will be the battle
+        elif player_is_next_to_Loki(player):  # This will be the battle
             if player['health'] >= 30:  # I've added a health to Loki's character :)
                 remove_Loki_from_board()
                 show_infinity_stones()
@@ -310,26 +310,26 @@ def player_next_to_character(player: dict,
         return False
 
 
-def player_is_close_to_Loki():
-    if (main.player['position_x'] + 1) == main.boards['characters']['Loki']['index_x']:
+def player_is_close_to_Loki(player):
+    if (player['position_x'] + 1) == main.boards['board_1']['characters']['Loki']['index_x']:
         return True
-    elif (main.player['position_y'] + 1) == main.boards['characters']['Loki']['index_y']:
+    elif (player['position_y'] + 1) == main.boards['board_1']['characters']['Loki']['index_y']:
         return True
     else:
         return False
 
 
-def player_is_next_to_Loki():
-    if main.player['position_x'] == main.boards['characters']['Loki']['index_x']:
+def player_is_next_to_Loki(player):
+    if player['position_x'] == main.boards['board_1']['characters']['Loki']['index_x']:
         return True
-    elif main.player['position_y'] == main.boards['characters']['Loki']['index_y']:
+    elif player['position_y'] == main.boards['board_1']['characters']['Loki']['index_y']:
         return True
     else:
         return False
 
 
 def remove_Loki_from_board():
-    del main.boards['characters']['Loki']
+    del main.boards['board_1']['characters']['Loki']
 
 
 def show_infinity_stones():
@@ -339,7 +339,6 @@ def show_infinity_stones():
 def player_has_lost():
     print("You have lost!")
     exit()
-
 
 
 def check_free_space(numbers, board, enemy):

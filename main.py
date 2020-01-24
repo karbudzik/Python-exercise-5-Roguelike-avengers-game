@@ -414,7 +414,7 @@ def main():
 
         if "Loki" in boards["board_1"]["characters"]:
             obstacle = True
-            black_character= boards["board_1"]["characters"]["Loki"]
+            black_character = boards["board_1"]["characters"]["Loki"]
             while obstacle and black_character:
                 numbers = random.choices(["0", "1", "-1"], k=2)
                 print(black_character)
@@ -423,7 +423,7 @@ def main():
                     black_character["index_x"] += int(numbers[1])
                     obstacle = False
                     
-        engine.plot_development(player, quests)
+        engine.plot_development(player, quests, boards)
         util.clear_screen()
 
 
