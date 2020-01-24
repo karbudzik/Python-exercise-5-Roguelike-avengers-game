@@ -8,6 +8,11 @@ import data_menager
 # from pygame import mixer
 # import pyfiglet
 
+enemy = {
+    "x": 3,
+    "y": 4
+}
+
 legend = {
     "x": "exit",
     "T": "tree",
@@ -364,7 +369,7 @@ def main():
     util.clear_screen()
     asci_logo = data_menager.read_file("avengers.txt")
     # zakomentujcie sobie poniżej wtedy nie będzie się wam wczytywać logo za każdym razem
-    ui.display_logo(asci_logo)
+    # ui.display_logo(asci_logo)
     util.clear_screen()
     # ui.display_logo(asci_logo)
     # util.clear_screen()
@@ -387,6 +392,7 @@ def main():
         engine.remove_player_from_board(board, player)
         if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
             player = engine.move_player(board, player, key, boards)
+            # enemy = engine.move_enemy()
         if key in ["q", "Q"]:
             is_running = False
         elif key in ["i", "I"] and "inventory" in player:
@@ -395,7 +401,23 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
+<<<<<<< HEAD
         engine.plot_development(player, quests, boards)
+=======
+
+        if "Loki" in boards["board_1"]["characters"]:
+            obstacle = True
+            black_character= boards["board_1"]["characters"]["Loki"]
+            while obstacle and black_character:
+                numbers = random.choices(["0", "1", "-1"], k=2)
+                print(black_character)
+                if engine.check_free_space(numbers, board, black_character):
+                    black_character["index_y"] += int(numbers[0])
+                    black_character["index_x"] += int(numbers[1])
+                    obstacle = False
+                    
+        engine.plot_development(player, quests)
+>>>>>>> ea8a806844b935cfe32ab611be8ffe5c353755cb
         util.clear_screen()
 
 

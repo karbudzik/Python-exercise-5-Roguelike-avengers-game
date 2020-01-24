@@ -127,7 +127,7 @@ def print_table(title, dictionary, headers, console_width):
     vertical_break = " | "
     total_width = first_width + len(vertical_break) + second_width
     print()
-    
+
     print((title).center(console_width))
     print(((total_width) * "-").center(console_width))
     print((f"{headers[0]:>{first_width}}{vertical_break}{headers[1]:>{second_width}}").center(console_width))
@@ -139,11 +139,10 @@ def print_table(title, dictionary, headers, console_width):
     print(((total_width) * "-").center(console_width))
 
 def display_logo(art):
-    # console_width = os.get_terminal_size().rows
     print("\n\n")
     for line in art:
         print("\t\t\t\t\t\t\t{}".format(line), end="")
-        sleep(0.2)
+        # sleep(0.2)
     print("\n\n")
 
 def type_writter_effect(list_of_words):
@@ -152,5 +151,5 @@ def type_writter_effect(list_of_words):
         print("\t\t\t", end="")
         for letter in word:
             print(letter, end="", flush=True)
-            sleep(0.05)
+            # sleep(0.05)
         print()
