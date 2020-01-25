@@ -187,6 +187,14 @@ boards = {
                 "number": 1
             },
         },
+        "items": {
+            "gold": {
+                "number": 2,
+                "index_x": 4,
+                "index_y": 8,
+                "icon": "$"
+            },
+        },
         "characters": {
             "Collector": {
                 "index_x": 13,
@@ -207,7 +215,7 @@ boards = {
                              a kid lough, saddens old man, pleases young girl.
                              When You laugh it laughswith You, when You weep
                              it weeps as well.""",
-                "answer": ("reflection", "mirror reflection"),
+                "answer": ("reflection", "mirror reflection", "mirror"),
                 "stone": "soul_stone"
             }
         },
@@ -318,7 +326,7 @@ def main():
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1)
     #  - muzyka działa po odkomentowaniu
-    message = ""
+    message, message_type, name = "", "no_type", ""
     player = create_player()
     show_inventory = False
     show_legend = True
@@ -329,6 +337,8 @@ def main():
         engine.put_player_on_board(board, player)
         ui.display_board(board, boards[player["current_board"]]["name"],
                          player, quests, show_inventory, show_legend, legend, message)
+        if message_type == "input":
+            engine.validate_answer(name, player, boards)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
 
@@ -341,9 +351,8 @@ def main():
             show_inventory = make_opposite_boolean(show_inventory)
         elif key in ["l", "L"]:
             show_legend = make_opposite_boolean(show_legend)
-        else:
-            pass
-        message = engine.plot_development(player, quests, boards, board)
+
+        message, message_type, name = engine.plot_development(player, quests, boards, board)
         util.clear_screen()
         if engine.check_health_is_zero_or_below(player) == False:
             engine.player_has_lost()
