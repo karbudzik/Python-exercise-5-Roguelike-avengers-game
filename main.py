@@ -4,9 +4,9 @@ import ui
 import random
 import sys
 import data_menager
-# import pygame
-# from pygame import mixer
-# import pyfiglet
+import pygame
+from pygame import mixer
+import pyfiglet
 
 legend = {
     "x": "exit",
@@ -314,7 +314,7 @@ def main():
     # asci_logo = data_menager.read_file("avengers.txt")
     # ui.display_logo(asci_logo)
     # util.clear_screen()
-    # pygame.init()
+    pygame.init()
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1)
     #  - muzyka działa po odkomentowaniu
@@ -348,6 +348,8 @@ def main():
         engine.plot_development(player, quests, boards, board)
         util.clear_screen()
         if engine.check_health_is_zero_or_below(player) == False:
+            lose_sound = mixer.Sound("game_over.wav")
+            lose_sound.play()
             engine.player_has_lost()
             is_running = False
         # is_running = engine.check_health_is_zero_or_below(player)
