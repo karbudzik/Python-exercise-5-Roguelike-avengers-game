@@ -318,19 +318,17 @@ def main():
     # mixer.music.load("The Avengers Theme Song.ogg")
     # mixer.music.play(-1)
     #  - muzyka działa po odkomentowaniu
+    message = ""
     player = create_player()
     show_inventory = False
     show_legend = True
     util.clear_screen()
     is_running = True
     while is_running:
-        # if engine.check_health_is_zero_or_below(player) == False:
-        #     engine.player_has_lost()
-        #     is_running=False
         board = engine.create_board(boards[player["current_board"]])
         engine.put_player_on_board(board, player)
         ui.display_board(board, boards[player["current_board"]]["name"],
-                         player, quests, show_inventory, show_legend, legend)
+                         player, quests, show_inventory, show_legend, legend, message)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
 
@@ -345,12 +343,11 @@ def main():
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
-        engine.plot_development(player, quests, boards, board)
+        message = engine.plot_development(player, quests, boards, board)
         util.clear_screen()
         if engine.check_health_is_zero_or_below(player) == False:
             engine.player_has_lost()
             is_running = False
-        # is_running = engine.check_health_is_zero_or_below(player)
 
 
 if __name__ == '__main__':
