@@ -134,14 +134,15 @@ def change_board(player, boards, direction_from, direction_to):
             player["position_y"] = boards[next_board]["exits"][direction_from]["index_y"] + correction_numbers[index][1]
 
 
-def update_inventory(player, to_add, what_we_update): #player, stone, items
+def update_inventory(boards, player, to_add, what_we_update): #player, stone, items
     if "inventory" not in player:
         player["inventory"] = {}
 
     if to_add in player["inventory"]:
-        player["inventory"][to_add] += main.boards[player["current_board"]][what_we_update][to_add]["number"]
+        player["inventory"][to_add] += boards[player["current_board"]][what_we_update][to_add]["number"]
     else:
-        player["inventory"][to_add] = main.boards[player["current_board"]][what_we_update][to_add]["number"]
+        player["inventory"][to_add] = boards[player["current_board"]][what_we_update][to_add]["number"]
+    return boards
 
 
 def remove_object_from_board(board, player, to_remove, boards, what_we_update):
@@ -159,6 +160,7 @@ def remove_object_from_board(board, player, to_remove, boards, what_we_update):
     '''
     board_name = player["current_board"]
     del boards[board_name][what_we_update][to_remove]
+    print("usun")
 
 
 def update_player_health(player, key):
@@ -188,7 +190,7 @@ def get_item(player, axis, current_board, sign, boards, what_we_update):
     if what_we_update == "items":
         for item in items_on_board:
             if items_on_board[item]["index_x"]+1 == player["position_x"]:
-                update_inventory(player, item, what_we_update)
+                boards = update_inventory(boards, player, item, what_we_update)
                 remove_object_from_board(current_board, player, item, boards, what_we_update)
                 break
     elif what_we_update == "food":
@@ -197,6 +199,7 @@ def get_item(player, axis, current_board, sign, boards, what_we_update):
                 update_player_health(player, items_on_board[item]["health"])
                 remove_object_from_board(current_board, player, item, boards, what_we_update)
                 break
+    return boards
 
 
 def interact_with_character(boards, icon, player):
@@ -241,24 +244,20 @@ def move_player(board, player, key, boards):
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-    elif desired_place_coordinates[move_index] == "x":
+    elif desired_place_coordinates[move_index] == "Q":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
     elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*"]:
-        get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
+        boards = get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
     elif desired_place_coordinates[move_index] in [":", "=", "U"]:
         get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "food")
     elif desired_place_coordinates[move_index] == "L":
         fight_with_Loki(player,current_board)
-        if check_health_is_zero_or_below(current_board["characters"]["Loki"]):
+        if check_health_is_zero_or_below(current_board["characters"]["Loki"])==False:
             #play music
-            add_infinity_stones(boards, "board_1", "time stone", 9, 3)
-            add_infinity_stones(boards, "board_1", "mind stone", 5, 5)
+            print(current_board["characters"]["Loki"]["health"])
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-        if check_health_is_zero_or_below(player):
-            #play game over music
-            print("you lose")
-            player["health"]-=1000
+            
 
             
         # number_of_items_in_inventories = get_number_of_items_in_inventories(player["inventory"], current_board["characters"]["Loki"]["inventory"])
@@ -283,9 +282,13 @@ def plot_development(player, quests, boards, board_list):
             # neighboring_fields=get_neighbor_fields(player["position_x"], player["position_y"])
             # tu może być zaimplementowana walka? albo ewentualnie w interact_with_character()?
         else:  # kamienie pokazują się po zniknięciu Lokiego:
-            pass
-            # add_infinity_stones(boards, "board_1", "time stone", 9, 3)
-            # add_infinity_stones(boards, "board_1", "mind stone", 5, 5)
+            if "mind stone" not in player["inventory"]:
+                add_infinity_stones(boards, "board_1", "mind stone", 9, 3)
+            if "time stone" not in player["inventory"]:
+                add_infinity_stones(boards, "board_1", "time stone", 5, 5)
+            if "mind stone" in player["inventory"] and "time stone" in player["inventory"]:
+                boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
+                boards["board_2"]["exits"]["south"]["icon"]="Q"
     
 
             # Ricardo's code:
@@ -419,7 +422,7 @@ def add_infinity_stones(boards, board, stone_name, x, y):
 
 def player_has_lost():
     print("You have lost!")
-    exit()
+  
 
 
 def check_free_space(move, board_list, character):
@@ -450,6 +453,8 @@ def check_free_space(move, board_list, character):
 
 def check_health_is_zero_or_below(character):
     if character["health"] < 0:
+        return False
+    else:
         return True
 
 
@@ -461,6 +466,7 @@ def fight_with_Loki(player, current_board):
         current_board["characters"]["Loki"]["health"] -= 10
         player["health"] -= 40
         #play fight music
-    elif "thor's hammer" and "captain's america' shield" not in player["inventory"]:
+    elif "thor's hammer" not in player["inventory"] and "captain's america' shield" not in player["inventory"]:
         player["health"] -= 50
+        print(player)
         #playe fight music

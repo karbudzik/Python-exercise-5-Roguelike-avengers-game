@@ -67,9 +67,9 @@ boards = {
                 "icon": "L",
                 "health": 100,
                 "inventory": {
-                  "inventory": "sword"  
+                    "inventory": "sword"
                 },
-                
+
             },
         },
         "food": {
@@ -124,11 +124,11 @@ boards = {
                 "obstacle_name": "rock",
                 "icon": "O",
                 "coor": [[7, 1], [13, 1], [12, 2], [3, 3],
-                        [6, 3], [6, 3], [6, 3], [2, 4],
-                        [4, 4], [11, 4], [5, 5], [4, 5], [11, 5],
-                        [12, 5], [2, 6], [4, 6], [7, 6], [12, 6],
-                        [3, 7], [6, 7], [8, 7], [12, 7], [9, 8],
-                        [9, 9]]
+                         [6, 3], [6, 3], [6, 3], [2, 4],
+                         [4, 4], [11, 4], [5, 5], [4, 5], [11, 5],
+                         [12, 5], [2, 6], [4, 6], [7, 6], [12, 6],
+                         [3, 7], [6, 7], [8, 7], [12, 7], [9, 8],
+                         [9, 9]]
             }
         },
         "items": {
@@ -196,7 +196,7 @@ boards = {
                 "riddle": """What animal walks with 4 legs, then with 2,
                                        and at end with 3?""",
                 "answer": ("human", "human being", "man", "person"),
-                "stone" : "power_stone"
+                "stone": "power_stone"
             },
             "Skull": {
                 "index_x": 7,
@@ -277,10 +277,12 @@ def ask_for_details():
     User's details
     """
     names = "Avalible heroes: You or Spider-Man/Iron-Man"
-    questions = ["Type your name or chosse between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' if you want to randomly pick", "Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly."]
-    questions = ["Type your name or choose between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' to pick randomly", "Choose the icon you want to be. Pick between '@', '&', '#' and '%' or press 'r' to choose randomly."]
+    questions = ["Type your name or chosse between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' if you want to randomly pick",
+                 "Choose the icon you want to be your character. You can choose between '@', '&', '#' and '%' or press 'r' if you want to pick randomly."]
+    questions = ["Type your name or choose between Spider-Man [type 'S'] and Iron-Man [type 'I'], or press 'r' to pick randomly",
+                 "Choose the icon you want to be. Pick between '@', '&', '#' and '%' or press 'r' to choose randomly."]
     ui.type_writter_effect([names, questions[0]])
-    print("\t\t\t",end="")
+    print("\t\t\t", end="")
     user_name = input("> ")
 
     if user_name in ["s", "S"]:
@@ -306,6 +308,7 @@ def make_opposite_boolean(boolean):
         boolean = True
     return boolean
 
+
 def main():
     util.clear_screen()
     # asci_logo = data_menager.read_file("avengers.txt")
@@ -313,32 +316,41 @@ def main():
     # util.clear_screen()
     # pygame.init()
     # mixer.music.load("The Avengers Theme Song.ogg")
-    # mixer.music.play(-1) - muzyka działa po odkomentowaniu
+    # mixer.music.play(-1)
+    #  - muzyka działa po odkomentowaniu
     player = create_player()
     show_inventory = False
     show_legend = True
-
     util.clear_screen()
     is_running = True
     while is_running:
+        # if engine.check_health_is_zero_or_below(player) == False:
+        #     engine.player_has_lost()
+        #     is_running=False
         board = engine.create_board(boards[player["current_board"]])
         engine.put_player_on_board(board, player)
-        ui.display_board(board, boards[player["current_board"]]["name"], player, quests, show_inventory, show_legend, legend)
+        ui.display_board(board, boards[player["current_board"]]["name"],
+                         player, quests, show_inventory, show_legend, legend)
         key = util.key_pressed()
         engine.remove_player_from_board(board, player)
+
         if key in ["W", "w", "s", "S", "a", "A", "D", "d"]:
             player = engine.move_player(board, player, key, boards)
         if key in ["q", "Q"]:
             is_running = False
+            break
         elif key in ["i", "I"] and "inventory" in player:
             show_inventory = make_opposite_boolean(show_inventory)
         elif key in ["l", "L"]:
             show_legend = make_opposite_boolean(show_legend)
         else:
             pass
-
         engine.plot_development(player, quests, boards, board)
         util.clear_screen()
+        if engine.check_health_is_zero_or_below(player) == False:
+            engine.player_has_lost()
+            is_running = False
+        # is_running = engine.check_health_is_zero_or_below(player)
 
 
 if __name__ == '__main__':

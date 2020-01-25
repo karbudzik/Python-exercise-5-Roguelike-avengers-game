@@ -40,7 +40,8 @@ def display_title(board_list, board_name, console_width):
     captions = caption.split("\n")
     print("")
     for caption in captions:
-        # print(colored(caption.center(console_width),"blue")) - odkomentować na prezentację
+        print(colored(caption.center(console_width),"blue")) 
+        # - odkomentować na prezentację
         print(caption.center(console_width))
 
 
@@ -84,8 +85,9 @@ def display_stats(player, console_width):
     string_to_display = (" | ").join(stats_to_display)
 
     print("")
-    # print(colored(string_to_display.center(console_width), "green")) - odkomentwać na prezentację
-    print(string_to_display.center(console_width))
+    print(colored(string_to_display.center(console_width), "green"))
+    #- odkomentwać na prezentację
+    # print(string_to_display.center(console_width))
     
 
 def display_equipment(player, console_width):
