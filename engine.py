@@ -257,17 +257,6 @@ def move_player(board, player, key, boards):
             print(current_board["characters"]["Loki"]["health"])
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-            
-
-            
-        # number_of_items_in_inventories = get_number_of_items_in_inventories(player["inventory"], current_board["characters"]["Loki"]["inventory"])
-        # number_of_items_in_player_invenotory = number_of_items_in_inventories[0]
-        # number_of_items_in_Loki_invenotory = number_of_items_in_inventories[1]
-
-        
-        # interact_with_character(boards, "L", player)
-
-        # player[movement_axis[move_index][0]] += movement_axis[move_index][1]
 
     return player
 
@@ -290,7 +279,9 @@ def plot_development(player, quests, boards, board_list):
                 boards["board_2"]["exits"]["south"]["icon"]="Q"
 
     elif player["current_board"] == "board_2":
-        pass
+        if "reality stone" in player["inventory"] and "space stone" in player["inventory"]:
+                boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
+                boards["board_3"]["exits"]["south"]["icon"]="Q"
 
     elif player["current_board"] == "board_3":
         characters = boards[player["current_board"]]["characters"] # map Characters dict into local var
@@ -329,8 +320,8 @@ def plot_development(player, quests, boards, board_list):
                 if player["riddle_counter"] >= 3:
                     print("Your are dead")
                     remove_player_from_board(player, boards[player["board"]])
-
-    message = input("Bleblebleble?")
+    print("Ble")
+    # message = input("Bleblebleble?")
     return message
 
 def character_movement(boards, board, board_list, name):

@@ -141,7 +141,7 @@ boards = {
             "space stone": {
                 "number": 1,
                 "index_x": 2,
-                "index_y": 4,
+                "index_y": 5,
                 "icon": "*"
             },
             "reality stone": {
