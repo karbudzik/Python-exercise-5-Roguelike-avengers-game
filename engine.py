@@ -244,7 +244,7 @@ def move_player(board, player, key, boards):
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-    elif desired_place_coordinates[move_index] == "x":
+    elif desired_place_coordinates[move_index] == "Q":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
     elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*"]:
         boards = get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
@@ -285,14 +285,17 @@ def plot_development(player, quests, boards, board_list):
 
     elif player["current_board"] == "board_3":
         characters = boards[player["current_board"]]["characters"] # map Characters dict into local var
-
-        # Check all characters
         for character_name in characters:
-            #If player next to a character
             if player_next_to_character(player,
                                         character_name,
                                         boards[player["current_board"]]):
                 message, message_type, name = characters[character_name]["riddle"], "input", character_name
+        if "power stone" in player["inventory"] and "soul stone" in player["inventory"]:
+                boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
+                boards["board_4"]["exits"]["south"]["icon"]="Q"
+    
+    elif player["current_board"] == "board_4":
+        pass
     
     return message, message_type, name
 
