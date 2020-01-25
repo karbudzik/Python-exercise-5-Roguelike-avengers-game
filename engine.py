@@ -244,7 +244,7 @@ def move_player(board, player, key, boards):
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-    elif desired_place_coordinates[move_index] == "Q":
+    elif desired_place_coordinates[move_index] == "x":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
     elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*"]:
         boards = get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
@@ -292,7 +292,7 @@ def plot_development(player, quests, boards, board_list):
             if player_next_to_character(player,
                                         character_name,
                                         boards[player["current_board"]]):
-                print(characters[character_name]["riddle"])
+                message = characters[character_name]["riddle"]
 
                 #Iterate until You get a good answer or counter exceeds
                 riddle_solved = False
@@ -320,9 +320,8 @@ def plot_development(player, quests, boards, board_list):
                 if player["riddle_counter"] >= 3:
                     print("Your are dead")
                     remove_player_from_board(player, boards[player["board"]])
-    print("Ble")
-    # message = input("Bleblebleble?")
-    return message
+    
+    return message, answer
 
 def character_movement(boards, board, board_list, name):
     black_character = boards[board]["characters"][name]
