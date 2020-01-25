@@ -248,8 +248,27 @@ def move_player(board, player, key, boards):
     elif desired_place_coordinates[move_index] in [":", "=", "U"]:
         get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "food")
     elif desired_place_coordinates[move_index] == "L":
-        interact_with_character(boards, "L", player)
-        player[movement_axis[move_index][0]] += movement_axis[move_index][1]
+        fight_with_Loki(player,current_board)
+        if check_health_is_zero_or_below(current_board["characters"]["Loki"]):
+            #play music
+            add_infinity_stones(boards, "board_1", "time stone", 9, 3)
+            add_infinity_stones(boards, "board_1", "mind stone", 5, 5)
+            remove_enemy_from_board(current_board["characters"], "Loki")
+            player[movement_axis[move_index][0]] += movement_axis[move_index][1]
+        if check_health_is_zero_or_below(player):
+            #play game over music
+            print("you lose")
+            player["health"]-=1000
+
+            
+        # number_of_items_in_inventories = get_number_of_items_in_inventories(player["inventory"], current_board["characters"]["Loki"]["inventory"])
+        # number_of_items_in_player_invenotory = number_of_items_in_inventories[0]
+        # number_of_items_in_Loki_invenotory = number_of_items_in_inventories[1]
+
+        
+        # interact_with_character(boards, "L", player)
+
+        # player[movement_axis[move_index][0]] += movement_axis[move_index][1]
 
     return player
 
@@ -261,10 +280,12 @@ def plot_development(player, quests, boards, board_list):
     if player["current_board"] == "board_1":
         if "Loki" in boards["board_1"]["characters"]:
             character_movement(boards, "board_1", board_list, "Loki")
+            # neighboring_fields=get_neighbor_fields(player["position_x"], player["position_y"])
             # tu może być zaimplementowana walka? albo ewentualnie w interact_with_character()?
-        else: # kamienie pokazują się po zniknięciu Lokiego:
-            add_infinity_stones(boards, "board_1", "time stone", 9, 3)
-            add_infinity_stones(boards, "board_1", "mind stone", 5, 5)
+        else:  # kamienie pokazują się po zniknięciu Lokiego:
+            pass
+            # add_infinity_stones(boards, "board_1", "time stone", 9, 3)
+            # add_infinity_stones(boards, "board_1", "mind stone", 5, 5)
     
 
             # Ricardo's code:
@@ -383,8 +404,8 @@ def player_is_next_to_Loki(player):
     
 
 
-def remove_Loki_from_board():
-    del main.boards['board_1']['characters']['Loki']
+def remove_enemy_from_board(board,enemy):
+    del board[enemy]
 
 
 def add_infinity_stones(boards, board, stone_name, x, y):
@@ -402,14 +423,44 @@ def player_has_lost():
 
 
 def check_free_space(move, board_list, character):
-    field_x = character["index_x"] + int(move[0]) + 1
-    field_y = character["index_y"] + int(move[1]) + 1
-    try:
-        # Check if field coordinate is empty
-        if board_list[field_y][field_x] == ' ':
-            return True
-        else:
-            return False
-    except IndexError:
-        print("Index out of bounds.")
-        return False
+    field_y = character["index_y"] + int(move[0])
+    field_x=character["index_x"]+int(move[1])
+    if board_list[field_y][field_x] == " ":
+        return True
+    return False
+
+    # field_x = character["index_x"] + int(move[0])
+    # field_y = character["index_y"] + int(move[1])
+    # try:
+    #     # Check if field coordinate is empty
+    #     if board_list[field_y][field_x] == ' ':
+    #         return True
+    #     else:
+    #         return False
+    # except IndexError:
+    #     print("Index out of bounds.")
+    #     return False
+
+# def get_number_of_items_in_inventories(*inventories):
+#     numbers_of_items=[]
+#     for inventorie in inventories:
+#         numbers_of_items.append(len(inventorie))
+#     return numbers_of_items
+
+
+def check_health_is_zero_or_below(character):
+    if character["health"] < 0:
+        return True
+
+
+def fight_with_Loki(player, current_board):
+    if "thor's hammer" and "captain's america' shield" in player["inventory"]:
+            current_board["characters"]["Loki"]["health"] -= 50
+            #play fight music
+    elif "thor's hammer" in player["inventory"]:
+        current_board["characters"]["Loki"]["health"] -= 10
+        player["health"] -= 40
+        #play fight music
+    elif "thor's hammer" and "captain's america' shield" not in player["inventory"]:
+        player["health"] -= 50
+        #playe fight music

@@ -65,7 +65,11 @@ boards = {
                 "index_x": 13,
                 "index_y": 4,
                 "icon": "L",
-                "health": 30
+                "health": 100,
+                "inventory": {
+                  "inventory": "sword"  
+                },
+                
             },
         },
         "food": {
