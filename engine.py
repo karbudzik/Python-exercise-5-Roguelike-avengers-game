@@ -293,14 +293,17 @@ def plot_development(player, quests, boards, board_list):
 
     elif player["current_board"] == "board_3":
         characters = boards[player["current_board"]]["characters"] # map Characters dict into local var
-
-        # Check all characters
         for character_name in characters:
-            #If player next to a character
             if player_next_to_character(player,
                                         character_name,
                                         boards[player["current_board"]]):
                 message, message_type, name = characters[character_name]["riddle"], "input", character_name
+        if "power stone" in player["inventory"] and "soul stone" in player["inventory"]:
+                boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
+                boards["board_4"]["exits"]["south"]["icon"]="Q"
+    
+    elif player["current_board"] == "board_4":
+        pass
     
     return message, message_type, name
 

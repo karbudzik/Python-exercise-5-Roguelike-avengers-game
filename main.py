@@ -162,6 +162,12 @@ boards = {
                 "index_y": 11,
                 "leads_to": "board_2",
                 "icon": "x"
+            },
+            "north": {
+                "index_x": 13,
+                "index_y": 0,
+                "leads_to": "board_4",
+                "icon": "x"
             }
         },
         "food": {
@@ -204,7 +210,7 @@ boards = {
                 "riddle": """What animal walks with 4 legs, then with 2,
                                        and at end with 3?""",
                 "answer": ("human", "human being", "man", "person"),
-                "stone": "power_stone"
+                "stone": "power stone"
             },
             "Skull": {
                 "index_x": 7,
@@ -216,7 +222,7 @@ boards = {
                              When You laugh it laughswith You, when You weep
                              it weeps as well.""",
                 "answer": ("reflection", "mirror reflection", "mirror"),
-                "stone": "soul_stone"
+                "stone": "soul stone"
             }
         },
         "static_elements": {
@@ -224,6 +230,43 @@ boards = {
                 "obstacle_name": "tree",
                 "icon": "T",
                 "coor": [[8, 1], [6, 4], [5, 8], [11, 8]]
+            },
+        },
+    },
+    "board_4": {
+        "name": "TITAN",
+        "width": 25,
+        "height": 25,
+        "exits": {
+            "south": {
+                "index_x": 13,
+                "index_y": 24,
+                "leads_to": "board_3",
+                "icon": "x"
+            }
+        },
+        "food": {
+            "hamburger": {
+                "health": 20,
+                "index_x": 14,
+                "index_y": 5,
+                "icon": "=",
+                "number": 1
+            }
+        },
+        "items": {
+            "gold": {
+                "number": 2,
+                "index_x": 4,
+                "index_y": 8,
+                "icon": "$"
+            },
+        },
+        "static_elements": {
+            "trees": {
+                "obstacle_name": "tree",
+                "icon": "T",
+                "coor": [[8, 1], [6, 4]]
             },
         },
     }
@@ -251,6 +294,10 @@ quests = {
                                  if You will answer their riddles.
                                  Beware off the traps."""]
     },
+    "4": {
+        "quest_description": ["""Figth with Thanos.
+                                 Można dorobić dłuższy opis"""]
+    }
 }
 
 
