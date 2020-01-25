@@ -4,7 +4,7 @@ import pyfiglet
 from termcolor import colored, cprint
 from time import sleep
 
-def display_board(board_list, board_name, player, quests, show_inventory, show_legend,legend):
+def display_board(board_list, board_name, player, quests, show_inventory, show_legend,legend, message):
     '''
     Displays complete game board on the screen
 
@@ -26,6 +26,8 @@ def display_board(board_list, board_name, player, quests, show_inventory, show_l
         display_equipment(player, console_width)
     if show_legend:
         display_legend(legend, console_width)
+
+    display_message(message, console_width)
 
 
 def display_title(board_list, board_name, console_width):
@@ -103,6 +105,11 @@ def display_legend(legend, console_width):
     headers = ["symbol:", "description:"]
     title = "LEGEND (Press 'L' to hide)"
     print_table(title, legend, headers, console_width)
+
+
+def display_message(message, console_width):
+    print("")
+    print(message.center(console_width))
 
 
 def set_table_width(dictionary, headers):

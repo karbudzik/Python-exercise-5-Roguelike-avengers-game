@@ -257,17 +257,6 @@ def move_player(board, player, key, boards):
             print(current_board["characters"]["Loki"]["health"])
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-            
-
-            
-        # number_of_items_in_inventories = get_number_of_items_in_inventories(player["inventory"], current_board["characters"]["Loki"]["inventory"])
-        # number_of_items_in_player_invenotory = number_of_items_in_inventories[0]
-        # number_of_items_in_Loki_invenotory = number_of_items_in_inventories[1]
-
-        
-        # interact_with_character(boards, "L", player)
-
-        # player[movement_axis[move_index][0]] += movement_axis[move_index][1]
 
     return player
 
@@ -276,11 +265,10 @@ def plot_development(player, quests, boards, board_list):
     '''
     description
     '''
+    message = ""
     if player["current_board"] == "board_1":
         if "Loki" in boards["board_1"]["characters"]:
             character_movement(boards, "board_1", board_list, "Loki")
-            # neighboring_fields=get_neighbor_fields(player["position_x"], player["position_y"])
-            # tu może być zaimplementowana walka? albo ewentualnie w interact_with_character()?
         else:  # kamienie pokazują się po zniknięciu Lokiego:
             if "mind stone" not in player["inventory"]:
                 add_infinity_stones(boards, "board_1", "mind stone", 9, 3)
@@ -289,21 +277,11 @@ def plot_development(player, quests, boards, board_list):
             if "mind stone" in player["inventory"] and "time stone" in player["inventory"]:
                 boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
                 boards["board_2"]["exits"]["south"]["icon"]="Q"
-    
-
-            # Ricardo's code:
-            #
-            # if player_is_close_to_Loki():  # this function will check player's location in relation to Loki's
-            #     player['health'] -= 20
-            # elif player_is_next_to_Loki():  # This will be the battle
-            #     if player['health'] >= 30:  # I've added a health to Loki's character :)
-            #         remove_Loki_from_board()
-            #         show_infinity_stones()
-            #     else:
-            #         player_has_lost()
 
     elif player["current_board"] == "board_2":
-        pass
+        if "reality stone" in player["inventory"] and "space stone" in player["inventory"]:
+                boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
+                boards["board_3"]["exits"]["south"]["icon"]="Q"
 
     elif player["current_board"] == "board_3":
         characters = boards[player["current_board"]]["characters"] # map Characters dict into local var
@@ -342,9 +320,9 @@ def plot_development(player, quests, boards, board_list):
                 if player["riddle_counter"] >= 3:
                     print("Your are dead")
                     remove_player_from_board(player, boards[player["board"]])
-
-    # at the end of this function we might add condition checking if player didn't loose too much hp - if hp is equal/lower
-    # than 0, then the person died and game end
+    print("Ble")
+    # message = input("Bleblebleble?")
+    return message
 
 def character_movement(boards, board, board_list, name):
     black_character = boards[board]["characters"][name]
