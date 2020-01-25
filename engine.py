@@ -265,7 +265,7 @@ def plot_development(player, quests, boards, board_list):
     '''
     description
     '''
-    message = ""
+    message, message_type, name = "", "no_type", ""
     if player["current_board"] == "board_1":
         if "Loki" in boards["board_1"]["characters"]:
             character_movement(boards, "board_1", board_list, "Loki")
@@ -292,36 +292,33 @@ def plot_development(player, quests, boards, board_list):
             if player_next_to_character(player,
                                         character_name,
                                         boards[player["current_board"]]):
-                message = characters[character_name]["riddle"]
-
-                #Iterate until You get a good answer or counter exceeds
-                riddle_solved = False
-                while not riddle_solved and player["riddle_counter"] > 3:
-                    answer = input("What's Your answer? ")
-                    if answer in characters[character_name]["answer"]:
-                        riddle_solved = True
-                        player["riddle_counter"] = 0 # reset riddle counter
-                        temp_char = characters.pop(character_name) # save removed character
-
-                        # make an infinity stone in the same place as character was
-                        stone = {
-                            "number": 1,
-                            "index_x": temp_char["index_x"],
-                            "index_y": temp_char["index_y"],
-                            "icon": "*"
-                        }
-                        board = boards[player["current_board"]] # current board dict
-                        board["items"][temp_char["stone"]] = stone # add stone to "items" dict
-                    else:
-                        if answer not in characters[character_name]["answer"]:
-                            player["riddle_counter"] += 1
-
-                # Game over - player is dead
-                if player["riddle_counter"] >= 3:
-                    print("Your are dead")
-                    remove_player_from_board(player, boards[player["board"]])
+                message, message_type, name = characters[character_name]["riddle"], "input", character_name
     
-    return message, answer
+    return message, message_type, name
+
+def validate_answer(character_name, player, boards):
+    riddle_solved = False
+    print("validate1")
+    while not riddle_solved and player["riddle_counter"] < 3:
+        print("validate2")
+        answer = input("What's Your answer? ")
+        if answer in boards[player["current_board"]]["characters"][character_name]["answer"]:
+            riddle_solved = True
+            player["riddle_counter"] = 0 # reset riddle counter
+            print("Super!")
+            stone_name = boards["board_3"]["characters"][character_name]["stone"]
+            stone_x = boards["board_3"]["characters"][character_name]["index_x"]
+            stone_y = boards["board_3"]["characters"][character_name]["index_y"]
+            add_infinity_stones(boards, "board_3", stone_name, stone_x, stone_y)
+            remove_enemy_from_board(boards["board_3"]["characters"], character_name)
+            
+        else:
+            player["riddle_counter"] += 1
+
+    if player["riddle_counter"] >= 3:
+        print("Your are dead")
+            # remove_player_from_board(player, boards[player["board"]])
+            
 
 def character_movement(boards, board, board_list, name):
     black_character = boards[board]["characters"][name]
