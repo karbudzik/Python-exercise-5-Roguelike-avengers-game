@@ -312,28 +312,6 @@ def validate_answer(character_name, player, boards):
             add_infinity_stones(boards, "board_3", stone_name, stone_x, stone_y)
             remove_enemy_from_board(boards["board_3"]["characters"], character_name)
             
-
-            # temp_char = characters.pop(character_name) # save removed character
-            #         # make an infinity stone in the same place as character was
-            # stone = {
-            #     "number": 1,
-            #     "index_x": temp_char["index_x"],
-            #     "index_y": temp_char["index_y"],
-            #     "icon": "*"
-            # }
-
-            # else:  # kamienie pokazują się po zniknięciu Lokiego:
-            # if "mind stone" not in player["inventory"]:
-            #     add_infinity_stones(boards, "board_1", "mind stone", 9, 3)
-            # if "time stone" not in player["inventory"]:
-            #     add_infinity_stones(boards, "board_1", "time stone", 5, 5)
-            # if "mind stone" in player["inventory"] and "time stone" in player["inventory"]:
-            #     boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
-            #     boards["board_2"]["exits"]["south"]["icon"]="Q"
-
-
-            # board = boards[player["current_board"]] # current board dict
-            # board["items"][temp_char["stone"]] = stone # add stone to "items" dict
         else:
             player["riddle_counter"] += 1
 
