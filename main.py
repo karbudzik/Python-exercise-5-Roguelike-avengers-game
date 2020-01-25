@@ -323,8 +323,8 @@ def main():
     # ui.display_logo(asci_logo)
     # util.clear_screen()
     pygame.init()
-    # mixer.music.load("The Avengers Theme Song.ogg")
-    # mixer.music.play(-1)
+    mixer.music.load("The Avengers Theme Song.ogg")
+    mixer.music.play(-1)
     #  - muzyka działa po odkomentowaniu
     message, message_type, name = "", "no_type", ""
     player = create_player()
@@ -350,14 +350,16 @@ def main():
         elif key in ["i", "I"] and "inventory" in player:
             show_inventory = make_opposite_boolean(show_inventory)
         elif key in ["l", "L"]:
+            
             show_legend = make_opposite_boolean(show_legend)
 
         message, message_type, name = engine.plot_development(player, quests, boards, board)
         util.clear_screen()
         if engine.check_health_is_zero_or_below(player) == False:
             lose_sound = mixer.Sound("game_over.wav")
+            mixer.music.stop()
             lose_sound.play()
-            engine.player_has_lost()
+            ui.player_has_lost()
             is_running = False
 
 

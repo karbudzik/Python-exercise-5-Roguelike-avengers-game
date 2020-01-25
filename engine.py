@@ -2,6 +2,8 @@ import copy
 import main
 import collections
 import random
+import pygame
+from pygame import mixer
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
@@ -244,16 +246,22 @@ def move_player(board, player, key, boards):
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-    elif desired_place_coordinates[move_index] == "x":
+    elif desired_place_coordinates[move_index] == "Q":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
     elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*"]:
         boards = get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
     elif desired_place_coordinates[move_index] in [":", "=", "U"]:
         get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "food")
     elif desired_place_coordinates[move_index] == "L":
-        fight_with_Loki(player,current_board)
+        fight_with_Loki(player, current_board)
+        kick = mixer.Sound("kick.wav")
+        mixer.music.stop()
+        kick.play()
+        mixer.music.play()
+        
         if check_health_is_zero_or_below(current_board["characters"]["Loki"])==False:
             #play music
+            
             print(current_board["characters"]["Loki"]["health"])
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
@@ -394,9 +402,7 @@ def add_infinity_stones(boards, board, stone_name, x, y):
     }
 
 
-def player_has_lost():
-    print("You have lost!")
-    # play_music("game_over.wav")
+
   
 
 def play_music(path):

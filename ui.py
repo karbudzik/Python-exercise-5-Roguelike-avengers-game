@@ -162,3 +162,9 @@ def type_writter_effect(list_of_words):
             print(letter, end="", flush=True)
             # sleep(0.05)
         print()
+
+def player_has_lost():
+    messege= "You have lost!"
+    print(pyfiglet.figlet_format("*** " + messege + " ***"))
+    sleep(5)
+    # play_music("game_over.wav")
