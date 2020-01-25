@@ -47,6 +47,9 @@ def add_const_elements(board, board_list, to_add=""):
     list: Game board
     """
     if to_add in board:
+        # if to_add == "Boss":
+        #     x = [0:len(board[to_add][element]["width"])]
+        #     y = [0:len(board[to_add][element]["height"])]
         for element in board[to_add]:
             x = board[to_add][element]["index_x"]
             y = board[to_add][element]["index_y"]
@@ -260,8 +263,7 @@ def move_player(board, player, key, boards):
         mixer.music.play()
         
         if check_health_is_zero_or_below(current_board["characters"]["Loki"])==False:
-            #play music
-            
+ 
             print(current_board["characters"]["Loki"]["health"])
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
@@ -303,7 +305,7 @@ def plot_development(player, quests, boards, board_list):
                 boards["board_4"]["exits"]["south"]["icon"]="Q"
     
     elif player["current_board"] == "board_4":
-        pass
+        character_movement(boards, "board_4", board_list, "Boss")
     
     return message, message_type, name
 
@@ -316,7 +318,7 @@ def validate_answer(character_name, player, boards):
         if answer in boards[player["current_board"]]["characters"][character_name]["answer"]:
             riddle_solved = True
             player["riddle_counter"] = 0 # reset riddle counter
-            print("Super!")
+            print("You are right")
             stone_name = boards["board_3"]["characters"][character_name]["stone"]
             stone_x = boards["board_3"]["characters"][character_name]["index_x"]
             stone_y = boards["board_3"]["characters"][character_name]["index_y"]
@@ -404,12 +406,6 @@ def add_infinity_stones(boards, board, stone_name, x, y):
         "icon":"*",
     }
 
-
-
-  
-
-def play_music(path):
-        pass
 
 def check_free_space(move, board_list, character):
     field_y = character["index_y"] + int(move[0])

@@ -254,6 +254,18 @@ boards = {
                 "number": 1
             }
         },
+         "characters": {
+            "Boss": {
+                "index_x": 7,
+                "index_y": 7,
+                "icon": "Z",
+                "health": 100,
+                "inventory": {
+                    "inventory": "sword"
+                },
+
+            },
+        },
         "items": {
             "gold": {
                 "number": 2,
