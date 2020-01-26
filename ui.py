@@ -38,14 +38,15 @@ def display_title(board_list, board_name, console_width):
     Returns:
     Nothing
     '''
-    # caption = pyfiglet.figlet_format("*** " + board_name + " ***", font="digital") - odkomentować na prezentację
+    # odkomentować na prezentację
+    caption = pyfiglet.figlet_format("*** " + board_name + " ***", font="digital")
     caption = "*** " + board_name + " ***"
     captions = caption.split("\n")
     print("")
     for caption in captions:
         print(colored(caption.center(console_width),"blue")) 
         # - odkomentować na prezentację
-        print(caption.center(console_width))
+        # print(caption.center(console_width))
 
 
 def display_description(player, quests, console_width):
@@ -155,7 +156,7 @@ def display_logo(art):
     print("\n\n")
     for line in art:
         print("{}".format(line), end="")
-        # sleep(0.2)
+        sleep(0.2)
     print("\n\n")
     sleep(0.5)
     messege = "Avengers: The Final Battle"
@@ -167,17 +168,18 @@ def type_writter_effect(list_of_words):
         print("\t\t\t", end="")
         for letter in word:
             print(letter, end="", flush=True)
-            # sleep(0.05)
+            sleep(0.05)
         print()
 
 def player_has_lost():
     messege= "You have lost!"
     print(pyfiglet.figlet_format("*** " + messege + " ***"))
-    sleep(5)
+    # sleep(5)
     # play_music("game_over.wav")
 
 def display_authors():
-    messege= "Game created by Karolina, Magda, Mateusz, Ricardo"
+    messege = "Game created by Karolina, Magda, Mateusz, Ricardo"
+    print(pyfiglet.figlet_format("*** " + messege + " ***",font="digital"))
     
     
 def won():

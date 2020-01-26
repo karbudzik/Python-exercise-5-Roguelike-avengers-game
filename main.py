@@ -5,9 +5,10 @@
         # you win board
     # proper legend dipslay
 
-import util
+
 import engine
 import ui
+import util
 import random
 import sys
 import data_menager
@@ -287,6 +288,18 @@ boards = {
                 "index_y": 8,
                 "icon": "$"
             },
+            "AK-47": {
+                "number": 1,
+                "index_x": 20,
+                "index_y": 23,
+                "icon":"K"
+            },
+            "Racket-Luncher": {
+                "number": 1,
+                "index_x":20,
+                "index_y": 2,
+                "icon":"R"
+            },
         },
         "static_elements": {
             "trees": {
@@ -294,6 +307,7 @@ boards = {
                 "icon": "T",
                 "coor": [[8, 1]]
             },
+            
         },
         "Boss": {  
             "name": "Thanos",
@@ -304,7 +318,7 @@ boards = {
                     ["+", "+", "+", "+", "+"],
                     ["+", "\\", " ", "/", "+"],
                     ["+", " ", "O", " ", "+"],
-                    ["+", "#", "#", "#", "+"],
+                    ["+", "#", "#", "#", "E"],
                     ["+", " ", "#", " ", "+"],
                     ["+", "/", " ", "\\", "+"],
                     ["+", "+", "+", "+", "+"]
@@ -353,7 +367,7 @@ def create_player():
         "health": 70,
         "position_x": 3,
         "position_y": 6,
-        "current_board": "board_4",
+        "current_board": "board_1",
         "player_icon": user_icon,
         "inventory": {},
         "riddle_counter": 0
@@ -403,17 +417,16 @@ def make_opposite_boolean(boolean):
 
 def main():
     #  - muzyka działa po odkomentowaniu
-    # pygame.init()
-    # mixer.music.load("The Avengers Theme Song.ogg")
-    # mixer.music.play(-1)
+    pygame.init()
+    mixer.music.load("The Avengers Theme Song.ogg")
+    mixer.music.play(-1)
+    util.clear_screen()
+    asci_logo = data_menager.read_file("avengers.txt")
+    ui.display_logo(asci_logo)
     # util.clear_screen()
-    # asci_logo = data_menager.read_file("avengers.txt")
-    # ui.display_logo(asci_logo)
-    # sleep(1)
-    # util.clear_screen()
-    # ui.display_authors()
-    # sleep(3)
-    # util.clear_screen()
+    ui.display_authors()
+    sleep(4)
+    util.clear_screen()
     message, message_type, name = "", "no_type", ""
     player = create_player()
     show_inventory = False
@@ -445,9 +458,15 @@ def main():
         util.clear_screen()
         if engine.check_health_is_zero_or_below(player) == False:
             lose_sound = mixer.Sound("game_over.wav")
-            mixer.music.stop()
+            # mixer.music.stop()
             lose_sound.play()
             ui.player_has_lost()
+            is_running = False
+        elif engine.check_health_is_zero_or_below(boards["board_4"]["Boss"]) == False:
+            win_sound = mixer.Sound("win.wav")
+            # mixer.music.stop()
+            win_sound.play()
+            ui.won()
             is_running = False
 
 

@@ -5,6 +5,7 @@ import random
 import pygame
 from pygame import mixer
 import ui
+from time import sleep
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
@@ -272,19 +273,19 @@ def move_player(board, player, key, boards):
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-    elif desired_place_coordinates[move_index] == "x":
+    elif desired_place_coordinates[move_index] == "Q":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
         change_description(player)
-    elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*"]:
+    elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*","K", "R"]:
         boards = get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
     elif desired_place_coordinates[move_index] in [":", "=", "U"]:
         get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "food")
     elif desired_place_coordinates[move_index] == "L":
         fight_with_Loki(player, current_board)
-        kick = mixer.Sound("kick.wav")
-        mixer.music.stop()
-        kick.play()
-        mixer.music.play()
+        # kick = mixer.Sound("kick.wav")
+        # mixer.music.stop()
+        # kick.play()
+        # mixer.music.play()
         
         if check_health_is_zero_or_below(current_board["characters"]["Loki"])==False:
  
@@ -292,13 +293,18 @@ def move_player(board, player, key, boards):
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
     
-    elif desired_place_coordinates[move_index] == "+":
+    elif desired_place_coordinates[move_index] == "E":
         answer = input("You Can beat easy:) Do you know a cheat[yes/now]? >  ")
         if answer in ["yes", "Yes", "Yes", "y", "Y"]:
             cheat = input("Type a cheat > ")
             if (cheat in ["Avengers", "AVENGERS","avengers"]):
                 ui.won()
+        
+        print("You have to find other way.Hint: Look up the current board")
+        sleep(3)
         # fight_with_Boss()
+    elif desired_place_coordinates[move_index] == "+":
+        fight_with_Boss(boards, player)
             
 
     return player
@@ -319,7 +325,8 @@ def plot_development(player, quests, boards, board_list):
                 add_infinity_stones(boards, "board_1", "time stone", 5, 5)
             if "mind stone" in player["inventory"] and "time stone" in player["inventory"]:
                 boards[player["current_board"]]["exits"]["north"]["icon"] = "Q"
-                boards["board_2"]["exits"]["south"]["icon"]="Q"
+                boards["board_2"]["exits"]["south"]["icon"] = "Q"
+    
 
     elif player["current_board"] == "board_2":
         if "reality stone" in player["inventory"] and "space stone" in player["inventory"]:
@@ -497,3 +504,16 @@ def change_description(player):
         player["quest"] = 3
     elif player["current_board"] == "board_4":
         player["quest"] = 4
+
+def fight_with_Boss(boards,player):
+    weapon = input("Look in your inventory. What do you want to use? > ")
+    if (weapon in ["ak", "AK-47", "AK-47","Racket-Luncher","Racket"]):
+        print("Good choice for you. I am weaker now")
+        sleep(2)
+        boards["board_4"]["Boss"]["health"] -= 300
+    
+        
+    else:
+        print("Bad choice. You are weaker now")
+        sleep(2)
+        player["health"]-=40
