@@ -112,7 +112,8 @@ def display_legend(legend, console_width):
 
 def display_message(message, console_width):
     print("")
-    print(message.center(console_width))
+    for line in message:  
+        print(line.center(console_width))
 
 
 def set_table_width(dictionary, headers):

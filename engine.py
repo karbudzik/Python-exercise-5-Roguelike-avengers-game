@@ -306,16 +306,14 @@ def plot_development(player, quests, boards, board_list):
                 boards["board_4"]["exits"]["south"]["icon"]="Q"
     
     elif player["current_board"] == "board_4":
-        pass
-        # character_movement(boards, "board_4", board_list, "Boss")
+        message, message_type, name = "Do you know the secred code?", "input", 
+        
     
     return message, message_type, name
 
 def validate_answer(character_name, player, boards):
     riddle_solved = False
-    print("validate1")
     while not riddle_solved and player["riddle_counter"] < 3:
-        print("validate2")
         answer = input("What's Your answer? ")
         if answer in boards[player["current_board"]]["characters"][character_name]["answer"]:
             riddle_solved = True
@@ -415,24 +413,6 @@ def check_free_space(move, board_list, character):
     if board_list[field_y][field_x] == " ":
         return True
     return False
-
-    # field_x = character["index_x"] + int(move[0])
-    # field_y = character["index_y"] + int(move[1])
-    # try:
-    #     # Check if field coordinate is empty
-    #     if board_list[field_y][field_x] == ' ':
-    #         return True
-    #     else:
-    #         return False
-    # except IndexError:
-    #     print("Index out of bounds.")
-    #     return False
-
-# def get_number_of_items_in_inventories(*inventories):
-#     numbers_of_items=[]
-#     for inventorie in inventories:
-#         numbers_of_items.append(len(inventorie))
-#     return numbers_of_items
 
 
 def check_health_is_zero_or_below(character):

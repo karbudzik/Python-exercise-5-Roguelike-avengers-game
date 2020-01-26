@@ -233,8 +233,7 @@ boards = {
                 "index_y": 4,
                 "icon": "C",
                 "health": 30,
-                "riddle": """What animal walks with 4 legs, then with 2,
-                                       and at end with 3?""",
+                "riddle": ["What animal walks with 4 legs, then with 2, and at end with 3?"],
                 "answer": ("human", "human being", "man", "person"),
                 "stone": "power stone"
             },
@@ -243,10 +242,7 @@ boards = {
                 "index_y": 8,
                 "icon": "S",
                 "health": 30,
-                "riddle": """Everyone has it, but some don't like it. It makes
-                             a kid lough, saddens old man, pleases young girl.
-                             When You laugh it laughswith You, when You weep
-                             it weeps as well.""",
+                "riddle": ["Everyone has it, but some don't like it.", "It makes a kid lough, saddens old man, pleases young girl.", "When You laugh it laughswith You, when You weep it weeps as well.],
                 "answer": ("reflection", "mirror reflection", "mirror"),
                 "stone": "soul stone"
             }
