@@ -189,7 +189,6 @@ def remove_object_from_board(board, player, to_remove, boards, what_we_update):
     '''
     board_name = player["current_board"]
     del boards[board_name][what_we_update][to_remove]
-    print("usun")
 
 
 def update_player_health(player, key):
@@ -234,12 +233,7 @@ def get_item(player, axis, current_board, sign, boards, what_we_update):
 def interact_with_character(boards, icon, player):
     if icon == "L":
         board_name = player["current_board"]
-        print("interact")
         del boards[board_name]["characters"]["Loki"]
-        # RICARDO:
-        # Here you could add a condition that if a player has "thor's hammer" and the "captain's america's shield"
-        # in the inventory, then he wins this fight (Loki is deleted from the board - as above). If not, the game is ended
-        # - the player looses and game quits
 
 
 def move_player(board, player, key, boards):

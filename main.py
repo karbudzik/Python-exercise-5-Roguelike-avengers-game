@@ -16,35 +16,22 @@ import pygame
 from pygame import mixer
 import pyfiglet
 from time import sleep
-# Boss = {     
-#     "name": "Thanos",
-#     "health": 500,
-#     "position_x": 10,
-#     "position_y": 15,
-#     "icons": [
-#             [" ", "\\", " ", "/", " "],
-#             [" ", " ", "O", " ", " "],
-#             ["/", "#", "#", "#", "\\"],
-#             [" ", " ", "#", " ", " "],
-#             [" ", "/", " ", "\\", " "]
-#             ],
-#     "blows": {
-#             "punch": 50,
-#             "kick": 75,
-#             "spear": 100
-#             }
-# }
 
 legend = {
-    "x": "exit",
+    "x": "closed exit",
+    "Q": "open exit",
     "T": "tree",
+    "0": "stone",
     "$": "gold",
     "U": "beer",
     "=": "hamburger",
     ":": "hot-dog",
     "B": "boots",
     "?": "specials",
-    "*": "infinity stones"
+    "*": "infinity stones",
+    "L": "Loki",
+    "S": "Skull",
+    "C": "Colector"
 }
 
 boards = {
@@ -337,13 +324,13 @@ quests = {
                               "But be careful, you need to prepare for this meeting..."]
     },
     "2": {
-        "quest_description": ["The space and reality stones are hidden on the board.", " To get them You need to move pass labyrinth.", " After collecting both stones,gates to Vormir will open."]
+        "quest_description": ["The space and reality stones are hidden on the board.", " To get them You need to move pass labyrinth.", " After collecting both stones, gates to Vormir will open."]
     },
     "3": {
-        "quest_description": ["Infinity stones are in possession by two characters: the Collector (Power Stone), and the Skull (Soul Stone).", " The characters will give You the stones if You will answer their riddles", "Beware off the traps."]
+        "quest_description": ["Infinity stones are in possession by two characters: the Collector (Power Stone), and the Skull (Soul Stone).", " The characters will give You the stones if You will answer their riddles"]
     },
     "4": {
-        "quest_description": ["Figth with Thanos"]
+        "quest_description": ["It's a final battle!", "Try to prepare as much as you can. You'll need all the help you can get..."]
     }
 }
 
