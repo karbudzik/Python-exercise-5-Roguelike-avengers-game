@@ -353,7 +353,7 @@ def create_player():
         "health": 70,
         "position_x": 3,
         "position_y": 6,
-        "current_board": "board_1",
+        "current_board": "board_4",
         "player_icon": user_icon,
         "inventory": {},
         "riddle_counter": 0

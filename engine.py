@@ -4,6 +4,7 @@ import collections
 import random
 import pygame
 from pygame import mixer
+import ui
 
 def create_rows(board, horizontal_brick, vertical_brick, floor_char):
     '''
@@ -291,9 +292,14 @@ def move_player(board, player, key, boards):
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
     
-    # elif desired_place_coordinates[move_index] == "+":
-    #     answer = input("You Can beat easy:) Do you know a cheat[yes/now]?")
-    #     if answer
+    elif desired_place_coordinates[move_index] == "+":
+        answer = input("You Can beat easy:) Do you know a cheat[yes/now]? >  ")
+        if answer in ["yes", "Yes", "Yes", "y", "Y"]:
+            cheat = input("Type a cheat > ")
+            if (cheat in ["Avengers", "AVENGERS","avengers"]):
+                ui.won()
+        # fight_with_Boss()
+            
 
     return player
 
@@ -490,4 +496,4 @@ def change_description(player):
     elif player["current_board"] == "board_3":
         player["quest"] = 3
     elif player["current_board"] == "board_4":
-        player["quest"]=4
+        player["quest"] = 4

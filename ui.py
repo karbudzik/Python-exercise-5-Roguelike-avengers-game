@@ -3,6 +3,7 @@ from pygame import mixer
 import pyfiglet
 from termcolor import colored, cprint
 from time import sleep
+import util
 
 def display_board(board_list, board_name, player, quests, show_inventory, show_legend,legend, message):
     '''
@@ -177,4 +178,11 @@ def player_has_lost():
 
 def display_authors():
     messege= "Game created by Karolina, Magda, Mateusz, Ricardo"
-    print( pyfiglet.figlet_format("*** " + messege + " ***",font="digital"))
+    
+    
+def won():
+    util.clear_screen()
+    messege = "You have won:) Congratulations !!!!"
+    print(pyfiglet.figlet_format("*** " + messege + " ***", font="digital"))
+    sleep(3)
+    exit()
