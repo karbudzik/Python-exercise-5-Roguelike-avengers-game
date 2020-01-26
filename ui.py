@@ -153,9 +153,12 @@ def print_table(title, dictionary, headers, console_width):
 def display_logo(art):
     print("\n\n")
     for line in art:
-        print("\t\t\t\t\t\t\t{}".format(line), end="")
+        print("{}".format(line), end="")
         # sleep(0.2)
     print("\n\n")
+    sleep(0.5)
+    messege = "Avengers: The Final Battle"
+    print(pyfiglet.figlet_format("*** " + messege + " ***",font="digital"))
 
 def type_writter_effect(list_of_words):
     print("\n\n")
@@ -171,3 +174,7 @@ def player_has_lost():
     print(pyfiglet.figlet_format("*** " + messege + " ***"))
     sleep(5)
     # play_music("game_over.wav")
+
+def display_authors():
+    messege= "Game created by Karolina, Magda, Mateusz, Ricardo"
+    print( pyfiglet.figlet_format("*** " + messege + " ***",font="digital"))

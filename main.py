@@ -1,7 +1,7 @@
 # to do
     # change description after world change - done
-    # into board "Game created by Karolina Magda Mateusz Ricardo"
-    # final battle 
+    # into board "Game created by Karolina Magda Mateusz Ricardo"- done 
+    # battle win thonos
         # you win board
     # proper legend dipslay
 
@@ -14,6 +14,25 @@ import data_menager
 import pygame
 from pygame import mixer
 import pyfiglet
+from time import sleep
+Boss = {  
+    "name": "Thanos",
+    "health": 500,
+    "position_x": 10,
+    "position_y": 15,
+    "icons": [
+            [" ", "\\", " ", "/", " "],
+            [" ", " ", "O", " ", " "],
+            ["/", "#", "#", "#", "\\"],
+            [" ", " ", "#", " ", " "],
+            [" ", "/", " ", "\\", " "]
+            ],
+    "blows": {
+            "punch": 50,
+            "kick": 75,
+            "spear": 100
+            }
+}
 
 legend = {
     "x": "exit",
@@ -261,18 +280,6 @@ boards = {
                 "number": 1
             }
         },
-         "characters": {
-            "Boss": {
-                "index_x": 7,
-                "index_y": 7,
-                "icon": "Z",
-                "health": 100,
-                "inventory": {
-                    "inventory": "sword"
-                },
-
-            },
-        },
         "items": {
             "gold": {
                 "number": 2,
@@ -375,14 +382,18 @@ def make_opposite_boolean(boolean):
 
 
 def main():
-    util.clear_screen()
+    #  - muzyka działa po odkomentowaniu
+    # pygame.init()
+    # mixer.music.load("The Avengers Theme Song.ogg")
+    # mixer.music.play(-1)
+    # util.clear_screen()
     # asci_logo = data_menager.read_file("avengers.txt")
     # ui.display_logo(asci_logo)
+    # sleep(1)
     # util.clear_screen()
-    pygame.init()
-    mixer.music.load("The Avengers Theme Song.ogg")
-    mixer.music.play(-1)
-    #  - muzyka działa po odkomentowaniu
+    # ui.display_authors()
+    # sleep(3)
+    # util.clear_screen()
     message, message_type, name = "", "no_type", ""
     player = create_player()
     show_inventory = False
