@@ -1,3 +1,10 @@
+# to do
+    # change description after world change - done
+    # into board "Game created by Karolina Magda Mateusz Ricardo"
+    # final battle 
+        # you win board
+    # proper legend dipslay
+
 import util
 import engine
 import ui
@@ -293,22 +300,13 @@ quests = {
                               "But be careful, you need to prepare for this meeting..."]
     },
     "2": {
-        "quest_description": ["""The space and reality stones are hidden on the
-                                 board. To get them You need to move pass 2
-                                 labyrinths. After collecting both stones
-                                 gates to Vormir will open."""]
+        "quest_description": ["The space and reality stones are hidden on the board.", " To get them You need to move pass labyrinth.", " After collecting both stones,gates to Vormir will open."]
     },
     "3": {
-        "quest_description": ["""Infinity stones are in possession by two
-                                 characters: the Collector (Power Stone),
-                                 and the Skull (Soul Stone). The characters
-                                 will give You the stones
-                                 if You will answer their riddles.
-                                 Beware off the traps."""]
+        "quest_description": ["Infinity stones are in possession by two characters: the Collector (Power Stone), and the Skull (Soul Stone).", " The characters will give You the stones if You will answer their riddles", "Beware off the traps."]
     },
     "4": {
-        "quest_description": ["""Figth with Thanos.
-                                 Można dorobić dłuższy opis"""]
+        "quest_description": ["Figth with Thanos"]
     }
 }
 

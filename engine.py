@@ -251,6 +251,7 @@ def move_player(board, player, key, boards):
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
     elif desired_place_coordinates[move_index] == "Q":
         change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
+        change_description(player)
     elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*"]:
         boards = get_item(player, movement_axis[move_index][0], current_board, movement_axis[move_index][2], boards, "items")
     elif desired_place_coordinates[move_index] in [":", "=", "U"]:
@@ -452,3 +453,13 @@ def fight_with_Loki(player, current_board):
         player["health"] -= 50
         print(player)
         #playe fight music
+
+def change_description(player):
+    if player["current_board"] == "board_1":
+        player["quest"] = 1
+    elif player["current_board"] == "board_2":
+        player["quest"] = 2
+    elif player["current_board"] == "board_3":
+        player["quest"] = 3
+    elif player["current_board"] == "board_4":
+        player["quest"]=4
