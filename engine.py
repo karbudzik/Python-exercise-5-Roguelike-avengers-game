@@ -47,14 +47,31 @@ def add_const_elements(board, board_list, to_add=""):
     list: Game board
     """
     if to_add in board:
-        # if to_add == "Boss":
-        #     x = [0:len(board[to_add][element]["width"])]
-        #     y = [0:len(board[to_add][element]["height"])]
         for element in board[to_add]:
             x = board[to_add][element]["index_x"]
             y = board[to_add][element]["index_y"]
             board_list[y][x] = board[to_add][element]["icon"]
     return board_list
+
+def add_boos(board, board_list, to_add=""):
+    if to_add == "Boss":
+        icons_nested_list=board[to_add]["icons"]
+        for i in range(len(icons_nested_list)):
+            for j in range(len(icons_nested_list[i])):
+                board_list[i+3][j+4]=icons_nested_list[i][j]
+
+            
+        # if to_add == "Boss":
+        #     x = [0:len(board[to_add][element]["width"])]
+        #     y = [0:len(board[to_add][element]["height"])]
+    else:
+        if to_add in board:
+            for element in board[to_add]:
+                x = board[to_add][element]["index_x"]
+                y = board[to_add][element]["index_y"]
+                board_list[y][x] = board[to_add][element]["icon"]
+    return board_list
+
 
 
 def create_board(board):
@@ -86,6 +103,11 @@ def create_board(board):
 
     for category in ["exits", "items", "characters", "food"]:
         board_list = add_const_elements(board, board_list, category)
+    
+    if "Boss" in board:
+        for category in ["exits", "items", "characters", "food", "Boss"]:
+            board_list=add_boos(board, board_list, category)
+        
 
     board_list = add_static_elements(board, board_list)
 
@@ -268,6 +290,10 @@ def move_player(board, player, key, boards):
             print(current_board["characters"]["Loki"]["health"])
             remove_enemy_from_board(current_board["characters"], "Loki")
             player[movement_axis[move_index][0]] += movement_axis[move_index][1]
+    
+    # elif desired_place_coordinates[move_index] == "+":
+    #     answer = input("You Can beat easy:) Do you know a cheat[yes/now]?")
+    #     if answer
 
     return player
 
@@ -306,6 +332,7 @@ def plot_development(player, quests, boards, board_list):
                 boards["board_4"]["exits"]["south"]["icon"]="Q"
     
     elif player["current_board"] == "board_4":
+        # put_boss_on_board(boards)
         pass
         # character_movement(boards, "board_4", board_list, "Boss")
     

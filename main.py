@@ -15,24 +15,24 @@ import pygame
 from pygame import mixer
 import pyfiglet
 from time import sleep
-Boss = {  
-    "name": "Thanos",
-    "health": 500,
-    "position_x": 10,
-    "position_y": 15,
-    "icons": [
-            [" ", "\\", " ", "/", " "],
-            [" ", " ", "O", " ", " "],
-            ["/", "#", "#", "#", "\\"],
-            [" ", " ", "#", " ", " "],
-            [" ", "/", " ", "\\", " "]
-            ],
-    "blows": {
-            "punch": 50,
-            "kick": 75,
-            "spear": 100
-            }
-}
+# Boss = {     
+#     "name": "Thanos",
+#     "health": 500,
+#     "position_x": 10,
+#     "position_y": 15,
+#     "icons": [
+#             [" ", "\\", " ", "/", " "],
+#             [" ", " ", "O", " ", " "],
+#             ["/", "#", "#", "#", "\\"],
+#             [" ", " ", "#", " ", " "],
+#             [" ", "/", " ", "\\", " "]
+#             ],
+#     "blows": {
+#             "punch": 50,
+#             "kick": 75,
+#             "spear": 100
+#             }
+# }
 
 legend = {
     "x": "exit",
@@ -292,9 +292,29 @@ boards = {
             "trees": {
                 "obstacle_name": "tree",
                 "icon": "T",
-                "coor": [[8, 1], [6, 4]]
+                "coor": [[8, 1]]
             },
         },
+        "Boss": {  
+            "name": "Thanos",
+            "health": 500,
+            "position_x": 10,
+            "position_y": 15,
+            "icons": [
+                    ["+", "+", "+", "+", "+"],
+                    ["+", "\\", " ", "/", "+"],
+                    ["+", " ", "O", " ", "+"],
+                    ["+", "#", "#", "#", "+"],
+                    ["+", " ", "#", " ", "+"],
+                    ["+", "/", " ", "\\", "+"],
+                    ["+", "+", "+", "+", "+"]
+                    ],
+            "blows": {
+                    "punch": 50,
+                    "kick": 75,
+                    "spear": 100
+                    }
+        }
     }
 }
 
