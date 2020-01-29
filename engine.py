@@ -246,22 +246,14 @@ def eat_food(player, current_board, boards):
     return boards, player
 
 
-    #################################################################
-
-
 def move_player(board, player, key, boards):
     '''
-    Modifies the player's coordinates according to the pressed key.
+    Modifies the player's coordinates to match the pressed key.
     Prevents from walking into walls and loads another board if a player go into gate.
-
-    Args:
-    list: The game board
-    dictionary: The player information containing the icon and coordinates
-    string: The key pressed by the player ("w", "s", "a" or "d")
-
-    Returns:
-    "Player" dictionary with modified player's coordinates
+    Args: board (list of lists), player (dictionary), key (string) and boards (dictionary).
+    Returns: "Player" dictionary with modified player's coordinates
     '''
+
     height = len(board)-1
     width = len(board[0]) - 1
     index_x = player["position_x"] - 1
@@ -273,16 +265,13 @@ def move_player(board, player, key, boards):
     desired_place_coordinates = [board[index_y][index_x - 1], board[index_y][index_x + 1], board[index_y + 1][index_x], board[index_y - 1][index_x]]
     movement_axis = [["position_x", -1, "-"], ["position_x", 1, "+"], ["position_y", 1, "+"], ["position_y", -1, "-"]]
     movement_directions = [["east", "west"], ["west", "east"], ["north", "south"], ["south", "north"]]
-
-    for pair in key_pairs:
-        if key in pair:
-            move_index = key_pairs.index(pair)
+    move_index = [key_pairs.index(pair) for pair in key_pairs if key in pair][0]
 
     if condition_if_not_wall[move_index] and desired_place_coordinates[move_index] in [" "]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
     elif desired_place_coordinates[move_index] == "+":
         player = change_board(player, boards, movement_directions[move_index][0], movement_directions[move_index][1])
-    elif desired_place_coordinates[move_index] in ["$", "D", "1", "?", "B", "*","K", "R"]:
+    elif desired_place_coordinates[move_index] in ["$", "?", "*"]:
         player[movement_axis[move_index][0]] += movement_axis[move_index][1]
         boards = get_item(player, current_board, boards)
     elif desired_place_coordinates[move_index] in [":", "=", "U"]:
@@ -290,26 +279,15 @@ def move_player(board, player, key, boards):
         boards, player = eat_food(player, current_board, boards)
     elif desired_place_coordinates[move_index] == "L":
         fight_with_Loki(player, current_board)
-        
-        if is_enemy_dead(current_board["characters"]["Loki"]) == True:
-            remove_enemy_from_board(current_board["characters"], "Loki")
-            player[movement_axis[move_index][0]] += movement_axis[move_index][1]
-    
     elif desired_place_coordinates[move_index] == "E":
-        answer = input("You Can beat easy:) Do you know a cheat[yes/now]? >  ")
-        if answer in ["yes", "Yes", "Yes", "y", "Y"]:
-            cheat = input("Type a cheat > ")
-            if (cheat in ["Avengers", "AVENGERS","avengers"]):
-                ui.won()
-        
-        print("You have to find other way.Hint: Look up the current board")
-        sleep(3)
-        
+        ask_for_cheat_code()
     elif desired_place_coordinates[move_index] in ["\\", "/", "[", "]"]:
         fight_with_boss(boards, player)
             
-
     return player
+
+
+###############################################################################################
 
 
 def plot_development(player, quests, boards, board_list):
@@ -354,8 +332,22 @@ def plot_development(player, quests, boards, board_list):
         # put_boss_on_board(boards)
         pass
         # character_movement(boards, "board_4", board_list, "boss")
+
+        # dodać ui.player_has_won() if enemy_is_dead()
     
     return message, message_type, name
+
+
+def ask_for_cheat_code():
+    answer = input("You Can beat easy:) Do you know a cheat[yes/now]? >  ")
+    if answer in ["yes", "Yes", "Yes", "y", "Y"]:
+        cheat = input("Type a cheat > ")
+        if (cheat in ["Avengers", "AVENGERS","avengers"]):
+            ui.won()
+    
+    print("You have to find other way.Hint: Look up the current board")
+    sleep(3)
+
 
 def validate_answer(character_name, player, boards, message_type):
     if message_type == "input":  
@@ -428,19 +420,7 @@ def player_is_close_to_Loki(player):
             return False
     else:
         return True
-
-
-def player_is_next_to_Loki(player):
-    if "Loki" in main.boards["board_1"]["characters"]:
-        if player['position_x'] == main.boards['board_1']['characters']['Loki']['index_x']:
-            return True
-        elif player['position_y'] == main.boards['board_1']['characters']['Loki']['index_y']:
-            return True
-        else:
-            return False
-    else:
-        return False
-    
+    #może da się wykorzystać player_next_to_character()?
 
 
 def remove_enemy_from_board(board,enemy):
@@ -474,11 +454,9 @@ def check_health_is_zero_or_below(character, is_running):
 
 def is_enemy_dead(enemy):
     if enemy["health"] < 0:
-        ui.player_has_won()
         return True
     else:
         return False
-
 
 
 def fight_with_Loki(player, current_board):
@@ -493,6 +471,11 @@ def fight_with_Loki(player, current_board):
         player["health"] -= 50
         print(player)
         #playe fight music
+            
+    if is_enemy_dead(current_board["characters"]["Loki"]) == True:
+        remove_enemy_from_board(current_board["characters"], "Loki")
+        # player[movement_axis[move_index][0]] += movement_axis[move_index][1]
+
 
 def change_quest(player):
     if player["current_board"] == "board_1":

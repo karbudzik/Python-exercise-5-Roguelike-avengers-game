@@ -11,14 +11,13 @@ from time import sleep
 
 legend = {
     "x": "closed exit",
-    "Q": "open exit",
+    "+": "open exit",
     "T": "tree",
     "0": "stone",
     "$": "gold",
     "U": "beer",
     "=": "hamburger",
     ":": "hot-dog",
-    "B": "boots",
     "?": "specials",
     "*": "infinity stones",
     "L": "Loki",
