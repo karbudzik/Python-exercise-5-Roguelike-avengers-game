@@ -157,9 +157,9 @@ def display_logo(art):
     print("\n\n")
     for line in art:
         print("{}".format(line), end="")
-        sleep(0.2)
+        sleep(0.1)
     print("\n\n")
-    sleep(0.5)
+    sleep(0.2)
     messege = "Avengers: The Final Battle"
     print(pyfiglet.figlet_format("*** " + messege + " ***",font="digital"))
 
@@ -169,8 +169,8 @@ def type_writter_effect(list_of_words):
         print("\t\t\t", end="")
         for letter in word:
             print(letter, end="", flush=True)
-            sleep(0.05)
-        print()
+            sleep(0.01)
+        print("\n\n\t\t\t", end="")
 
 def player_has_lost():
     messege= "You have lost!"
