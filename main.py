@@ -160,13 +160,13 @@ boards = {
                 "index_x": 4,
                 "index_y": 11,
                 "leads_to": "board_2",
-                "icon": "+"
+                "icon": "x"
             },
             "north": {
                 "index_x": 13,
                 "index_y": 0,
                 "leads_to": "board_4",
-                "icon": "+"
+                "icon": "x"
             }
         },
         "food": {
@@ -477,7 +477,7 @@ def main():
         board = engine.remove_player_from_board(board, player)
         player, show_inventory, show_legend, is_running, boards = react_to_pressed_key(key, board, boards, player, 
                                                                   show_inventory, show_legend, is_running)
-        message, message_type, name = engine.plot_development(player, quests, boards, board)
+        message, message_type, name = engine.plot_development(player, boards, board)
         is_running = engine.check_health_is_zero_or_below(player, is_running)
         
 

@@ -287,66 +287,97 @@ def move_player(board, player, key, boards):
     return player
 
 
-###############################################################################################
-
-
-def plot_development(player, quests, boards, board_list):
+def plot_development(player, boards, board_list):
     '''
-    description
+    Function in charge of changing boards' elements to the current plot of the game.
+    Args: player (dictionary), boards (dictinary) and board_list (list of lists).
+    Returns: message, message_type and name (all strings).
     '''
+
     message, message_type, name = "", "no_type", ""
-        
-    # elif check_health_is_zero_or_below(boards["board_4"]["Boss"]) == False:
-    #     ui.won()
         
     if player["current_board"] == "board_1":
         if "Loki" in boards["board_1"]["characters"]:
-            character_movement(boards, "board_1", board_list, "Loki")
-        else:  # kamienie pokazują się po zniknięciu Lokiego:
-            if "mind stone" not in player["inventory"]:
-                add_infinity_stones(boards, "board_1", "mind stone", 9, 3)
-            if "time stone" not in player["inventory"]:
-                add_infinity_stones(boards, "board_1", "time stone", 5, 5)
-            if "mind stone" in player["inventory"] and "time stone" in player["inventory"]:
-                boards[player["current_board"]]["exits"]["north"]["icon"] = "+"
-                boards["board_2"]["exits"]["south"]["icon"] = "+"
-    
+            boards = character_movement(boards, "board_1", board_list, "Loki")
+        else: 
+            boards = update_board_if_loki_dead(player, boards)
+            boards = open_gates_if_stones_collected(["time stone", "mind stone"], player, boards)
 
     elif player["current_board"] == "board_2":
-        if "reality stone" in player["inventory"] and "space stone" in player["inventory"]:
-                boards[player["current_board"]]["exits"]["north"]["icon"] = "+"
-                boards["board_3"]["exits"]["south"]["icon"]="+"
+        boards = open_gates_if_stones_collected(["reality stone", "space stone"], player, boards)
 
     elif player["current_board"] == "board_3":
-        characters = boards[player["current_board"]]["characters"] # map Characters dict into local var
-        for character_name in characters:
-            if player_next_to_character(player,
-                                        character_name,
-                                        boards[player["current_board"]]):
-                message, message_type, name = characters[character_name]["riddle"], "input", character_name
-        if "power stone" in player["inventory"] and "soul stone" in player["inventory"]:
-                boards[player["current_board"]]["exits"]["north"]["icon"] = "+"
-                boards["board_4"]["exits"]["south"]["icon"]="+"
-    
-    elif player["current_board"] == "board_4":
-        # put_boss_on_board(boards)
-        pass
-        # character_movement(boards, "board_4", board_list, "boss")
-
-        # dodać ui.player_has_won() if enemy_is_dead()
+        message, message_type, name = get_riddle_from_characters(boards, player)
+        boards = open_gates_if_stones_collected(["power stone", "soul stone"], player, boards)
     
     return message, message_type, name
 
 
 def ask_for_cheat_code():
-    answer = input("You Can beat easy:) Do you know a cheat[yes/now]? >  ")
+    """
+    Asks player for a cheat code that allows user to win the game without fighting the main boss.
+    Args: none.
+    Returns: nothing.
+    """
+
+    answer = input("You can win easily if you know a secret code. Do you know it? [yes/no] >  ")
     if answer in ["yes", "Yes", "Yes", "y", "Y"]:
-        cheat = input("Type a cheat > ")
-        if (cheat in ["Avengers", "AVENGERS","avengers"]):
-            ui.won()
+        cheat = input("Type a cheat code: > ")
+        if (cheat in ["Avengers", "AVENGERS", "avengers"]):
+            ui.player_has_won()
     
     print("You have to find other way.Hint: Look up the current board")
     sleep(3)
+
+
+def update_board_if_loki_dead(player, boards):
+    """
+    Adds infinity stones to the board when Loki is killed.
+    Args: player and boards (both dictionaries)
+    Returns: boards (dictionary)
+    """
+
+    if "mind stone" not in player["inventory"]:
+        boards = add_infinity_stones(boards, "board_1", "mind stone", 9, 3)
+    if "time stone" not in player["inventory"]:
+        boards = add_infinity_stones(boards, "board_1", "time stone", 5, 5)
+    
+    return boards
+
+
+def open_gates_if_stones_collected(stones, player, boards):
+    """
+    Opens gates to another board if two required stones are collected.
+    Args: stones (list with two strings), player and boards (both dictionaries).
+    Returns boards (dictionary).
+    """
+
+    if stones[0] in player["inventory"] and stones[1] in player["inventory"]:
+        board_names = ["board_1", "board_2", "board_3", "board_4"]
+        current_index = board_names.index(player["current_board"])
+        boards[player["current_board"]]["exits"]["north"]["icon"] = "+"
+        boards[board_names[current_index + 1]]["exits"]["south"]["icon"] = "+"
+    
+    return boards
+
+
+def get_riddle_from_characters(boards, player):
+    """
+    Gets riddle of the character if player stands next to him.
+    Args: boards and player (both dictionaries).
+    Returns: message, message_type, name (all strings)
+    """
+
+    characters = boards[player["current_board"]]["characters"]
+    message, message_type, name = "", "no_type", ""
+    for character_name in characters:
+        if player_next_to_character(player, character_name, boards[player["current_board"]]):
+            message, message_type, name = characters[character_name]["riddle"], "input", character_name
+    
+    return message, message_type, name
+
+
+###################################################################################
 
 
 def validate_answer(character_name, player, boards, message_type):
@@ -372,16 +403,16 @@ def validate_answer(character_name, player, boards, message_type):
                 # remove_player_from_board(player, boards[player["board"]])
                 
             #NAPRAWIĆ - nie działa umieranie po 3 złych odpowiedziach
+            #podziedzić na oddzielne funkcje - validacja + zmiana gracza w kamień
 
 
 def character_movement(boards, board, board_list, name):
     black_character = boards[board]["characters"][name]
     numbers = random.choices(["0", "1", "-1"], k=2)
-    print(numbers)
-    print(black_character["index_x"], black_character["index_y"])
     if check_free_space(numbers, board_list, black_character):
         black_character["index_y"] += int(numbers[0])
         black_character["index_x"] += int(numbers[1])
+    return boards
 
 
 def get_neighbor_fields(field_coor: tuple) -> list:
@@ -396,17 +427,15 @@ def get_neighbor_fields(field_coor: tuple) -> list:
 def player_next_to_character(player: dict,
                              character_name: str,
                              board: dict) -> bool:
-    try:
-        character_coor = (board["characters"][character_name]["index_x"] + 1,
-                          board["characters"][character_name]["index_y"] + 1)
-        neighboring_fields = get_neighbor_fields(character_coor)
 
-        player_coor = [player["position_x"], player["position_y"]]
-        if player_coor in neighboring_fields:
-            return True
-        else:
-            return False
-    except KeyError:
+    character_coor = (board["characters"][character_name]["index_x"] + 1,
+                        board["characters"][character_name]["index_y"] + 1)
+    neighboring_fields = get_neighbor_fields(character_coor)
+
+    player_coor = [player["position_x"], player["position_y"]]
+    if player_coor in neighboring_fields:
+        return True
+    else:
         return False
 
 
@@ -425,6 +454,7 @@ def player_is_close_to_Loki(player):
 
 def remove_enemy_from_board(board,enemy):
     del board[enemy]
+    #czy potrzebujemy tej funkcji?
 
 
 def add_infinity_stones(boards, board, stone_name, x, y):
@@ -434,6 +464,7 @@ def add_infinity_stones(boards, board, stone_name, x, y):
         "index_y": y,
         "icon":"*",
     }
+    return boards
 
 
 def check_free_space(move, board_list, character):
@@ -462,15 +493,12 @@ def is_enemy_dead(enemy):
 def fight_with_Loki(player, current_board):
     if "thor's hammer" and "captain's america' shield" in player["inventory"]:
             current_board["characters"]["Loki"]["health"] -= 50
-            #play fight music
     elif "thor's hammer" in player["inventory"]:
         current_board["characters"]["Loki"]["health"] -= 10
         player["health"] -= 40
-        #play fight music
     elif "thor's hammer" not in player["inventory"] and "captain's america' shield" not in player["inventory"]:
         player["health"] -= 50
         print(player)
-        #playe fight music
             
     if is_enemy_dead(current_board["characters"]["Loki"]) == True:
         remove_enemy_from_board(current_board["characters"], "Loki")
@@ -489,9 +517,9 @@ def change_quest(player):
 
     return player
 
-def fight_with_boss(boards,player):
+def fight_with_boss(boards, player):
     weapon = input("Look in your inventory. What do you want to use? > ")
-    if (weapon in ["ak", "AK-47", "AK-47","Racket-Luncher","Racket"]):
+    if (weapon in ["ak", "AK", "AK-47", "AK-47","Rocket-Luncher","Rocket"]):
         print("Good choice for you. I am weaker now")
         sleep(2)
         boards["board_4"]["boss"]["health"] -= 300
@@ -501,3 +529,8 @@ def fight_with_boss(boards,player):
         print("Bad choice. You are weaker now")
         sleep(2)
         player["health"]-=40
+    current_board = boards[player["current_board"]]
+    if is_enemy_dead(current_board["characters"]["boss"]) == True:
+        remove_enemy_from_board(current_board["characters"], "boss")
+        ui.player_has_won()
+    # czy rozmowę z Skullem i Collectorem da się zrobić za pomocą validate_answer

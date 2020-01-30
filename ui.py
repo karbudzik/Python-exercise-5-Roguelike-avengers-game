@@ -183,7 +183,7 @@ def display_authors():
     print(pyfiglet.figlet_format("*** " + messege + " ***",font="digital"))
     
     
-def won():
+def player_has_won():
     util.clear_screen()
     messege = "You have won:) Congratulations !!!!"
     print(pyfiglet.figlet_format("*** " + messege + " ***", font="digital"))
