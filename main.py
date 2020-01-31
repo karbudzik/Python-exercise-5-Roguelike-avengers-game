@@ -35,7 +35,7 @@ boards = {
                 "index_x": 8,
                 "index_y": 0,
                 "leads_to": "board_2",
-                "icon": "+"
+                "icon": "x"
             }
         },
         "static_elements": {
@@ -104,13 +104,13 @@ boards = {
                 "index_x": 9,
                 "index_y": 11,
                 "leads_to": "board_1",
-                "icon": "+"
+                "icon": "x"
             },
             "north": {
                 "index_x": 5,
                 "index_y": 0,
                 "leads_to": "board_3",
-                "icon": "+"
+                "icon": "x"
             }
         },
         "static_elements": {

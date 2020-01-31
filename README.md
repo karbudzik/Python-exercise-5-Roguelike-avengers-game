@@ -1,37 +1,77 @@
-# Roguelike game
+# Python exercise 5 - Roguelike game (Avengers-themed)
+Project done in 4-people groups, during 2 weeks of distance cooperation and 2 days of workshops.
+The aim of the project was to create a game resembling the 80' unix game - Rogue. We've chosen the Avengers movies to be an inspiration for game's plot.
+Another aspect important for the execution was the fact, that the project had to be based on the dictionaries, as a part of introduction to OOP.
+
+## General info
+The main game features that we managed to deliver were:
+* creating basic board generator function, returning list of lists of given sizes, with walls around it
+* displaying board, together with other elements present on it (exits, items, characters, player)
+* implementing user's movement on the board via pressing the WASD keys. Player cannot walk through walls, but going through gates loads another board.
+* implementing items that can be added to player's inventory and can be used in later game. Some items are food that increas player's health.
+* adding attributes to player and presenting their statistics under the board.
+* adding other characters and interactions between them and player (movement, fight, riddles)
+* adding large boss at the end of the game and fight with it (there is a secret code that makes to finish the game more easily).
+* the player can win the game by collecting needed items and beating the boss, or can loose the game when their health drops to 0.
+* adding visual improvements to the project (centering the board, adding colors, effects)
+* player can display legend and details of their inventory.
+
+## Plot of the game
+1:
+![1](img/1.png)
+2:
+![2](img/2.png)
+3:
+![3](img/3.png)
+1:
+![1](img/4.png)
+2:
+![2](img/5.png)
+3:
+![3](img/6.png)
+1:
+![1](img/7.png)
+2:
+![2](img/8.png)
+3:
+![3](img/9.png)
+1:
+![1](img/10.png)
+2:
+![2](img/11.png)
+3:
+![3](img/12.png)
+1:
+![1](img/13.png)
+2:
+![2](img/14.png)
+3:
+![3](img/15.png)
+
+
+## Technologies
+* Python 3.6
+
+## Lessons learned from the assignment
+* Working with dictionaries as an introduction to objective programming in the future
+* Working with main() function as a game's engine
+* Planning game's logic to be as effective as possible
+
+## Status
+Project is finished.
+
+## Credits
+Project assigned and supervised by Codecool mentors.
+
+
 
 ## Story
 
-"La Speluna", a company from San Escobar contacted you and asked
-about creating a roguelike game for them. They didn't tell us much about
-their needs, only a few details about the game's framework. They are big
-fans of old-fashioned RPG games when graphics didn't matter that much,
-but the most important things were gameplay and a story.
+"
 
-The game should be about a creature (human? alien? ant? hacker?) who is
-travelling through a dangerous and wild world (forest? planet? table?
-meetups?). In the beginning, the creature is weak and fragile, but
-through the game he (she? they? apache helicopter?) will be levelling
-up, getting tougher, collecting powerful items, and finally be able to
-defeat an ultimate boss! Of course, the way to the ultimate boss isn't a
-bed of roses, there will be a lot of obstacles (rivers? craters? drops
-of milk? firewalls?) and many dangerous enemies. Use your imagination!.
 
-In this project your job is to implement a
-[Roguelike](https://en.wikipedia.org/wiki/Roguelike) game.
 
-## What are you going to learn?
-
-You will learn and practice how to do the following things in Python:
- - variables, functions, loops and conditionals,
- - nested lists,
- - dictionaries,
- - print formatting,
- - handling user input,
- - error handling,
- - clean code.
-
-## Tasks
+## Features
 
 
 1. Implement0 a basic board generator function to return a rectangular board of the given size.
@@ -105,6 +145,16 @@ You will learn and practice how to do the following things in Python:
     - The `engine.create_board` function has other optional parameters that modify its base behavior to add extra inner walls.
     - The `engine.create_board` function has other optional parameters that modify its base behavior to diverge from the rectangular shape.
 
+## What are you going to learn?
+
+You will learn and practice how to do the following things in Python:
+ - variables, functions, loops and conditionals,
+ - nested lists,
+ - dictionaries,
+ - print formatting,
+ - handling user input,
+ - error handling,
+ - clean code.
 
 ## General requirements
 
