@@ -309,7 +309,7 @@ boards = {
 
 quests = {
     "1": {
-        "quest_description": ["You are an Avenger, fighting Thanos and his troops."
+        "quest_description": ["You are an Avenger, fighting Thanos and his troops.",
                               "Your task is to find infinity stones located on 3 worlds, starting from Earth.",
                               "To find the stones placed here, you'll need to beat the sneakiest of them all - Loki.",
                               "Only then you'll be able to get to other worlds.",
@@ -326,7 +326,7 @@ quests = {
     },
     "4": {
         "quest_description": ["It's a final battle!", 
-                              "Although you have frozen time with your stones and Thanos can't move, he's stil dangerous."
+                              "Although you have frozen time with your stones and Thanos can't move, he's stil dangerous.",
                               "Try to prepare as much as you can. You'll need all the help you can get..."]
     }
 }
